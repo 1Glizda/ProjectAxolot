@@ -25,12 +25,12 @@ jobs:
           git reset --hard
 
       - name: Build WebGL
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v3
         with:
           targetPlatform: WebGL
 
       - name: Upload WebGL Build Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: build-WebGL
           path: build/WebGL
@@ -44,7 +44,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download WebGL Build Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: build-WebGL
           path: build
