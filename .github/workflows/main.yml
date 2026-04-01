@@ -3,7 +3,10 @@ name: WebGL Build and Deploy
 on:
   push:
     branches:
-      - main  # Change this if you want a different branch trigger
+      - main  # Make sure this matches your default branch name
+
+permissions:
+  contents: write  # Crucial for the deployment action to push to gh-pages
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -16,7 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated from v3
+        with:
+          lfs: true # Built-in LFS support is cleaner
 
       - name: Git LFS Pull
         run: |
@@ -25,12 +30,12 @@ jobs:
           git reset --hard
 
       - name: Build WebGL
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v4 # Updated from v3
         with:
           targetPlatform: WebGL
 
       - name: Upload WebGL Build Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # Updated from v3
         with:
           name: build-WebGL
           path: build/WebGL
@@ -41,16 +46,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated from v3
 
       - name: Download WebGL Build Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4 # Updated from v3
         with:
           name: build-WebGL
-          path: build
+          path: build/WebGL # Kept path consistent with builder output
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4 # Updated from 4.1.4
         with:
-          branch: gh-pages       # The branch to which the build files will be deployed
-          folder: build/WebGL    # Folder containing your WebGL build
+          branch: gh-pages
+          folder: build/WebGL
