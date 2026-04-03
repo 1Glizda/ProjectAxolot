@@ -1,4 +1,6 @@
+using Player.Helpers;
 using System;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
@@ -9,10 +11,10 @@ namespace Player.StateMachine
     {
         public Action<Type> onChangeState;
         public bool IsInJumpBuffer { get {return _jumpBuffer > 0f && _isJumpBuffered;}}
-
+        
+        
         public bool HasDetachedFromWall => _hasDetachedFromWall;
         
-
         private readonly PlayerSettingsSo _settings;
         private readonly PlayerContext _ctx;
         
@@ -20,8 +22,10 @@ namespace Player.StateMachine
 
         private bool _isJumpBuffered;
         private float _jumpBuffer;
-        
         private bool _hasDetachedFromWall;
+        
+        private readonly Dictionary<Type, PlayerBaseState> _states = new Dictionary<Type, PlayerBaseState>();
+        
         
         public MovementStateMachine(PlayerSettingsSo settings, PlayerContext ctx)
         {
@@ -31,6 +35,17 @@ namespace Player.StateMachine
             
             _ctx.manager.JumpAction.started += TryBufferJump;
             _jumpBuffer = _settings.JumpBufferTime;
+            
+            //populate state dictionary
+            _states.Add(typeof(PlayerIdleState), _activeState);
+            _states.Add(typeof(PlayerRunState), new PlayerRunState(ctx, this));
+            _states.Add(typeof(PlayerJumpState), new PlayerJumpState(ctx, this));
+            _states.Add(typeof(PlayerClimbingState), new PlayerClimbingState(ctx, this));
+            _states.Add(typeof(PlayerFallingState), new PlayerFallingState(ctx, this));
+            _states.Add(typeof(PlayerLandingState), new PlayerLandingState(ctx, this));
+            _states.Add(typeof(PlayerPrepareJumpState), new PlayerPrepareJumpState(ctx, this));
+            _states.Add(typeof(PlayerSwingingState), new PlayerSwingingState(ctx, this));
+            _states.Add(typeof(PlayerVaultState), new PlayerVaultState(ctx, this));
         }
 
         ~MovementStateMachine()
@@ -53,7 +68,7 @@ namespace Player.StateMachine
             _activeState?.FixedTick(dt);
         }
         
-        public void ChangeState(PlayerBaseState newState)
+        public void ChangeState(Type newStateType)
         {
             if (_activeState is PlayerJumpState)
             {
@@ -62,7 +77,7 @@ namespace Player.StateMachine
             }
             
             _activeState.ExitState();
-            _activeState = newState;
+            _activeState = _states[newStateType];
             _activeState.EnterState();
             
             onChangeState?.Invoke(_activeState.GetType());

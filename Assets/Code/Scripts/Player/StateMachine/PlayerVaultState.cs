@@ -11,15 +11,17 @@ namespace Player.StateMachine
 
         private float _timer;
 
-        public PlayerVaultState(PlayerContext ctx, MovementStateMachine stateMachine, VaultHelper vaultHelper) : base(
-        ctx, stateMachine)
-        {
-            _p1 = vaultHelper.VaultApex.position;
-            _p2 = vaultHelper.VaultTarget.position;
-        }
+        public PlayerVaultState(PlayerContext ctx, MovementStateMachine stateMachine) : 
+            base(ctx, stateMachine)
+        { }
 
         public override void EnterState()
         {
+            VaultHelper vaultHelper = ctx.collisionHandler.VaultHelper;
+            
+            _p1 = vaultHelper.VaultApex.position;
+            _p2 = vaultHelper.VaultTarget.position;
+            
             ctx.rb.bodyType = RigidbodyType2D.Kinematic;
             _p0 = ctx.rb.position;
             ctx.rb.linearVelocityY = 0f;
@@ -37,7 +39,7 @@ namespace Player.StateMachine
 
             if (t >= 1)
             {
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState(typeof(PlayerFallingState));
             }
         }
 

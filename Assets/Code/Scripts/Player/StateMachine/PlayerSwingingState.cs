@@ -10,15 +10,17 @@ namespace Player.StateMachine
         private int _currentBoneIndex;
 
         private bool _queueJump;
-        public PlayerSwingingState(PlayerContext ctx, MovementStateMachine stateMachine, SwingBone swingBone) : base(ctx, stateMachine)
-        {
-            _currentBoneRb = swingBone.Rb;
-            _vine = swingBone.VineHelper;
-            _currentBoneIndex = _vine.GetBoneIndex(swingBone);
-        }
+        public PlayerSwingingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        {}
 
         public override void EnterState()
         {
+            SwingBone swingBone = ctx.collisionHandler.SwingBone;
+            
+            _currentBoneRb = swingBone.Rb;
+            _vine = swingBone.VineHelper;
+            _currentBoneIndex = _vine.GetBoneIndex(swingBone);
+            
             Vector2 entryV = ctx.rb.linearVelocity;
             ctx.rb.position = _currentBoneRb.position - (Vector2)ctx.rb.transform.TransformDirection(ctx.swingHinge.anchor);
             
@@ -37,7 +39,7 @@ namespace Player.StateMachine
 
             if (jumpAction.triggered)
             {
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState(typeof(PlayerFallingState));
             }
         }
         public override void FixedTick(float dt)

@@ -23,17 +23,18 @@ namespace Player.StateMachine
 
             if (_isDetached)
             {
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState(typeof(PlayerFallingState));
             }
             
             if (!ctx.controller.IsNearValidWall)
             {
-                if (ctx.controller.IsFootNearValidWall && ctx.collisionHandler.CanVault)
+                if (ctx.controller.IsFootNearValidWall && ctx.collisionHandler.CanVault && ctx.collisionHandler
+                    .VaultHelper != null)
                 {
-                    stateMachine.ChangeState(new PlayerVaultState(ctx, stateMachine, ctx.collisionHandler.VaultHelper));
+                    stateMachine.ChangeState(typeof(PlayerVaultState));
                     return;
                 }
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState(typeof(PlayerFallingState));
                 return;
             }
 
@@ -43,12 +44,12 @@ namespace Player.StateMachine
             {
                 if (isGrounded)
                 {
-                    stateMachine.ChangeState(new PlayerRunState(ctx, stateMachine));
+                    stateMachine.ChangeState(typeof(PlayerRunState));
                     return;
                 }
                 else
                 {
-                    stateMachine.ChangeState(new PlayerPrepareJumpState(ctx, stateMachine));
+                    stateMachine.ChangeState(typeof(PlayerPrepareJumpState));
                 }
             }
             

@@ -37,19 +37,19 @@ namespace Player.StateMachine
 
             if (jumpAction.triggered && ctx.collisionHandler.CanSwing)
             {
-                stateMachine.ChangeState(new PlayerSwingingState(ctx, stateMachine, ctx.collisionHandler.SwingBone));
+                stateMachine.ChangeState(typeof(PlayerSwingingState));
                 return;
             }
             
             if (ctx.rb.linearVelocityY <= 0f)
             {
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState(typeof(PlayerFallingState));
                 return;
             }
 
             if (ctx.controller.IsNearValidWall)
             {
-                stateMachine.ChangeState(new PlayerClimbingState(ctx, stateMachine));
+                stateMachine.ChangeState(typeof(PlayerClimbingState));
                 return;
             }
             
