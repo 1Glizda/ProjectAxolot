@@ -7,6 +7,7 @@ namespace Player.StateMachine
 
         private bool _jumpTriggered;
         private bool _isDetached;
+        private float _attachTimer;
         public PlayerClimbingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
             
@@ -15,6 +16,8 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             ctx.rb.linearVelocity = Vector2.zero;
+            _jumpTriggered = false;
+            _attachTimer = settings.WallAttachGraceTime;
         }
         
         public override void Tick(float dt)
@@ -26,21 +29,26 @@ namespace Player.StateMachine
                 stateMachine.ChangeState<PlayerFallingState>();
             }
             
+            if (ctx.controller.CanVault && ctx.controller.IsFootNearValidWall)
+            {
+                stateMachine.ChangeState<PlayerVaultState>();
+                return;
+            }
+
             if (!ctx.controller.IsNearValidWall)
             {
-                if (ctx.controller.IsFootNearValidWall && ctx.collisionHandler.CanVault && ctx.collisionHandler
-                    .VaultHelper != null)
-                {
-                    stateMachine.ChangeState<PlayerVaultState>();
-                    return;
-                }
                 stateMachine.ChangeState<PlayerFallingState>();
                 return;
             }
 
+            if (_attachTimer > 0f)
+            {
+                _attachTimer -= dt;
+            }
+
             float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
             
-            if (dot > 0f)
+            if (dot > 0f && _attachTimer <= 0f)
             {
                 if (isGrounded)
                 {

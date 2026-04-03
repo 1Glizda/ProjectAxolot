@@ -16,12 +16,20 @@ namespace Player.StateMachine
             _timer = 0f;
             ctx.rb.linearVelocityY = 0f;
 
-            float lAngle = ( 90f + settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
-            float rAngle = (90f - settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
+            Vector2 dir = Vector2.up;
             
-            Vector2 dirL = new Vector2(Mathf.Cos(lAngle), Mathf.Sin(lAngle));
-            Vector2 dirR = new Vector2(Mathf.Cos(rAngle), Mathf.Sin(rAngle));
-            Vector2 dir = Vector3.Slerp(dirL, dirR, horizontalInput);
+            if (!ctx.controller.IsNearValidWall)
+            {
+                float lAngle = ( 90f + settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
+                float rAngle = (90f - settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
+                
+                Vector2 dirL = new Vector2(Mathf.Cos(lAngle), Mathf.Sin(lAngle));
+                Vector2 dirR = new Vector2(Mathf.Cos(rAngle), Mathf.Sin(rAngle));
+                
+                float t = (horizontalInput + 1f) / 2f;
+                dir = Vector3.Slerp(dirL, dirR, t);
+            }
+
             Vector2 initialForce = settings.InitialJumpForce * ctx.rb.mass * dir;
             ctx.rb.AddForce(initialForce, ForceMode2D.Impulse);  
             //TODO add physics ground force

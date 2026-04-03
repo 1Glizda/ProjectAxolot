@@ -1,3 +1,4 @@
+using Interfaces;
 using Player.Input;
 using Player.StateMachine;
 using UnityEngine;
@@ -14,6 +15,10 @@ namespace Player
         public bool IsNearValidWall => _isNearValidWall;
         public bool IsFootNearValidWall => _isFootNearValidWall;
         public Vector2 WallHitNormal => _wallHitNormal;
+        public bool IsFootNearPushable => _isFootNearPushable;
+        public IPushable Pushable => _pushable;
+        public bool CanVault => _canVault;
+        public Vector2 VaultTarget => _vaultTarget;
         
         [Header("Debug")]
         [SerializeField] private bool _debugMode;
@@ -40,20 +45,30 @@ namespace Player
         private bool _isNearValidWall;
         private bool _isFootNearValidWall;
         private Vector2 _wallHitNormal;
-
+        private bool _isFootNearPushable;
+        
+        
         private Vector2 _leftWallCheckOrigin;
         private Vector2 _rightWallCheckOrigin;
         private Vector2 _baseWallCheckOrigin;
         private RaycastHit2D _wallHit;
         
+        private IPushable _pushable;
+        private bool _canVault;
+        private Vector2 _vaultTarget;
+        
         
         private float _coyoteTimer;
         private RaycastHit2D[] _groundHits;
+        private Vector2[] _checkOrigins = new Vector2[3];
+        private int _pushableLayerIndex;
 
         
         
         private void Awake()
         {
+            _pushableLayerIndex = LayerMask.NameToLayer("Movable");
+
             _context = new PlayerContext(
                 inputHandler as IPlayerInputManager,
                 this as IPlayerController,
@@ -69,8 +84,9 @@ namespace Player
 
             
             _stateMachine = new MovementStateMachine(_settings, _context);
-            _stateMachine.onChangeState += type => Debug.Log(type, this);
             _groundHits = new RaycastHit2D[3];   
+            
+            _stateMachine.onChangeState += type => Debug.Log(type, this);
         }
 
         private void Update()
@@ -88,36 +104,60 @@ namespace Player
             _stateMachine.FixedTick(dt);
         }
 
+        private void CheckForPushable()
+        {
+            
+        }
+        
         private void CheckWall()
         {
             _leftWallCheckOrigin = new Vector2(_bodyCollider.bounds.min.x, _bodyCollider.bounds.center.y);
             _rightWallCheckOrigin = new Vector2(_bodyCollider.bounds.max.x, _bodyCollider.bounds.center.y);
             float distance = _settings.WallDetectionRange;
             LayerMask mask = _settings.WallLayers;
+            
+            Vector2 dir = !_spriteRenderer.flipX ? Vector2.right : Vector2.left;
+            Vector2 centerOrigin = !_spriteRenderer.flipX ? _rightWallCheckOrigin : _leftWallCheckOrigin;
+            
+            _baseWallCheckOrigin = new Vector2(!_spriteRenderer.flipX ? _bodyCollider.bounds.max.x : _bodyCollider.bounds.min.x, _bodyCollider.bounds.min.y);
+            Vector2 headOrigin = new Vector2(!_spriteRenderer.flipX ? _bodyCollider.bounds.max.x : _bodyCollider.bounds.min.x, _bodyCollider.bounds.max.y);
 
-            if (!_spriteRenderer.flipX)
+            _wallHit = Physics2D.Raycast(centerOrigin, dir, distance, mask);
+            _isFootNearValidWall = Physics2D.Raycast(_baseWallCheckOrigin, dir, distance, mask).collider;
+            
+        
+            RaycastHit2D headHit = Physics2D.Raycast(headOrigin, dir, distance, mask);
+            _canVault = false;
+            
+            if (!headHit.collider && (_wallHit.collider || _isFootNearValidWall))
             {
-                _wallHit = Physics2D.Raycast(_rightWallCheckOrigin, Vector2.right, distance, mask );
-                _baseWallCheckOrigin = new Vector2(_bodyCollider.bounds.max.x, _bodyCollider.bounds.min.y);
-                _isFootNearValidWall = Physics2D.Raycast(_baseWallCheckOrigin, Vector2.right, distance, mask).collider;
+                // cast down from end point of head check
+                Vector2 downRayOrigin = headOrigin + (dir * distance);
+                float downRayDistance = _bodyCollider.bounds.size.y + 0.5f;
+                RaycastHit2D downHit = Physics2D.Raycast(downRayOrigin, Vector2.down, downRayDistance, mask);
                 
-                if (_debugMode)
+                if (downHit.collider)
                 {
-                    Debug.DrawRay(_rightWallCheckOrigin, Vector2.right * distance, _wallHit.collider? Color.green : Color.red);
-                    Debug.DrawRay(_baseWallCheckOrigin, Vector3.right * distance, _isFootNearValidWall ? Color.green : Color.red );
+                    _canVault = true;
+                    _vaultTarget = downHit.point;
+                    if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.cyan);
                 }
+                else if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.yellow);
             }
-            else
-            {
-                _wallHit = Physics2D.Raycast(_leftWallCheckOrigin, Vector2.left, distance, mask );
-                _baseWallCheckOrigin = new Vector2(_bodyCollider.bounds.min.x, _bodyCollider.bounds.min.y);
-                _isFootNearValidWall = Physics2D.Raycast(_baseWallCheckOrigin, Vector2.left, distance, mask).collider;
+            if (_debugMode) Debug.DrawRay(headOrigin, dir * distance, headHit.collider ? Color.cyan : Color.yellow);
 
-                if (_debugMode)
-                {
-                    Debug.DrawRay(_leftWallCheckOrigin, Vector2.left * distance, _wallHit.collider? Color.green : Color.red);
-                    Debug.DrawRay(_baseWallCheckOrigin, Vector3.left * distance, _isFootNearValidWall ? Color.green : Color.red );
-                }
+            // check for pushable
+            _pushable = null;
+            if (_isFootNearValidWall && _wallHit.collider && _wallHit.collider.gameObject.layer == _pushableLayerIndex)
+            {
+                _pushable = _wallHit.collider.GetComponent<IPushable>();
+            }
+            _isFootNearPushable = _pushable != null; 
+
+            if (_debugMode)
+            {
+                Debug.DrawRay(centerOrigin, dir * distance, _wallHit.collider ? Color.green : Color.red);
+                Debug.DrawRay(_baseWallCheckOrigin, dir * distance, _isFootNearValidWall ? Color.green : Color.red);
             }
             
             _isNearValidWall = _wallHit.collider;
@@ -127,20 +167,17 @@ namespace Player
         private void CheckGrounded()
         {
             Bounds bounds = _feetCollider.bounds;
-            Vector2[] checkOrigins = new Vector2[3]
-            {
-                new Vector2(bounds.min.x, bounds.min.y),
-                new Vector2(bounds.center.x, bounds.min.y),
-                new Vector2(bounds.max.x, bounds.min.y)
-            };
+            _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y);
+            _checkOrigins[1] = new Vector2(bounds.center.x, bounds.min.y);
+            _checkOrigins[2] = new Vector2(bounds.max.x, bounds.min.y);
 
-            Vector2 middleOrigin = checkOrigins[1];
+            Vector2 middleOrigin = _checkOrigins[1];
             
             float distance = _settings.GroundCheckDistance;
             LayerMask mask = _settings.GroundLayers;
 
 
-            bool didHit = MultiRaycast(out _groundHits, checkOrigins, Vector2.down, distance, mask);
+            bool didHit = MultiRaycast(_groundHits, _checkOrigins, Vector2.down, distance, mask);
             
             
             if (didHit && _groundHits[1].collider)
@@ -203,10 +240,8 @@ namespace Player
         }
 
 
-        private bool MultiRaycast(out RaycastHit2D[] hits, Vector2[] origins, Vector2 dir, float distance, LayerMask mask)
+        private bool MultiRaycast(RaycastHit2D[] hits, Vector2[] origins, Vector2 dir, float distance, LayerMask mask)
         {
-            hits =  new RaycastHit2D[origins.Length];
-
             for (int i = 0; i < origins.Length; i++)
             {
                 hits[i] = Physics2D.Raycast(origins[i], dir, distance, mask);
@@ -223,5 +258,8 @@ namespace Player
 
             return hits[0].collider || hits[1].collider || hits[2].collider;
         }
+
+
+        
     }
 }

@@ -9,6 +9,8 @@ namespace Player.StateMachine
         private float _catchBuffer;
         private bool _isCatchBuffered;
         
+        private float _graceTimer;
+        
         public PlayerFallingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
@@ -16,12 +18,19 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             jumpAction.performed += BufferCatch;
+            _isCatchBuffered = false;
+            _graceTimer = 0.15f; // prevent immediate regrab
         }
         
         public override void Tick(float dt)
         {
             base.Tick(dt);
             TryFlipSprite();
+
+            if (_graceTimer > 0)
+            {
+                _graceTimer -= dt;
+            }
 
             if (_isCatchBuffered)
             {
@@ -39,7 +48,7 @@ namespace Player.StateMachine
                 return;
             }
 
-            if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing)
+            if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing && _graceTimer <= 0)
             {
                 stateMachine.ChangeState<PlayerSwingingState>();
                 return;
@@ -47,18 +56,12 @@ namespace Player.StateMachine
 
             if (ctx.controller.IsNearValidWall)
             {
-                if (!stateMachine.HasDetachedFromWall)
+                if (jumpAction.IsPressed() || stateMachine.IsInJumpBuffer)
                 {
+                    stateMachine.ConsumeJumpBuffer();
                     stateMachine.ChangeState<PlayerClimbingState>();
                     return;
                 }
-                
-                float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
-                if (dot < 0f)
-                {
-                    //moving towards wall
-                    stateMachine.ChangeState<PlayerClimbingState>();
-                } 
             }
 
         }

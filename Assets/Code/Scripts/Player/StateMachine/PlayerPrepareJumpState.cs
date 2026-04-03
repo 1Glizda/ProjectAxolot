@@ -14,7 +14,7 @@ namespace Player.StateMachine
         {
             base.EnterState();
             ctx.rb.linearVelocityY = 0f;
-           
+            _jumpTriggered = false;
         }
         public override void Tick(float dt)
         {

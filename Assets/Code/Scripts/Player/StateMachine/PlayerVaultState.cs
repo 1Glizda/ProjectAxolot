@@ -11,18 +11,19 @@ namespace Player.StateMachine
 
         private float _timer;
 
-        public PlayerVaultState(PlayerContext ctx, MovementStateMachine stateMachine) : 
-            base(ctx, stateMachine)
+        internal PlayerVaultState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         { }
 
         public override void EnterState()
         {
-            VaultHelper vaultHelper = ctx.collisionHandler.VaultHelper;
+            _timer = 0f;
             
-            _p1 = vaultHelper.VaultApex.position;
-            _p2 = vaultHelper.VaultTarget.position;
+            _p2 = ctx.controller.VaultTarget;
+            _p1 = new Vector2(ctx.rb.position.x, _p2.y);
             
             ctx.rb.bodyType = RigidbodyType2D.Kinematic;
+            ctx.bodyCollider.enabled = false;
+            ctx.feetCollider.enabled = false;
             _p0 = ctx.rb.position;
             ctx.rb.linearVelocityY = 0f;
 
@@ -47,6 +48,8 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             ctx.rb.bodyType = RigidbodyType2D.Dynamic;
+            ctx.bodyCollider.enabled = true;
+            ctx.feetCollider.enabled = true;
         }
 
         private Vector2 CalculatePoint(float t, Vector2 p0, Vector2 p1, Vector2 p2)

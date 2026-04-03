@@ -32,9 +32,6 @@ namespace Player.StateMachine
                 //TODO add physics ground force
                 return;
             }
-
-           
-
             if (horizontalInput != 0f)
             { 
                 stateMachine.ChangeState<PlayerRunState>();

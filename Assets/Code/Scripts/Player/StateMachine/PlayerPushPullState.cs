@@ -1,19 +1,22 @@
-
+using Interfaces;
 using UnityEngine;
 
 namespace Player.StateMachine
 {
-    internal sealed class PlayerRunState : PlayerBaseState
+    internal class PlayerPushPullState : PlayerBaseState
     {
-        public PlayerRunState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        private IPushable _pushable;
+        internal PlayerPushPullState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine){}
+
+        public override void EnterState()
         {
+            _pushable = ctx.controller.Pushable;
         }
 
         public override void Tick(float dt)
         {
             base.Tick(dt);
-            TryFlipSprite();
-            
+
             if (!isGrounded)
             {
                 if (isInCoyoteTime && stateMachine.IsInJumpBuffer)
@@ -22,9 +25,12 @@ namespace Player.StateMachine
                     //TODO add physics ground force
                     return;
                 }
-                
-                stateMachine.ChangeState<PlayerFallingState>();
-                return;   
+                else if(!isInCoyoteTime)
+                {
+                    stateMachine.ChangeState<PlayerFallingState>();
+                    return;    
+                }
+                stateMachine.ChangeState<PlayerPushPullState>();
             }
             else if (stateMachine.IsInJumpBuffer)
             {
@@ -32,28 +38,22 @@ namespace Player.StateMachine
                 //TODO add physics ground force
                 return;
             }
-
-
-            Debug.LogWarning(ctx.controller.IsFootNearPushable);
-            if (ctx.controller.IsFootNearPushable)
-            {
-                stateMachine.ChangeState<PlayerPushPullState>();
-            }
-
-
-            if (ctx.rb.linearVelocityX == 0f && horizontalInput == 0f)
+            if (horizontalInput == 0f)
             {
                 stateMachine.ChangeState<PlayerIdleState>();
             }
+            
         }
 
         public override void FixedTick(float dt)
         {
             base.FixedTick(dt);
+            float forceMag = horizontalInput * settings.PushPullForce;
+            
+            _pushable.ApplyPushForce(groundData.slopeTangent * forceMag);
+            
             ApplyAccel(dt, settings.GroundedAcceleration, settings.GroundedDeceleration, settings.MaxHorizontalVelocity);
-            if(horizontalInput == 0f) ApplyDecel(dt, settings.GroundedDeceleration);
             ApplyGravity(dt, settings.BaseGravity);
-
         }
     }
 }
