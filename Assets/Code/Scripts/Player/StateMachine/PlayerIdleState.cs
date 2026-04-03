@@ -15,20 +15,20 @@ namespace Player.StateMachine
             {
                 if (isInCoyoteTime && stateMachine.IsInJumpBuffer)
                 {
-                    stateMachine.ChangeState(typeof(PlayerJumpState));
+                    stateMachine.ChangeState<PlayerJumpState>();
                     //TODO add physics ground force
                     return;
                 }
                 else if(!isInCoyoteTime)
                 {
-                    stateMachine.ChangeState(typeof(PlayerFallingState));
+                    stateMachine.ChangeState<PlayerFallingState>();
                     return;    
                 }
                 
             }
             else if (stateMachine.IsInJumpBuffer)
             {
-                stateMachine.ChangeState(typeof(PlayerJumpState));
+                stateMachine.ChangeState<PlayerJumpState>();
                 //TODO add physics ground force
                 return;
             }
@@ -37,7 +37,7 @@ namespace Player.StateMachine
 
             if (horizontalInput != 0f)
             { 
-                stateMachine.ChangeState(typeof(PlayerRunState));
+                stateMachine.ChangeState<PlayerRunState>();
             }
             
         }

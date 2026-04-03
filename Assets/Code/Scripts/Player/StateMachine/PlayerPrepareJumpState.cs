@@ -23,7 +23,7 @@ namespace Player.StateMachine
 
             if (horizontalInput == 0f)
             {
-                stateMachine.ChangeState(typeof(PlayerClimbingState));
+                stateMachine.ChangeState<PlayerClimbingState>();
                 return;
             }
             
@@ -42,7 +42,7 @@ namespace Player.StateMachine
             { 
                 TryFlipSprite();
                 ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
-                stateMachine.ChangeState(typeof(PlayerFallingState));
+                stateMachine.ChangeState<PlayerFallingState>();
             }
             
         }

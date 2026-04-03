@@ -67,8 +67,14 @@ namespace Player.StateMachine
         {
             _activeState?.FixedTick(dt);
         }
+
+
+        public void ChangeState<T>() where T : PlayerBaseState
+        {
+            ChangeState(typeof(T));    
+        }
         
-        public void ChangeState(Type newStateType)
+        private void ChangeState(Type newStateType)
         {
             if (_activeState is PlayerJumpState)
             {

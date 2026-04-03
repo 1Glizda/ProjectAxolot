@@ -39,7 +39,7 @@ namespace Player.StateMachine
 
             if (t >= 1)
             {
-                stateMachine.ChangeState(typeof(PlayerFallingState));
+                stateMachine.ChangeState<PlayerFallingState>();
             }
         }
 

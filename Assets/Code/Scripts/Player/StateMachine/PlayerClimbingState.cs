@@ -23,7 +23,7 @@ namespace Player.StateMachine
 
             if (_isDetached)
             {
-                stateMachine.ChangeState(typeof(PlayerFallingState));
+                stateMachine.ChangeState<PlayerFallingState>();
             }
             
             if (!ctx.controller.IsNearValidWall)
@@ -31,10 +31,10 @@ namespace Player.StateMachine
                 if (ctx.controller.IsFootNearValidWall && ctx.collisionHandler.CanVault && ctx.collisionHandler
                     .VaultHelper != null)
                 {
-                    stateMachine.ChangeState(typeof(PlayerVaultState));
+                    stateMachine.ChangeState<PlayerVaultState>();
                     return;
                 }
-                stateMachine.ChangeState(typeof(PlayerFallingState));
+                stateMachine.ChangeState<PlayerFallingState>();
                 return;
             }
 
@@ -44,12 +44,12 @@ namespace Player.StateMachine
             {
                 if (isGrounded)
                 {
-                    stateMachine.ChangeState(typeof(PlayerRunState));
+                    stateMachine.ChangeState<PlayerRunState>();
                     return;
                 }
                 else
                 {
-                    stateMachine.ChangeState(typeof(PlayerPrepareJumpState));
+                    stateMachine.ChangeState<PlayerPrepareJumpState>();
                 }
             }
             

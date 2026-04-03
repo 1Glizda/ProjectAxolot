@@ -18,19 +18,19 @@ namespace Player.StateMachine
             {
                 if (isInCoyoteTime && stateMachine.IsInJumpBuffer)
                 {
-                    stateMachine.ChangeState(typeof(PlayerJumpState));
+                    stateMachine.ChangeState<PlayerJumpState>();
                     //TODO add physics ground force
                     return;
                 }
                 else if(!isInCoyoteTime)
                 {
-                    stateMachine.ChangeState(typeof(PlayerFallingState));
+                    stateMachine.ChangeState<PlayerFallingState>();
                     return;    
                 }
             }
             else if (stateMachine.IsInJumpBuffer)
             {
-                stateMachine.ChangeState(typeof(PlayerJumpState));
+                stateMachine.ChangeState<PlayerJumpState>();
                 //TODO add physics ground force
                 return;
             }
@@ -44,14 +44,14 @@ namespace Player.StateMachine
                 if (dot < 0f)
                 {
                     //moving towards wall
-                    stateMachine.ChangeState(typeof(PlayerClimbingState));
+                    stateMachine.ChangeState<PlayerClimbingState>();
                 } 
 
             }
 
             if (ctx.rb.linearVelocityX == 0f && horizontalInput == 0f)
             {
-                stateMachine.ChangeState(typeof(PlayerIdleState));
+                stateMachine.ChangeState<PlayerIdleState>();
             }
         }
 

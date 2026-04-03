@@ -35,13 +35,13 @@ namespace Player.StateMachine
             
             if (isGrounded)
             {
-                stateMachine.ChangeState(typeof(PlayerIdleState));
+                stateMachine.ChangeState<PlayerIdleState>();
                 return;
             }
 
             if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing)
             {
-                stateMachine.ChangeState(typeof(PlayerSwingingState));
+                stateMachine.ChangeState<PlayerSwingingState>();
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace Player.StateMachine
             {
                 if (!stateMachine.HasDetachedFromWall)
                 {
-                    stateMachine.ChangeState(typeof(PlayerClimbingState));
+                    stateMachine.ChangeState<PlayerClimbingState>();
                     return;
                 }
                 
@@ -57,7 +57,7 @@ namespace Player.StateMachine
                 if (dot < 0f)
                 {
                     //moving towards wall
-                    stateMachine.ChangeState(typeof(PlayerClimbingState));
+                    stateMachine.ChangeState<PlayerClimbingState>();
                 } 
             }
 

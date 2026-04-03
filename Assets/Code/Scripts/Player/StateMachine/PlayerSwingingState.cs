@@ -39,7 +39,7 @@ namespace Player.StateMachine
 
             if (jumpAction.triggered)
             {
-                stateMachine.ChangeState(typeof(PlayerFallingState));
+                stateMachine.ChangeState<PlayerFallingState>();
             }
         }
         public override void FixedTick(float dt)
