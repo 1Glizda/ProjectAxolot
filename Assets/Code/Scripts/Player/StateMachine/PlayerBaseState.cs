@@ -1,17 +1,16 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
 {
-    public abstract class PlayerBaseState
+    internal abstract class PlayerBaseState
     {
     
         protected readonly PlayerContext ctx;
         protected readonly MovementStateMachine stateMachine;
         protected readonly InputAction moveAction;
         protected readonly InputAction jumpAction;
-        
+        protected readonly InputAction interactAction;
         
         protected bool isGrounded;
         protected bool isInCoyoteTime;
@@ -29,6 +28,7 @@ namespace Player.StateMachine
            settings = ctx.settings;
            moveAction = ctx.manager.MoveAction;
            jumpAction = ctx.manager.JumpAction;
+           interactAction = ctx.manager.InteractAction;
         }
 
         public virtual void EnterState(){}
@@ -185,9 +185,5 @@ namespace Player.StateMachine
             }
         }
 
-        protected void TryGetIntoClimbingState()
-        {
-           
-        }
     }
 }

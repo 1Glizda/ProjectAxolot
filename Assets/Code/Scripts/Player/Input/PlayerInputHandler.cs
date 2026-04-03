@@ -1,22 +1,24 @@
-using Player;
-using Player.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Code.Scripts.Player.Input
+namespace Player.Input
 {
     [DefaultExecutionOrder(-100)]
-    public class PlayerInputManager : MonoBehaviour, IPlayerInputManager
+    internal class PlayerInputHandler : MonoBehaviour, IPlayerInputManager
     {
         public InputAction MoveAction => _moveAction;
         public InputAction JumpAction => _jumpAction;
+        public InputAction InteractAction => _interactAction;
         public InputAction PulseAction => _pulseAction;
         public InputAction PointAction => _pointAction;
         
         private InputAction _moveAction;
         private InputAction _jumpAction;
+        private InputAction _interactAction;
+        
         private InputAction _pulseAction;
         private InputAction _pointAction;
+        
         
         private InputSystem_Actions _inputActions;
 
@@ -26,6 +28,8 @@ namespace Code.Scripts.Player.Input
 
             _moveAction = _inputActions.Player.Move;
             _jumpAction = _inputActions.Player.Jump;
+            _interactAction = _inputActions.Player.Interact;
+            
             _pulseAction = _inputActions.Player.Pulse;
             _pointAction = _inputActions.Player.Point;
             
