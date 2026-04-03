@@ -1,10 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Player.Pulse
 {
-    public class PulseBehaviour : MonoBehaviour
+    internal class PulseBehaviour : MonoBehaviour
     {
         [Header("Travel Distance")]
         [SerializeField] private float _pulseSpeed;

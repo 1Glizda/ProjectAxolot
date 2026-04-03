@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerPrepareJumpState : PlayerBaseState
+    internal sealed class PlayerPrepareJumpState : PlayerBaseState
     {
         private bool _jumpTriggered;
         public PlayerPrepareJumpState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)

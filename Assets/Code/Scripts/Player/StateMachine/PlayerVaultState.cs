@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerVaultState : PlayerBaseState
+    internal sealed class PlayerVaultState : PlayerBaseState
     {
 
         private Vector2 _p0;

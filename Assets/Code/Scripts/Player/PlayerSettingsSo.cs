@@ -4,7 +4,7 @@ namespace Player
 {
  
     [CreateAssetMenu(fileName = "PlayerSettings So", menuName = "PlayerSettings")]
-    public class PlayerSettingsSo : ScriptableObject
+    internal class PlayerSettingsSo : ScriptableObject
     {
         public float GroundedAcceleration => _groundedAcceleration;
         public float GroundedDeceleration => _groundedDeceleration;

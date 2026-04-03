@@ -1,10 +1,9 @@
-using Platforming;
-using System;
+using Player.Helpers;
 using UnityEngine;
 
 namespace Player
 {
-    public class PlayerCollisionHandler : MonoBehaviour
+    internal class PlayerCollisionHandler : MonoBehaviour
     {
         public bool CanVault => _canVault;
         public bool CanSwing => _canSwing;

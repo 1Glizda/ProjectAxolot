@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerRunState : PlayerBaseState
+    internal sealed class PlayerRunState : PlayerBaseState
     {
         public PlayerRunState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {

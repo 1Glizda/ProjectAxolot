@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
 {
-    public class PlayerFallingState : PlayerBaseState
+    internal sealed class PlayerFallingState : PlayerBaseState
     {
 
         private float _catchBuffer;

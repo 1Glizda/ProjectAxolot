@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using PlayerInputManager = Code.Scripts.Player.Input.PlayerInputManager;
+using Player.Input;
 
 namespace Player.Pulse
 {
-    public class PulseController : MonoBehaviour
+    internal class PulseController : MonoBehaviour
     {
         [SerializeField] private bool _debugMode;
-        [SerializeField] private PlayerInputManager _playerInputManager;
+        [SerializeField] private PlayerInputHandler _playerInputManager;
         [SerializeField] private float _pulseDistance;
         [SerializeField] private LayerMask _layerMask;
         

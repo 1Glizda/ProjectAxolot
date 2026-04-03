@@ -1,10 +1,9 @@
-using Player.StateMachine;
 using UnityEngine;
 
 namespace Player
 {
     //player references container
-    public sealed class PlayerContext
+    internal sealed class PlayerContext
     {
 
         public readonly IPlayerInputManager manager;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerClimbingState : PlayerBaseState
+    internal sealed class PlayerClimbingState : PlayerBaseState
     {
 
         private bool _jumpTriggered;

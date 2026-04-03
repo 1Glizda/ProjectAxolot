@@ -1,6 +1,6 @@
 namespace Player.StateMachine
 {
-    public class PlayerLandingState : PlayerBaseState
+    internal sealed class PlayerLandingState : PlayerBaseState
     {
 
         public PlayerLandingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)

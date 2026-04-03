@@ -1,9 +1,9 @@
-using Platforming;
+using Player.Helpers;
 using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerSwingingState : PlayerBaseState
+    internal sealed class PlayerSwingingState : PlayerBaseState
     {
         private Rigidbody2D _currentBoneRb;
         private VineHelper _vine;

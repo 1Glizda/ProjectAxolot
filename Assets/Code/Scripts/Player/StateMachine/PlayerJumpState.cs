@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerJumpState : PlayerBaseState
+    internal sealed class PlayerJumpState : PlayerBaseState
     {
         private float _timer;
         private bool _spaceReleased;

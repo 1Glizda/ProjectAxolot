@@ -5,7 +5,7 @@ namespace Player.StateMachine
 {
     //state machine that holds the movement states.
     //currently the states know of each other and the state machine, they can call ChangeState() from here
-    public sealed class MovementStateMachine
+    internal sealed class MovementStateMachine
     {
         public Action<Type> onChangeState;
         public bool IsInJumpBuffer { get {return _jumpBuffer > 0f && _isJumpBuffered;}}

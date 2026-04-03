@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
 {
-    public abstract class PlayerBaseState
+    internal abstract class PlayerBaseState
     {
     
         protected readonly PlayerContext ctx;

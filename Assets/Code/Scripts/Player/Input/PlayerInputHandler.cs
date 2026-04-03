@@ -1,12 +1,10 @@
-using Player;
-using Player.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Code.Scripts.Player.Input
+namespace Player.Input
 {
     [DefaultExecutionOrder(-100)]
-    public class PlayerInputManager : MonoBehaviour, IPlayerInputManager
+    internal class PlayerInputHandler : MonoBehaviour, IPlayerInputManager
     {
         public InputAction MoveAction => _moveAction;
         public InputAction JumpAction => _jumpAction;

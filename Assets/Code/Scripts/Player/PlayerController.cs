@@ -1,12 +1,12 @@
-using Code.Scripts.Player.Input;
+using Player.Input;
 using Player.StateMachine;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
-    //holds the StateMachine and allows communication with engine
-    public class PlayerController : MonoBehaviour, IPlayerController
+    //controls the StateMachine and talks to the engine
+    internal class PlayerController : MonoBehaviour, IPlayerController
     {
         public bool IsGrounded => _isGrounded;
         public float DistanceToGround => _distanceToGround;
@@ -21,7 +21,8 @@ namespace Player
         [Header("Context References")]
         [SerializeField] private PlayerCollisionHandler _collisionHandler;
         [SerializeField] private PlayerSettingsSo _settings;
-        [SerializeField] private PlayerInputManager _inputManager;
+        [FormerlySerializedAs("_inputManager")]
+        [SerializeField] private PlayerInputHandler inputHandler;
         [SerializeField] private Animator _animator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Collider2D _bodyCollider;
@@ -54,7 +55,7 @@ namespace Player
         private void Awake()
         {
             _context = new PlayerContext(
-                _inputManager as IPlayerInputManager,
+                inputHandler as IPlayerInputManager,
                 this as IPlayerController,
                 _collisionHandler,
                 _settings,
