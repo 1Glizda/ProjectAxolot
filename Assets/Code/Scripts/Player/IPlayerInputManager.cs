@@ -7,5 +7,6 @@ namespace Player
         public InputAction MoveAction { get; }
         public InputAction JumpAction { get; }
         public InputAction InteractAction { get; }
+        public InputAction PulseAction { get; }
     }
 }

@@ -10,7 +10,6 @@ namespace Player
     internal class PlayerController : MonoBehaviour, IPlayerController
     {
         public bool IsGrounded => _isGrounded;
-        public float DistanceToGround => _distanceToGround;
         public bool IsInCoyoteTime => _isInCoyoteTime;
         public bool IsNearValidWall => _isNearValidWall;
         public bool IsFootNearValidWall => _isFootNearValidWall;
@@ -20,6 +19,9 @@ namespace Player
         public bool CanVault => _canVault;
         public Vector2 VaultTarget => _vaultTarget;
         
+        public PlayerContext PlayerContext => _context;
+
+
         [Header("Debug")]
         [SerializeField] private bool _debugMode;
         
@@ -39,7 +41,6 @@ namespace Player
         private PlayerContext _context;
 
         private bool _isGrounded;
-        private float _distanceToGround;
         private bool _isInCoyoteTime;
         
         private bool _isNearValidWall;
@@ -182,16 +183,13 @@ namespace Player
             
             if (didHit && _groundHits[1].collider)
             {
-                _distanceToGround = 0f;
-                
+               
                 _isGrounded = true;
                 _isInCoyoteTime = false;
             }
             else
             {
                 RaycastHit2D hit = Physics2D.Raycast(middleOrigin, Vector2.down, Mathf.Infinity, mask);
-                _distanceToGround = hit.distance;
-                
                 _isGrounded = false;
                 
                 if (!_isInCoyoteTime)
