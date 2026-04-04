@@ -3179,7 +3179,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000095c31cbf8d8227f3f795c53c994c9d5ced53e709
+  m_ApplyToSortingLayers: 0000000095c31cbf8d8227f3f795c53c994c9d5ced53e70933c1695c
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -4198,7 +4198,7 @@ Transform:
   m_GameObject: {fileID: 806903599}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.41, y: 9.38, z: 0}
+  m_LocalPosition: {x: 1.19, y: 6.59, z: 3.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5206,7 +5206,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9a463b3ba843c8f4db8d837b1ea41111, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5225,34 +5225,34 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1550434611
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
-  m_SortMode: 1
+  m_SortMode: 0
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 2
+  m_LengthScale: 0.98
   m_SortingFudge: 0
-  m_NormalDirection: 1
+  m_NormalDirection: 0
   m_ShadowBias: 0
   m_RenderAlignment: 4
   m_Pivot: {x: 0, y: 0, z: 0}
-  m_Flip: {x: 0.08, y: 0, z: 0}
+  m_Flip: {x: 0, y: 0, z: 0}
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 0
-  m_FreeformStretching: 0
-  m_RotateWithStretchDirection: 1
+  m_FreeformStretching: 1
+  m_RotateWithStretchDirection: 0
   m_UseCustomVertexStreams: 0
   m_VertexStreams: 00010304
   m_UseCustomTrailVertexStreams: 0
   m_TrailVertexStreams: 00010304
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   m_Mesh1: {fileID: 0}
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
@@ -5275,7 +5275,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -5514,7 +5514,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.6
+      scalar: 0.97
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5831,9 +5831,9 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 1
-    maxNumParticles: 1000
+    maxNumParticles: 1200
     customEmitterVelocity: {x: 0, y: 0, z: 0}
-    size3D: 0
+    size3D: 1
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
@@ -6207,7 +6207,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 100
+        scalar: 300
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6265,7 +6265,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 100
+        scalar: 300
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6323,7 +6323,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 100
+        scalar: 300
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -6381,7 +6381,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 100
+        scalar: 300
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -7431,7 +7431,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.88
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -13160,7 +13160,7 @@ Transform:
   m_GameObject: {fileID: 1582480237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.5, y: 10.9, z: 0}
+  m_LocalPosition: {x: -7.5, y: 10.9, z: 7.4}
   m_LocalScale: {x: 4.529241, y: 4.5291514, z: 0.024235614}
   m_ConstrainProportionsScale: 0
   m_Children: []
