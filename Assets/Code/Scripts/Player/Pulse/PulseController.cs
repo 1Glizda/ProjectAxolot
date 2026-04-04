@@ -14,17 +14,23 @@ namespace Player.Pulse
         
         private PlayerContext _ctx;
         private InputAction _pulseAction;
-        
-        
-        
-        
+
+        private RaycastHit2D[] _hits;
+         
+            
+            
         private void Awake()
         {
             _ctx = _playerController.PlayerContext;
             _pulseAction = _ctx.manager.PulseAction;
+            
+            _hits = new RaycastHit2D[_settings.MaxHits];
         }
-        
-        
+
+        private void Pulse()
+        {
+            
+        }
         
         
     }
