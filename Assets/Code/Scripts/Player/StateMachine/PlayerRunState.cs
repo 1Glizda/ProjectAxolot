@@ -34,7 +34,6 @@ namespace Player.StateMachine
             }
 
 
-            Debug.LogWarning(ctx.controller.IsFootNearPushable);
             if (ctx.controller.IsFootNearPushable)
             {
                 stateMachine.ChangeState<PlayerPushPullState>();
