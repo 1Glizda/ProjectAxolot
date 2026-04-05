@@ -168,20 +168,21 @@ namespace Player
         private void CheckGrounded()
         {
             Bounds bounds = _feetCollider.bounds;
-            _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y);
-            _checkOrigins[1] = new Vector2(bounds.center.x, bounds.min.y);
-            _checkOrigins[2] = new Vector2(bounds.max.x, bounds.min.y);
+            float yOffset = 0.05f;
+            _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y + yOffset);
+            _checkOrigins[1] = new Vector2(bounds.center.x, bounds.min.y + yOffset);
+            _checkOrigins[2] = new Vector2(bounds.max.x, bounds.min.y + yOffset);
 
             Vector2 middleOrigin = _checkOrigins[1];
             
-            float distance = _settings.GroundCheckDistance;
+            float distance = _settings.GroundCheckDistance + yOffset;
             LayerMask mask = _settings.GroundLayers;
 
 
             bool didHit = MultiRaycast(_groundHits, _checkOrigins, Vector2.down, distance, mask);
             
             
-            if (didHit && _groundHits[1].collider)
+            if (didHit)
             {
                
                 _isGrounded = true;
@@ -211,13 +212,25 @@ namespace Player
         private Vector2 ComputeSlopeTangent()
         {
             Vector2 normal = Vector2.zero;
+            int validHits = 0;
             foreach (RaycastHit2D hit in _groundHits)
             {
-                normal +=  hit.normal;
+                if (hit.collider)
+                {
+                    normal += hit.normal;
+                    validHits++;
+                }
             }
             
-            normal /= _groundHits.Length;
-            normal.Normalize();
+            if (validHits > 0)
+            {
+                normal /= validHits;
+                normal.Normalize();
+            }
+            else
+            {
+                normal = Vector2.up;
+            }
             
             Vector2 slope = new (normal.y, -normal.x);
             
