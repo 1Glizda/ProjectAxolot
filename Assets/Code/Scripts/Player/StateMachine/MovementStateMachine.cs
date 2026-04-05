@@ -11,6 +11,7 @@ namespace Player.StateMachine
     {
         public Action<Type> onChangeState;
         public bool IsInJumpBuffer { get {return _jumpBuffer > 0f && _isJumpBuffered;}}
+        public bool WasDetached;
 
         public void ConsumeJumpBuffer()
         {

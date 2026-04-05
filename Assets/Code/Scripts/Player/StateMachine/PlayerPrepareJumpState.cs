@@ -38,10 +38,11 @@ namespace Player.StateMachine
             base.FixedTick(dt);
 
             float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
-            if (Mathf.Approximately(dot, 1f) && _jumpTriggered)
+            if (dot > 0f && _jumpTriggered)
             { 
                 TryFlipSprite();
                 ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
+                stateMachine.WasDetached = true;
                 stateMachine.ChangeState<PlayerFallingState>();
             }
             
