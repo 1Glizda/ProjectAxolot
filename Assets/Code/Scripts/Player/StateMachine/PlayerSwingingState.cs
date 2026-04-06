@@ -1,30 +1,32 @@
-using Platforming;
+using Player.Helpers;
 using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerSwingingState : PlayerBaseState
+    internal sealed class PlayerSwingingState : PlayerBaseState
     {
         private Rigidbody2D _currentBoneRb;
         private VineHelper _vine;
         private int _currentBoneIndex;
-
+        private float _releaseTimer;
+        
         private bool _queueJump;
-        public PlayerSwingingState(PlayerContext ctx, MovementStateMachine stateMachine, SwingBone swingBone) : base(ctx, stateMachine)
-        {
-            _currentBoneRb = swingBone.Rb;
-            _vine = swingBone.VineHelper;
-            _currentBoneIndex = _vine.GetBoneIndex(swingBone);
-        }
+        public PlayerSwingingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        {}
 
         public override void EnterState()
         {
-            Vector2 entryV = ctx.rb.linearVelocity;
-            ctx.rb.position = _currentBoneRb.position - (Vector2)ctx.rb.transform.TransformDirection(ctx.swingHinge.anchor);
+            _releaseTimer = 0f;
+            SwingBone swingBone = ctx.collisionHandler.SwingBone;
+            
+            _currentBoneRb = swingBone.Rb;
+            _vine = swingBone.VineHelper;
+            _currentBoneIndex = _vine.GetBoneIndex(swingBone);
             
             ctx.swingHinge.connectedBody = _currentBoneRb;
             ctx.swingHinge.enabled = true;
-            
+
+            Vector2 entryV = ctx.rb.linearVelocity;
             _currentBoneRb.AddForce(entryV * (settings.SwingEntryMomentumTransfer * _currentBoneRb.mass), ForceMode2D.Impulse);
             
             ctx.rb.angularDamping = settings.SwingAngularDrag;
@@ -37,7 +39,32 @@ namespace Player.StateMachine
 
             if (jumpAction.triggered)
             {
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                ctx.swingHinge.enabled = false;
+                ctx.swingHinge.connectedBody = null;
+
+                Vector2 jumpDir = Vector2.up + (Vector2.right * horizontalInput);
+                jumpDir.Normalize();
+                ctx.rb.AddForce(jumpDir * (settings.VineJumpForce * ctx.rb.mass), ForceMode2D.Impulse);
+                
+                
+                stateMachine.ChangeState<PlayerFallingState>();
+                return;
+            }
+
+            if (verticalInput < -0.1f)
+            {
+                _releaseTimer += dt;
+                if (_releaseTimer >= settings.VineReleaseHoldTime)
+                {
+                    ctx.swingHinge.enabled = false;
+                    ctx.swingHinge.connectedBody = null;
+                    stateMachine.ChangeState<PlayerFallingState>();
+                    return;
+                }
+            }
+            else
+            {
+                _releaseTimer = 0f;
             }
         }
         public override void FixedTick(float dt)

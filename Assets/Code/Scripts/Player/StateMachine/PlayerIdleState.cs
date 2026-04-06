@@ -1,6 +1,6 @@
 namespace Player.StateMachine
 {
-    public class PlayerIdleState : PlayerBaseState
+    internal sealed class PlayerIdleState : PlayerBaseState
     {
         public PlayerIdleState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
@@ -15,29 +15,26 @@ namespace Player.StateMachine
             {
                 if (isInCoyoteTime && stateMachine.IsInJumpBuffer)
                 {
-                    stateMachine.ChangeState(new PlayerJumpState(ctx, stateMachine));
+                    stateMachine.ChangeState<PlayerJumpState>();
                     //TODO add physics ground force
                     return;
                 }
                 else if(!isInCoyoteTime)
                 {
-                    stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                    stateMachine.ChangeState<PlayerFallingState>();
                     return;    
                 }
                 
             }
             else if (stateMachine.IsInJumpBuffer)
             {
-                stateMachine.ChangeState(new PlayerJumpState(ctx, stateMachine));
+                stateMachine.ChangeState<PlayerJumpState>();
                 //TODO add physics ground force
                 return;
             }
-
-           
-
             if (horizontalInput != 0f)
             { 
-                stateMachine.ChangeState(new PlayerRunState(ctx, stateMachine));
+                stateMachine.ChangeState<PlayerRunState>();
             }
             
         }

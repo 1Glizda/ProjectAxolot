@@ -1,14 +1,15 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
 {
-    public class PlayerFallingState : PlayerBaseState
+    internal sealed class PlayerFallingState : PlayerBaseState
     {
 
         private float _catchBuffer;
         private bool _isCatchBuffered;
+        
+        private float _graceTimer;
         
         public PlayerFallingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
@@ -17,12 +18,19 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             jumpAction.performed += BufferCatch;
+            _isCatchBuffered = false;
+            _graceTimer = 0.15f; // prevent immediate regrab
         }
         
         public override void Tick(float dt)
         {
             base.Tick(dt);
             TryFlipSprite();
+
+            if (_graceTimer > 0)
+            {
+                _graceTimer -= dt;
+            }
 
             if (_isCatchBuffered)
             {
@@ -36,30 +44,35 @@ namespace Player.StateMachine
             
             if (isGrounded)
             {
-                stateMachine.ChangeState(new PlayerIdleState(ctx, stateMachine));
+                stateMachine.ChangeState<PlayerIdleState>();
                 return;
             }
 
-            if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing)
+            if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing && _graceTimer <= 0)
             {
-                stateMachine.ChangeState(new PlayerSwingingState(ctx, stateMachine, ctx.collisionHandler.SwingBone));
+                stateMachine.ChangeState<PlayerSwingingState>();
                 return;
             }
 
             if (ctx.controller.IsNearValidWall)
             {
-                if (!stateMachine.HasDetachedFromWall)
+                bool canGrab = false;
+                if (stateMachine.WasDetached)
                 {
-                    stateMachine.ChangeState(new PlayerClimbingState(ctx, stateMachine));
+                    canGrab = (_isCatchBuffered && _catchBuffer > 0f) || stateMachine.IsInJumpBuffer;
+                }
+                else
+                {
+                    canGrab = jumpAction.IsPressed() || stateMachine.IsInJumpBuffer;
+                }
+
+                if (canGrab)
+                {
+                    stateMachine.ConsumeJumpBuffer();
+                    _isCatchBuffered = false;
+                    stateMachine.ChangeState<PlayerClimbingState>();
                     return;
                 }
-                
-                float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
-                if (dot < 0f)
-                {
-                    //moving towards wall
-                    stateMachine.ChangeState(new PlayerClimbingState(ctx, stateMachine));
-                } 
             }
 
         }
@@ -80,6 +93,7 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             jumpAction.performed -= BufferCatch;
+            stateMachine.WasDetached = false;
         }
     }
 }

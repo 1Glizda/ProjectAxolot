@@ -2,11 +2,12 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerClimbingState : PlayerBaseState
+    internal sealed class PlayerClimbingState : PlayerBaseState
     {
 
         private bool _jumpTriggered;
         private bool _isDetached;
+        private float _attachTimer;
         public PlayerClimbingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
             
@@ -15,6 +16,9 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             ctx.rb.linearVelocity = Vector2.zero;
+            _jumpTriggered = false;
+            _isDetached = false;
+            _attachTimer = settings.WallAttachGraceTime;
         }
         
         public override void Tick(float dt)
@@ -23,32 +27,39 @@ namespace Player.StateMachine
 
             if (_isDetached)
             {
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState<PlayerFallingState>();
+                return;
             }
             
+            if (ctx.controller.CanVault && ctx.controller.IsFootNearValidWall)
+            {
+                stateMachine.ChangeState<PlayerVaultState>();
+                return;
+            }
+
             if (!ctx.controller.IsNearValidWall)
             {
-                if (ctx.controller.IsFootNearValidWall && ctx.collisionHandler.CanVault)
-                {
-                    stateMachine.ChangeState(new PlayerVaultState(ctx, stateMachine, ctx.collisionHandler.VaultHelper));
-                    return;
-                }
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.ChangeState<PlayerFallingState>();
                 return;
+            }
+
+            if (_attachTimer > 0f)
+            {
+                _attachTimer -= dt;
             }
 
             float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
             
-            if (dot > 0f)
+            if (dot > 0f && _attachTimer <= 0f)
             {
                 if (isGrounded)
                 {
-                    stateMachine.ChangeState(new PlayerRunState(ctx, stateMachine));
+                    stateMachine.ChangeState<PlayerRunState>();
                     return;
                 }
                 else
                 {
-                    stateMachine.ChangeState(new PlayerPrepareJumpState(ctx, stateMachine));
+                    stateMachine.ChangeState<PlayerPrepareJumpState>();
                 }
             }
             
@@ -72,6 +83,8 @@ namespace Player.StateMachine
             {
                 Vector2 dir = ctx.controller.WallHitNormal;
                 ctx.rb.AddForce(settings.WallDetachForce * ctx.rb.mass * dir, ForceMode2D.Impulse);
+                stateMachine.WasDetached = true;
+                _isDetached = true;
                 return;
             }
             

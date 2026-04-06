@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Platforming
+namespace Player.Helpers
 {
-    public class SwingBone : MonoBehaviour
+    internal class SwingBone : MonoBehaviour
     {
         public Rigidbody2D Rb { get; private set; }
         public VineHelper VineHelper { get; private set; }

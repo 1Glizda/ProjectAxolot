@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Player.StateMachine
 {
-    public class PlayerPrepareJumpState : PlayerBaseState
+    internal sealed class PlayerPrepareJumpState : PlayerBaseState
     {
         private bool _jumpTriggered;
         public PlayerPrepareJumpState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
@@ -14,7 +14,7 @@ namespace Player.StateMachine
         {
             base.EnterState();
             ctx.rb.linearVelocityY = 0f;
-           
+            _jumpTriggered = false;
         }
         public override void Tick(float dt)
         {
@@ -23,7 +23,7 @@ namespace Player.StateMachine
 
             if (horizontalInput == 0f)
             {
-                stateMachine.ChangeState(new PlayerClimbingState(ctx, stateMachine));
+                stateMachine.ChangeState<PlayerClimbingState>();
                 return;
             }
             
@@ -38,11 +38,12 @@ namespace Player.StateMachine
             base.FixedTick(dt);
 
             float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
-            if (Mathf.Approximately(dot, 1f) && _jumpTriggered)
+            if (dot > 0f && _jumpTriggered)
             { 
                 TryFlipSprite();
                 ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
-                stateMachine.ChangeState(new PlayerFallingState(ctx, stateMachine));
+                stateMachine.WasDetached = true;
+                stateMachine.ChangeState<PlayerFallingState>();
             }
             
         }

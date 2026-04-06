@@ -1,16 +1,24 @@
+using Player.Helpers;
 using System;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
 {
     //state machine that holds the movement states.
     //currently the states know of each other and the state machine, they can call ChangeState() from here
-    public sealed class MovementStateMachine
+    internal sealed class MovementStateMachine
     {
         public Action<Type> onChangeState;
         public bool IsInJumpBuffer { get {return _jumpBuffer > 0f && _isJumpBuffered;}}
+        public bool WasDetached;
 
-        public bool HasDetachedFromWall => _hasDetachedFromWall;
+        public void ConsumeJumpBuffer()
+        {
+            _isJumpBuffered = false;
+            _jumpBuffer = 0f;
+        }
+        
         
 
         private readonly PlayerSettingsSo _settings;
@@ -21,7 +29,8 @@ namespace Player.StateMachine
         private bool _isJumpBuffered;
         private float _jumpBuffer;
         
-        private bool _hasDetachedFromWall;
+        private readonly Dictionary<Type, PlayerBaseState> _states = new Dictionary<Type, PlayerBaseState>();
+        
         
         public MovementStateMachine(PlayerSettingsSo settings, PlayerContext ctx)
         {
@@ -31,6 +40,18 @@ namespace Player.StateMachine
             
             _ctx.manager.JumpAction.started += TryBufferJump;
             _jumpBuffer = _settings.JumpBufferTime;
+            
+            #region POPULATE STATES DICTIONARY
+            _states.Add(typeof(PlayerIdleState), _activeState);
+            _states.Add(typeof(PlayerRunState), new PlayerRunState(ctx, this));
+            _states.Add(typeof(PlayerJumpState), new PlayerJumpState(ctx, this));
+            _states.Add(typeof(PlayerClimbingState), new PlayerClimbingState(ctx, this));
+            _states.Add(typeof(PlayerFallingState), new PlayerFallingState(ctx, this));
+            _states.Add(typeof(PlayerPrepareJumpState), new PlayerPrepareJumpState(ctx, this));
+            _states.Add(typeof(PlayerSwingingState), new PlayerSwingingState(ctx, this));
+            _states.Add(typeof(PlayerVaultState), new PlayerVaultState(ctx, this));
+            _states.Add(typeof(PlayerPushPullState), new PlayerPushPullState(ctx, this));
+            #endregion
         }
 
         ~MovementStateMachine()
@@ -41,10 +62,6 @@ namespace Player.StateMachine
         public void Tick(float dt)
         {
             if(_isJumpBuffered) _jumpBuffer -= dt;
-            if (_ctx.controller.IsGrounded)
-            {
-                _hasDetachedFromWall = false;
-            }
             _activeState?.Tick(dt);
         }
 
@@ -52,8 +69,14 @@ namespace Player.StateMachine
         {
             _activeState?.FixedTick(dt);
         }
+
+
+        public void ChangeState<T>() where T : PlayerBaseState
+        {
+            ChangeState(typeof(T));    
+        }
         
-        public void ChangeState(PlayerBaseState newState)
+        private void ChangeState(Type newStateType)
         {
             if (_activeState is PlayerJumpState)
             {
@@ -62,22 +85,16 @@ namespace Player.StateMachine
             }
             
             _activeState.ExitState();
-            _activeState = newState;
+            _activeState = _states[newStateType];
             _activeState.EnterState();
             
             onChangeState?.Invoke(_activeState.GetType());
         }
 
 
-        public void DetachedFromWall()
-        {
-            _hasDetachedFromWall = true;
-        }
-
         private void TryBufferJump(InputAction.CallbackContext context)
         {
-            if (_ctx.controller.DistanceToGround <= _settings.JumpBufferMaxDistance && 
-                _activeState is PlayerFallingState || _activeState is PlayerIdleState || _activeState is PlayerRunState)
+            if (_activeState is PlayerFallingState || _activeState is PlayerIdleState || _activeState is PlayerRunState)
             {
                 _isJumpBuffered = true;
                 _jumpBuffer = _settings.JumpBufferTime;
