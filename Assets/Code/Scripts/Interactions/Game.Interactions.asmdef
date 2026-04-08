@@ -1,4 +1,17 @@
 {
-	"name": "Game.Interactions",
-	"references":[ "GUID:6eedbf251661d3f46a086910df8c981d" ]
+    "name": "Game.Interactions",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6eedbf251661d3f46a086910df8c981d",
+        "GUID:516a5277b8c3b4f4c8cc86b77b1591ff"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

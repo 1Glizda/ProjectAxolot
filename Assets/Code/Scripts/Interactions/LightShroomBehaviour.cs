@@ -2,6 +2,7 @@ using Interfaces;
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Interactions
 {
@@ -9,28 +10,25 @@ namespace Interactions
     {
 
         [Header("References")]
-        [SerializeField] private SpriteRenderer _renderer;
+        [SerializeField] private Light2D _light2D;
             
         [Header("Settings")]
         [SerializeField] private float _timeLitUp = 5f;
         [SerializeField] private float _fadeIn = 0.2f;
         [SerializeField] private float _fadeOut = 0.8f;
+        [SerializeField] private float _maxIntensity = 1f;
         
-        
-        private static readonly int EmissionFactorID = Shader.PropertyToID("_EmissionFactor");
-        private MaterialPropertyBlock _propertyBlock;
-
         private bool _isPulsing = false;
 
         private void Start()
         {
-            _renderer = GetComponent<SpriteRenderer>();
+            if (_light2D == null)
+            {
+                _light2D = GetComponent<Light2D>();
+            }
             
-            _propertyBlock = new MaterialPropertyBlock();
-            
-            SetEmissionOnPropertyBlock(0f);
+            SetLightIntensity(0f);
         }
-
 
         private void OnParticleCollision(GameObject other)
         {
@@ -38,7 +36,6 @@ namespace Interactions
             {
                 PulseInteract();
             }
-            
         }
 
         public void PulseInteract()
@@ -48,7 +45,6 @@ namespace Interactions
                 _ = LightUp();
             }
         }
-
 
         private async Task LightUp()
         {
@@ -68,7 +64,6 @@ namespace Interactions
             }
         }
 
-
         private async Task FadeIn()
         {
             float t = 0f;
@@ -78,11 +73,11 @@ namespace Interactions
             {
                 t += Time.deltaTime;
                 
-                SetEmissionOnPropertyBlock(t/time);
+                SetLightIntensity(t/time);
                 await Awaitable.NextFrameAsync(destroyCancellationToken);
             }
             
-            SetEmissionOnPropertyBlock(1f);
+            SetLightIntensity(1f);
         }
         
         private async Task FadeOut()
@@ -94,22 +89,18 @@ namespace Interactions
             {
                 t += Time.deltaTime;
                 
-                SetEmissionOnPropertyBlock(1 - t/time);
+                SetLightIntensity(1 - t/time);
                 await Awaitable.NextFrameAsync(destroyCancellationToken);
             }
 
-            SetEmissionOnPropertyBlock(0f);
+            SetLightIntensity(0f);
         }
-
         
-        private void SetEmissionOnPropertyBlock(float value)
+        private void SetLightIntensity(float normalizedValue)
         {
-            if(_renderer == null) return;
+            if(_light2D == null) return;
             
-            
-            _renderer.GetPropertyBlock(_propertyBlock);
-            _propertyBlock.SetFloat(EmissionFactorID, value);
-            _renderer.SetPropertyBlock(_propertyBlock);
+            _light2D.intensity = normalizedValue * _maxIntensity;
         }
     }
 }
