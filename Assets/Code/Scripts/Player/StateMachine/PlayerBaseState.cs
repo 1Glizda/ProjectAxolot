@@ -83,11 +83,11 @@ namespace Player.StateMachine
         private void ApplySpriteRotation(Vector3 rotation)
         { 
             Quaternion targetRotation = 
-                Quaternion.Lerp(ctx.spriteRenderer.transform.parent.localRotation, 
+                Quaternion.Lerp(ctx.spriteRenderer.transform.localRotation, 
                 Quaternion.Euler(rotation), 
                 15f * Time.deltaTime); //TODO replace the magic number
             
-            ctx.spriteRenderer.transform.parent.localRotation = targetRotation;
+            ctx.spriteRenderer.transform.localRotation = targetRotation;
         }
 
         protected void ApplyAccel(float dt, float acceleration, float deceleration, float maxV)
@@ -126,7 +126,7 @@ namespace Player.StateMachine
                 }
                 
 
-                Vector2 force = deltaV * ctx.rb.mass * ctx.rb.transform.right;
+                Vector2 force = deltaV * ctx.rb.mass * Vector2.right;
                 ctx.rb.AddForce(force, ForceMode2D.Impulse);
                 return;
             }
@@ -159,7 +159,7 @@ namespace Player.StateMachine
                 absDeltaV = Mathf.Min(absDeltaV, Mathf.Abs(currentV));
                 deltaV = absDeltaV;
             }
-            Vector2 force = deltaV * ctx.rb.mass * ctx.rb.transform.right;
+            Vector2 force = deltaV * ctx.rb.mass * Vector2.right;
             ctx.rb.AddForce(force, ForceMode2D.Impulse);
         }
 
