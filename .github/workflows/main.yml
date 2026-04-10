@@ -3,10 +3,10 @@ name: WebGL Build and Deploy
 on:
   push:
     branches:
-      - main  # Make sure this matches your default branch name
+      - main
 
 permissions:
-  contents: write  # Crucial for the deployment action to push to gh-pages
+  contents: write
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Updated from v3
+        uses: actions/checkout@v4
         with:
-          lfs: true # Built-in LFS support is cleaner
+          lfs: true
 
       - name: Git LFS Pull
         run: |
@@ -29,15 +29,26 @@ jobs:
           git add .
           git reset --hard
 
+      # Speed up: Cache the Library folder
+      - name: Restore Library Cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-WebGL-
+
       - name: Build WebGL
-        uses: game-ci/unity-builder@v4 # Updated from v3
+        uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
+          buildsPath: build # Unity creates 'build/WebGL'
 
       - name: Upload WebGL Build Artifact
-        uses: actions/upload-artifact@v4 # Updated from v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
+          # Crucial: We only upload what's INSIDE the WebGL folder
           path: build/WebGL
 
   deployPages:
@@ -46,16 +57,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Updated from v3
+        uses: actions/checkout@v4
 
       - name: Download WebGL Build Artifact
-        uses: actions/download-artifact@v4 # Updated from v3
+        uses: actions/download-artifact@v4
         with:
           name: build-WebGL
-          path: build/WebGL # Kept path consistent with builder output
+          path: deployment_temp # Download files here
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4 # Updated from 4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: build/WebGL
+          # This moves the contents of 'deployment_temp' to the branch root
+          folder: deployment_temp
