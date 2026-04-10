@@ -123,14 +123,22 @@ public sealed class SpriteCutterTool
         for (int y = 0; y < paddedHeight; y++)
         {
             int texY = startY + y;
+            if (texY < 0 || texY >= texHeight) continue;
+            
             for (int x = 0; x < paddedWidth; x++)
             {
                 int texX = startX + x;
+                if (texX < 0 || texX >= texWidth) continue;
+                
                 int rawIndex = texX + texY * texWidth;
                 int pieceIndex = y * correctedWidth + x;
                 
                 //grab color data from source texture
-                piecePixelArray[pieceIndex] = rawTex[rawIndex];
+                if (rawIndex >= 0 && rawIndex < rawTex.Length)
+                {
+                    piecePixelArray[pieceIndex] = rawTex[rawIndex];
+                }
+                
             }
         }
         
@@ -180,14 +188,23 @@ public sealed class SpriteCutterTool
         int maxY = -1;
         bool foundPixel = false;
 
+        
+        int texHeight = rawTex.Length / texWidth;
+        
         for (int y = 0; y < area.height; y++)
         {
             int texY = area.y + y;
+            if (texY < 0 || texY >= texHeight) continue;
+            
             for (int x = 0; x < area.width; x++)
             {
                 int texX = area.x + x;
+                if (texX < 0 || texX >= texWidth) continue;
+                
                 int index = texX + texY * texWidth;
                 
+                
+                if (index < 0 || index >= rawTex.Length) continue;
                 //find visible pixels
                 if (rawTex[index].a > 5)
                 {

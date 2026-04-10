@@ -31,6 +31,8 @@ public class SpriteImportProcessor : AssetPostprocessor
             importer.textureType = TextureImporterType.Sprite;
         }
         
+        //check 4x4 blocks
+        
         //auto change PPU
         foreach (string prefix in _ppuByLayer.Keys)
         {
@@ -40,6 +42,13 @@ public class SpriteImportProcessor : AssetPostprocessor
                 break;
             }
         }
-        
+        int texWidth;
+        int texHeight;
+        importer.GetSourceTextureWidthAndHeight(out  texWidth, out texHeight);
+
+        if (texWidth % 4 != 0 || texHeight % 4 != 0)
+        {
+            Debug.LogWarning($"Texture {assetPath} does not comply with 4x4 block rule ({texWidth}x{texHeight}px). Consider resizing.");
+        }
     }
 }
