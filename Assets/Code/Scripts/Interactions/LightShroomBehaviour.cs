@@ -10,7 +10,7 @@ namespace Interactions
     {
 
         [Header("References")]
-        [SerializeField] private Light2D _light2D;
+        [SerializeField] private Light2D[] _lights;
             
         [Header("Settings")]
         [SerializeField] private float _timeLitUp = 5f;
@@ -22,11 +22,6 @@ namespace Interactions
 
         private void Start()
         {
-            if (_light2D == null)
-            {
-                _light2D = GetComponent<Light2D>();
-            }
-            
             SetLightIntensity(0f);
         }
 
@@ -98,9 +93,12 @@ namespace Interactions
         
         private void SetLightIntensity(float normalizedValue)
         {
-            if(_light2D == null) return;
-            
-            _light2D.intensity = normalizedValue * _maxIntensity;
+            if(_lights == null || _lights.Length == 0) return;
+
+            foreach (Light2D lightComp in _lights)
+            {
+                lightComp.intensity = normalizedValue * _maxIntensity;
+            }
         }
     }
 }
