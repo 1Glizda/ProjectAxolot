@@ -29,7 +29,6 @@ jobs:
           git add .
           git reset --hard
 
-      # Speed up: Cache the Library folder
       - name: Restore Library Cache
         uses: actions/cache@v4
         with:
@@ -42,14 +41,14 @@ jobs:
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
-          buildsPath: build # Unity creates 'build/WebGL'
+          buildsPath: build
 
       - name: Upload WebGL Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
-          # Crucial: We only upload what's INSIDE the WebGL folder
-          path: build/WebGL
+          # Change: Adding '/*' ensures we upload the CONTENTS, not the folder itself
+          path: build/WebGL/*
 
   deployPages:
     needs: buildWebGL
@@ -63,11 +62,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-WebGL
-          path: deployment_temp # Download files here
+          path: build_files # Keep this a temp folder
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          # This moves the contents of 'deployment_temp' to the branch root
-          folder: deployment_temp
+          # This will take the contents of build_files and put them at the root of gh-pages
+          folder: build_files
