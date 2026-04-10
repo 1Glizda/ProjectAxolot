@@ -3,10 +3,10 @@ name: WebGL Build and Deploy
 on:
   push:
     branches:
-      - main  # Make sure this matches your default branch name
+      - main
 
 permissions:
-  contents: write  # Crucial for the deployment action to push to gh-pages
+  contents: write
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Updated from v3
+        uses: actions/checkout@v4
         with:
-          lfs: true # Built-in LFS support is cleaner
+          lfs: true
 
       - name: Git LFS Pull
         run: |
@@ -29,16 +29,31 @@ jobs:
           git add .
           git reset --hard
 
+      # --- CACHING STEP START ---
+      - name: Restore Library Cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          # This creates a unique key based on your project files
+          key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-WebGL-
+            Library-
+      # --- CACHING STEP END ---
+
       - name: Build WebGL
-        uses: game-ci/unity-builder@v4 # Updated from v3
+        uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
+          buildsPath: build
+          # Optional: Disabling compressed output in Unity settings 
+          # can speed up the build, but makes the site load slower.
 
       - name: Upload WebGL Build Artifact
-        uses: actions/upload-artifact@v4 # Updated from v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
-          path: build
+          path: build/WebGL
 
   deployPages:
     needs: buildWebGL
@@ -46,16 +61,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Updated from v3
+        uses: actions/checkout@v4
 
       - name: Download WebGL Build Artifact
-        uses: actions/download-artifact@v4 # Updated from v3
+        uses: actions/download-artifact@v4
         with:
           name: build-WebGL
-          path: build # Kept path consistent with builder output
+          path: build_artifacts
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4 # Updated from 4.1.4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: build
+          folder: build_artifacts
