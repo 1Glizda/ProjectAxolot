@@ -3,10 +3,10 @@ name: WebGL Build and Deploy
 on:
   push:
     branches:
-      - main
+      - main  # Make sure this matches your default branch name
 
 permissions:
-  contents: write
+  contents: write  # Crucial for the deployment action to push to gh-pages
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -19,9 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Updated from v3
         with:
-          lfs: true
+          lfs: true # Built-in LFS support is cleaner
 
       - name: Git LFS Pull
         run: |
@@ -29,26 +29,16 @@ jobs:
           git add .
           git reset --hard
 
-      - name: Restore Library Cache
-        uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-WebGL-v2-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-WebGL-v2-
-
       - name: Build WebGL
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v4 # Updated from v3
         with:
           targetPlatform: WebGL
-          buildsPath: build
 
       - name: Upload WebGL Build Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4 # Updated from v3
         with:
           name: build-WebGL
-          # Change: Adding '/*' ensures we upload the CONTENTS, not the folder itself
-          path: build/WebGL/*
+          path: build/WebGL
 
   deployPages:
     needs: buildWebGL
@@ -56,17 +46,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4 # Updated from v3
 
       - name: Download WebGL Build Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v4 # Updated from v3
         with:
           name: build-WebGL
-          path: build_files # Keep this a temp folder
+          path: build/WebGL # Kept path consistent with builder output
 
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4 # Updated from 4.1.4
         with:
           branch: gh-pages
-          # This will take the contents of build_files and put them at the root of gh-pages
-          folder: build_files
+          folder: build/WebGL
