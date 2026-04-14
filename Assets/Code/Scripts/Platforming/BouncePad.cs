@@ -19,6 +19,9 @@ namespace Platforming
             if (other.collider.CompareTag("Player"))
             {
                 other.rigidbody.AddForce(GetBounceDirection() * _pushForce, ForceMode2D.Impulse);
+            } else if (other.collider.CompareTag("AI"))
+            {
+                other.rigidbody.AddForce(GetBounceDirection() * _pushForce * 0.45f, ForceMode2D.Impulse);
             }
         }
 
