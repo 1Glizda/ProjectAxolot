@@ -11,7 +11,7 @@ namespace Player.Helpers
         private void Awake()
         {
             Rb = GetComponent<Rigidbody2D>();
-            VineHelper = transform.parent.GetComponent<VineHelper>();
+            VineHelper = GetComponentInParent<VineHelper>();
             
         }
     }

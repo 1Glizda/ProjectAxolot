@@ -56,8 +56,11 @@ namespace Player.StateMachine
         //rotates the sprite to look better while on slopes
         private void RotateSlopedSprite()
         {
-            if (!ctx.controller.IsGrounded) return;
-            
+            if (!ctx.controller.IsGrounded)
+            {
+                ApplySpriteRotation(Vector3.zero);
+                return;
+            }
             Vector3 rotation = new (0, 0, 0);
             Vector2 slopeTangent = groundData.slopeTangent;
             float angle = Vector2.Angle(slopeTangent, Vector2.right);

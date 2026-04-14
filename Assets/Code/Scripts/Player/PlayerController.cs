@@ -139,9 +139,22 @@ namespace Player
                 
                 if (downHit.collider)
                 {
-                    _canVault = true;
-                    _vaultTarget = downHit.point;
-                    if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.cyan);
+                    // check head room
+                    Vector2 boxSize = new Vector2(_bodyCollider.bounds.size.x * 0.8f, 0.1f);
+                    float requiredHeight = _bodyCollider.bounds.size.y;
+                    RaycastHit2D clearanceCheck = Physics2D.BoxCast(downHit.point + Vector2.up * 0.1f, boxSize, 0f, Vector2.up, requiredHeight, mask);
+
+                    if (!clearanceCheck.collider)
+                    {
+                        _canVault = true;
+                        _vaultTarget = downHit.point;
+                        if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.cyan);
+                    }
+                    else
+                    {
+                        _canVault = false;
+                        if (_debugMode) Debug.DrawRay(downHit.point + Vector2.up * 0.1f, Vector2.up * requiredHeight, Color.red);
+                    }
                 }
                 else if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.yellow);
             }
