@@ -17,6 +17,12 @@ namespace Player.StateMachine
         {
             base.Tick(dt);
 
+            if (_pushable == null || ctx.controller.Pushable == null)
+            {
+                stateMachine.ChangeState<PlayerIdleState>();
+                return;
+            }
+
             if (!isGrounded)
             {
                 if (isInCoyoteTime && stateMachine.IsInJumpBuffer)
@@ -30,7 +36,7 @@ namespace Player.StateMachine
                     stateMachine.ChangeState<PlayerFallingState>();
                     return;    
                 }
-                stateMachine.ChangeState<PlayerPushPullState>();
+                // We are in coyote time but not jumping. Just continue the state.
             }
             else if (stateMachine.IsInJumpBuffer)
             {

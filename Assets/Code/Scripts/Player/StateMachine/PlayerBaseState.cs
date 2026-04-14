@@ -139,6 +139,8 @@ namespace Player.StateMachine
                 ctx.rb.linearVelocityX = 0f;
                 return;
             }
+
+            ApplyDecel(dt, deceleration);
         }
 
         protected void ApplyDecel(float dt, float deceleration)
