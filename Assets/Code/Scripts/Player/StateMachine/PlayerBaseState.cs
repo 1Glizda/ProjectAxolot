@@ -56,8 +56,11 @@ namespace Player.StateMachine
         //rotates the sprite to look better while on slopes
         private void RotateSlopedSprite()
         {
-            if (!ctx.controller.IsGrounded) return;
-            
+            if (!ctx.controller.IsGrounded)
+            {
+                ApplySpriteRotation(Vector3.zero);
+                return;
+            }
             Vector3 rotation = new (0, 0, 0);
             Vector2 slopeTangent = groundData.slopeTangent;
             float angle = Vector2.Angle(slopeTangent, Vector2.right);
@@ -83,11 +86,11 @@ namespace Player.StateMachine
         private void ApplySpriteRotation(Vector3 rotation)
         { 
             Quaternion targetRotation = 
-                Quaternion.Lerp(ctx.spriteRenderer.transform.parent.localRotation, 
+                Quaternion.Lerp(ctx.spriteRenderer.transform.localRotation, 
                 Quaternion.Euler(rotation), 
                 15f * Time.deltaTime); //TODO replace the magic number
             
-            ctx.spriteRenderer.transform.parent.localRotation = targetRotation;
+            ctx.spriteRenderer.transform.localRotation = targetRotation;
         }
 
         protected void ApplyAccel(float dt, float acceleration, float deceleration, float maxV)
@@ -126,7 +129,7 @@ namespace Player.StateMachine
                 }
                 
 
-                Vector2 force = deltaV * ctx.rb.mass * ctx.rb.transform.right;
+                Vector2 force = deltaV * ctx.rb.mass * Vector2.right;
                 ctx.rb.AddForce(force, ForceMode2D.Impulse);
                 return;
             }
@@ -136,6 +139,8 @@ namespace Player.StateMachine
                 ctx.rb.linearVelocityX = 0f;
                 return;
             }
+
+            ApplyDecel(dt, deceleration);
         }
 
         protected void ApplyDecel(float dt, float deceleration)
@@ -159,7 +164,7 @@ namespace Player.StateMachine
                 absDeltaV = Mathf.Min(absDeltaV, Mathf.Abs(currentV));
                 deltaV = absDeltaV;
             }
-            Vector2 force = deltaV * ctx.rb.mass * ctx.rb.transform.right;
+            Vector2 force = deltaV * ctx.rb.mass * Vector2.right;
             ctx.rb.AddForce(force, ForceMode2D.Impulse);
         }
 
