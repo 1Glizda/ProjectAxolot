@@ -41,11 +41,16 @@ namespace Player.AI
         private float _climbDir; 
         private string _currentStateStr = "IDLE";
         private float _climbOvershootTimer;
+        private float _currentVelocityX; // For SmoothDamp
 
         // Stuck detection
         private Vector2 _lastPos;
         private float _stuckTimer;
         private float _logTimer;
+        
+        // Pathing
+        private Transform[] _currentPath;
+        private int _currentAnchorIndex;
 
         private void Awake()
         {
@@ -77,12 +82,14 @@ namespace Player.AI
         {
             if (newArea.anchorPoints != null && newArea.anchorPoints.Length > 0)
             {
-                target = newArea.anchorPoints[0];
-                DebugLog($"[SimpleAi] Area changed! New target: {target.name}");
+                _currentPath = newArea.anchorPoints;
+                _currentAnchorIndex = 0;
+                target = _currentPath[_currentAnchorIndex];
+                DebugLog($"[SimpleAi] Area changed! Path loaded with {_currentPath.Length} points. Next target: {target.name}");
             }
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (target == null)
             {
@@ -98,9 +105,18 @@ namespace Player.AI
             // --- Arrived ---
             if (toTarget.magnitude < arrivalDistance)
             {
+                // Sequence to the next anchor point if available
+                if (_currentPath != null && _currentAnchorIndex < _currentPath.Length - 1)
+                {
+                    _currentAnchorIndex++;
+                    target = _currentPath[_currentAnchorIndex];
+                    DebugLog($"[SimpleAi] Reached anchor {_currentAnchorIndex - 1}. Sequencing to next: {target.name}");
+                    return; // Skip halting this frame so it maintains momentum to the next point
+                }
+
                 SetState("ARRIVED");
-                // Snappy but smooth stop
-                _rb.linearVelocityX = Mathf.Lerp(_rb.linearVelocityX, 0f, 1f - Mathf.Exp(-20f * Time.deltaTime));
+                // Premium SmoothDamp stop
+                _rb.linearVelocityX = Mathf.SmoothDamp(_rb.linearVelocityX, 0f, ref _currentVelocityX, 0.15f);
                 if (_isClimbing) ExitClimb("Arrived at target");
                 return;
             }
@@ -158,18 +174,24 @@ namespace Player.AI
         {
             SetState($"MOVING (dir:{dirX})");
 
-            // --- Smooth, Snappy Movement (Exponential Decay Lerp) ---
+            // --- Premium SmoothDamp Movement ---
             float targetVelX = dirX * moveSpeed;
-            float currentVelX = _rb.linearVelocityX;
+            float currentVelX = _rb.linearVelocityX; // Re-added for anticipatory jump math
             
-            // Choose how snappy the transition is based on whether we are moving, stopping, grounded, or airborne
-            float lerpRate = 0f;
+            // Choose the spring smoothTime based on the environment
+            float smoothTime = 0f;
             if (_isGrounded)
-                lerpRate = Mathf.Abs(targetVelX) > 0.01f ? 15f : 20f; // Fast accel, even faster decel
+            {
+                // Snappy but beautifully smoothed on ground (slower smoothTime when stopping)
+                smoothTime = Mathf.Abs(targetVelX) > 0.01f ? 0.08f : 0.12f;
+            }
             else
-                lerpRate = 5f; // Floatier momentum in the air
+            {
+                // Floaty, realistic mid-air momentum
+                smoothTime = 0.35f; 
+            }
                 
-            _rb.linearVelocityX = Mathf.Lerp(currentVelX, targetVelX, 1f - Mathf.Exp(-lerpRate * Time.deltaTime));
+            _rb.linearVelocityX = Mathf.SmoothDamp(_rb.linearVelocityX, targetVelX, ref _currentVelocityX, smoothTime);
 
 
             // Jump logic
@@ -232,8 +254,15 @@ namespace Player.AI
 
         private void ExecuteJump()
         {
-            _rb.linearVelocityY = jumpForce;
-            _jumpCooldown = 0.5f; // slightly longer jump cooldown
+            // If we are already flying upwards extremely fast (e.g. from a bouncy shroom), 
+            // do NOT cap our velocity back down to a standard jump!
+            if (_rb.linearVelocityY < jumpForce * 1.5f)
+            {
+                // Only override if we're not currently rocket-jumping from a bounce pad
+                _rb.linearVelocityY = Mathf.Max(_rb.linearVelocityY, jumpForce);
+            }
+            
+            _jumpCooldown = 0.5f; 
             SetState("JUMPING");
         }
 
@@ -267,6 +296,7 @@ namespace Player.AI
                     // Vault: jump up and over
                     _rb.linearVelocityY = jumpForce * 0.6f;
                     _rb.linearVelocityX = _climbDir * moveSpeed;
+                    _currentVelocityX = _rb.linearVelocityX; // Pre-warm the dampener so it doesn't fight the vault
                     _jumpCooldown = 0.2f;
                     _climbOvershootTimer = 0f;
                     return;
