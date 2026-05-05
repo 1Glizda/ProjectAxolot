@@ -11,14 +11,9 @@ namespace Player.AI.Navigation
         [Tooltip("The patrol points within this area where the AI can navigate.")]
         public Transform[] anchorPoints;
 
-<<<<<<< Updated upstream
-        [SerializeField] List<AiPoint> points;
-        
-=======
         [Tooltip("When the player enters this zone, the AI will burrow-teleport to the first anchor point instead of walking.")]
         public bool teleportToNextZone;
 
->>>>>>> Stashed changes
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
