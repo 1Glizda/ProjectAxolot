@@ -42,6 +42,8 @@ namespace Player.StateMachine
                 ctx.swingHinge.enabled = false;
                 ctx.swingHinge.connectedBody = null;
 
+                ctx.stateProvider.NotifyJump();
+
                 Vector2 jumpDir = Vector2.up + (Vector2.right * horizontalInput);
                 jumpDir.Normalize();
                 ctx.rb.AddForce(jumpDir * (settings.VineJumpForce * ctx.rb.mass), ForceMode2D.Impulse);

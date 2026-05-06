@@ -10,14 +10,14 @@ namespace Player.StateMachine
 
         public override void EnterState()
         {
-            _pushable = ctx.controller.Pushable;
+            _pushable = ctx.stateProvider.Pushable;
         }
 
         public override void Tick(float dt)
         {
             base.Tick(dt);
 
-            if (_pushable == null || ctx.controller.Pushable == null)
+            if (_pushable == null || ctx.stateProvider.Pushable == null)
             {
                 stateMachine.ChangeState<PlayerIdleState>();
                 return;

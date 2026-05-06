@@ -54,16 +54,13 @@ namespace Player.StateMachine
                 return;
             }
 
-            if (ctx.controller.IsNearValidWall)
+            if (ctx.stateProvider.IsNearValidWall)
             {
-                bool canGrab = false;
+                bool canGrab = true;
                 if (stateMachine.WasDetached)
                 {
-                    canGrab = (_isCatchBuffered && _catchBuffer > 0f) || stateMachine.IsInJumpBuffer;
-                }
-                else
-                {
-                    canGrab = jumpAction.IsPressed() || stateMachine.IsInJumpBuffer;
+                    float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.stateProvider.WallHitNormal);
+                    canGrab = dot < 0f;
                 }
 
                 if (canGrab)

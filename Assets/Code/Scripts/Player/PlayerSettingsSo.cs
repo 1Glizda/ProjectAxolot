@@ -34,6 +34,7 @@ namespace Player
         public float WallAcceleration => _wallAcceleration;
         public float WallDeceleration => _wallDeceleration;
         public float MaxClimbSpeed => _maxClimbSpeed;
+        public float WallSlideSpeed => _wallSlideSpeed;
         public float WallDetachForce => _wallDetachForce;
         public float WallAttachGraceTime => _wallAttachGraceTime;
         
@@ -116,6 +117,8 @@ namespace Player
         [SerializeField] private float _wallDeceleration;
         
         [SerializeField] private float _maxClimbSpeed;
+        
+        [SerializeField] private float _wallSlideSpeed = 2f;
 
         [SerializeField] private float _wallDetachForce;
         

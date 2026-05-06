@@ -7,8 +7,14 @@ using UnityEngine.Serialization;
 namespace Player
 {
     //controls the StateMachine and talks to the engine
-    internal class PlayerController : MonoBehaviour, IPlayerController
+    internal class PlayerController : MonoBehaviour, IPlayerStateProvider
     {
+        public event System.Action OnJump;
+        public event System.Action OnStartClimb;
+        public bool IsClimbing => _isInClimbingState && VerticalVelocity > 0.1f;
+        public float VerticalVelocity => _rb.linearVelocityY;
+        public float HorizontalVelocity => _rb.linearVelocityX;
+
         public bool IsGrounded => _isGrounded;
         public bool IsInCoyoteTime => _isInCoyoteTime;
         public bool IsNearValidWall => _isNearValidWall;
@@ -25,13 +31,15 @@ namespace Player
         [Header("Debug")]
         [SerializeField] private bool _debugMode;
         
+        [Header("ToInitialize")]
+        [SerializeField] private AnimatorHelper _animatorHelper;
+        
         [Header("Context References")]
         [SerializeField] private PlayerCollisionHandler _collisionHandler;
         [SerializeField] private PlayerSettingsSo _settings;
         [FormerlySerializedAs("_inputManager")]
         [SerializeField] private PlayerInputHandler inputHandler;
-        [SerializeField] private Animator _animator;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private GameObject _spriteObject;
         [SerializeField] private Collider2D _bodyCollider;
         [SerializeField] private Collider2D _feetCollider;
         [SerializeField] private Rigidbody2D _rb;
@@ -41,6 +49,7 @@ namespace Player
         private PlayerContext _context;
 
         private bool _isGrounded;
+        private bool _isInClimbingState;
         private bool _isInCoyoteTime;
         
         private bool _isNearValidWall;
@@ -72,11 +81,10 @@ namespace Player
 
             _context = new PlayerContext(
                 inputHandler as IPlayerInputManager,
-                this as IPlayerController,
+                this as IPlayerStateProvider,
                 _collisionHandler,
                 _settings,
-                _animator,
-                _spriteRenderer,
+                _spriteObject,
                 _bodyCollider,
                 _feetCollider,
                 _rb,
@@ -87,7 +95,12 @@ namespace Player
             _stateMachine = new MovementStateMachine(_settings, _context);
             _groundHits = new RaycastHit2D[3];   
             
-            _stateMachine.onChangeState += type => Debug.Log(type, this);
+            _stateMachine.onChangeState += type => {
+                if (_debugMode) Debug.Log(type, this);
+                _isInClimbingState = type == typeof(PlayerClimbingState) || type == typeof(PlayerPrepareJumpState);
+            };
+            
+            _animatorHelper.Initialize(this);
         }
 
         private void Update()
@@ -105,6 +118,16 @@ namespace Player
             _stateMachine.FixedTick(dt);
         }
 
+        public void NotifyJump()
+        {
+            OnJump?.Invoke();
+        }
+
+        public void NotifyStartClimb()
+        {
+            OnStartClimb?.Invoke();
+        }
+
         private void CheckForPushable()
         {
             
@@ -117,11 +140,12 @@ namespace Player
             float distance = _settings.WallDetectionRange;
             LayerMask mask = _settings.WallLayers;
             
-            Vector2 dir = !_spriteRenderer.flipX ? Vector2.right : Vector2.left;
-            Vector2 centerOrigin = !_spriteRenderer.flipX ? _rightWallCheckOrigin : _leftWallCheckOrigin;
+            bool isFacingRight = Mathf.Abs(_spriteObject.transform.localEulerAngles.y) < 90f;
+            Vector2 dir = isFacingRight ? Vector2.right : Vector2.left;
+            Vector2 centerOrigin = isFacingRight ? _rightWallCheckOrigin : _leftWallCheckOrigin;
             
-            _baseWallCheckOrigin = new Vector2(!_spriteRenderer.flipX ? _bodyCollider.bounds.max.x : _bodyCollider.bounds.min.x, _bodyCollider.bounds.min.y);
-            Vector2 headOrigin = new Vector2(!_spriteRenderer.flipX ? _bodyCollider.bounds.max.x : _bodyCollider.bounds.min.x, _bodyCollider.bounds.max.y);
+            _baseWallCheckOrigin = new Vector2(isFacingRight ? _bodyCollider.bounds.max.x : _bodyCollider.bounds.min.x, _bodyCollider.bounds.min.y);
+            Vector2 headOrigin = new Vector2(isFacingRight ? _bodyCollider.bounds.max.x : _bodyCollider.bounds.min.x, _bodyCollider.bounds.max.y);
 
             _wallHit = Physics2D.Raycast(centerOrigin, dir, distance, mask);
             _isFootNearValidWall = Physics2D.Raycast(_baseWallCheckOrigin, dir, distance, mask).collider;
@@ -160,14 +184,7 @@ namespace Player
             }
             if (_debugMode) Debug.DrawRay(headOrigin, dir * distance, headHit.collider ? Color.cyan : Color.yellow);
 
-            // check for pushable
-            _pushable = null;
-            if (_isFootNearValidWall && _wallHit.collider && _wallHit.collider.gameObject.layer == _pushableLayerIndex)
-            {
-                _pushable = _wallHit.collider.GetComponent<IPushable>();
-            }
-            _isFootNearPushable = _pushable != null; 
-
+            
             if (_debugMode)
             {
                 Debug.DrawRay(centerOrigin, dir * distance, _wallHit.collider ? Color.green : Color.red);
@@ -176,6 +193,24 @@ namespace Player
             
             _isNearValidWall = _wallHit.collider;
             _wallHitNormal = _wallHit.normal;
+            
+            // TODO check for pushable
+            /*
+            _pushable = null;
+            if (_isFootNearValidWall && _wallHit.collider && _wallHit.collider.gameObject.layer == _pushableLayerIndex)
+            {
+                _pushable = _wallHit.collider.GetComponent<IPushable>();
+            }
+            _isFootNearPushable = _pushable != null; 
+            */
+
+            _baseWallCheckOrigin.y += 0.1f;
+            _pushable = null;
+            Debug.DrawRay(_baseWallCheckOrigin, dir * distance, Color.blue);
+            RaycastHit2D pushableHit = Physics2D.Raycast(_baseWallCheckOrigin, dir, distance, LayerMask.GetMask("Movable"));
+            if(pushableHit.collider) _pushable = pushableHit.transform.GetComponent<IPushable>();
+            _isFootNearPushable = _pushable != null;
+
         }
         
         private void CheckGrounded()

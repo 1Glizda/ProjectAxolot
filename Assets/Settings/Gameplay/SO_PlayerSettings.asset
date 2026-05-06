@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerSettingsSo
   _groundedAcceleration: 60
   _groundedDeceleration: 100
-  _jumpAcceleration: 30
+  _jumpAcceleration: 60
   _jumpDeceleration: 0
   _maxHorizontalVelocity: 6
   _terminalVerticalVelocity: -35
@@ -44,14 +44,14 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _jumpInitialGravity: 5
-  _fallingGravity: 25
+  _fallingGravity: 10
   _standstillThreshold: 0.02
-  _initialJumpForce: 5
+  _initialJumpForce: 2
   _jumpRunningMaxAngle: 15
-  _jumpHoldAccel: 5
+  _jumpHoldAccel: 10
   _maxJumpTime: 0.3
   _minJumpTime: 0
-  _jumpBufferTime: 0.3
+  _jumpBufferTime: 0.2
   _groundLayers:
     serializedVersion: 2
     m_Bits: 35840
@@ -62,13 +62,14 @@ MonoBehaviour:
   _wallDetectionRange: 0.1
   _wallLayers:
     serializedVersion: 2
-    m_Bits: 35840
+    m_Bits: 32768
   _wallAcceleration: 200
   _wallDeceleration: 200
   _maxClimbSpeed: 6
+  _wallSlideSpeed: 1
   _wallDetachForce: 2
   _wallAttachGraceTime: 0.15
-  _wallJumpForce: 10
+  _wallJumpForce: 5
   _wallJumpAngle: 60
   _vaultDuration: 0.3
   _swingAcceleration: 25

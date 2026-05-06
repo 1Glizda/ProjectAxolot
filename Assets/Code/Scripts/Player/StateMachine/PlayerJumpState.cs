@@ -13,12 +13,16 @@ namespace Player.StateMachine
         
         public override void EnterState()
         {
+            UpdateInput();
             _timer = 0f;
+            _spaceReleased = false;
             ctx.rb.linearVelocityY = 0f;
+            
+            ctx.stateProvider.NotifyJump();
 
             Vector2 dir = Vector2.up;
             
-            if (!ctx.controller.IsNearValidWall)
+            if (!ctx.stateProvider.IsNearValidWall)
             {
                 float lAngle = ( 90f + settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
                 float rAngle = (90f - settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
@@ -55,7 +59,7 @@ namespace Player.StateMachine
                 return;
             }
 
-            if (ctx.controller.IsNearValidWall)
+            if (ctx.stateProvider.IsNearValidWall)
             {
                 stateMachine.ChangeState<PlayerClimbingState>();
                 return;
@@ -66,14 +70,12 @@ namespace Player.StateMachine
         public override void FixedTick(float dt)
         {
             ApplyAccel(dt, settings.JumpAcceleration, settings.JumpDeceleration, settings.MaxHorizontalVelocity);
-            
-            if(horizontalInput == 0f) ApplyDecel(dt, settings.JumpDeceleration);
 
             if (_timer <= settings.MinJumpTime || 
-                _timer <= settings.MaxJumpTime && !jumpAction.IsPressed() && !_spaceReleased)
+                (_timer <= settings.MaxJumpTime && jumpAction.IsPressed() && !_spaceReleased))
             {
-                float accel = settings.JumpHoldAccel * dt * ctx.rb.mass;
-                ctx.rb.AddForce(Vector2.up * accel, ForceMode2D.Impulse);
+                float force = settings.JumpHoldAccel * ctx.rb.mass;
+                ctx.rb.AddForce(Vector2.up * force, ForceMode2D.Force);
             }
             
             
