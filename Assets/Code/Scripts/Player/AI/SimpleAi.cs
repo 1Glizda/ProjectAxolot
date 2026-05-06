@@ -23,6 +23,7 @@ namespace Player.AI
         [Header("References")]
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private Collider2D bodyCollider;
+        [SerializeField] private AiBurrowController burrowController;
 
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
@@ -68,6 +69,10 @@ namespace Player.AI
             {
                 AiManager.Instance.OnAreaChanged += HandleAreaChanged;
             }
+            if (burrowController != null)
+            {
+                burrowController.OnBurrowComplete += HandleBurrowComplete;
+            }
         }
 
         private void OnDestroy()
@@ -76,21 +81,52 @@ namespace Player.AI
             {
                 AiManager.Instance.OnAreaChanged -= HandleAreaChanged;
             }
+            if (burrowController != null)
+            {
+                burrowController.OnBurrowComplete -= HandleBurrowComplete;
+            }
         }
 
         private void HandleAreaChanged(AiArea newArea)
         {
-            if (newArea.anchorPoints != null && newArea.anchorPoints.Length > 0)
+            if (newArea.anchorPoints == null || newArea.anchorPoints.Length == 0) return;
+
+            _currentPath = newArea.anchorPoints;
+            _currentAnchorIndex = 0;
+            target = _currentPath[_currentAnchorIndex];
+
+            // If the zone is marked for teleport, burrow instead of walking
+            if (newArea.teleportToNextZone && burrowController != null)
             {
-                _currentPath = newArea.anchorPoints;
-                _currentAnchorIndex = 0;
-                target = _currentPath[_currentAnchorIndex];
-                DebugLog($"[SimpleAi] Area changed! Path loaded with {_currentPath.Length} points. Next target: {target.name}");
+                DebugLog($"[SimpleAi] Teleport zone! Burrowing to {target.name}");
+                burrowController.StartBurrow(target.position);
+                return;
             }
+
+            DebugLog($"[SimpleAi] Area changed! Path loaded with {_currentPath.Length} points. Next target: {target.name}");
+        }
+
+        private void HandleBurrowComplete()
+        {
+            DebugLog($"[SimpleAi] Burrow complete. Resuming movement.");
+            // Advance to next anchor if available, otherwise stay at current
+            if (_currentPath != null && _currentAnchorIndex < _currentPath.Length - 1)
+            {
+                _currentAnchorIndex++;
+                target = _currentPath[_currentAnchorIndex];
+            }
+            _stuckTimer = 0f;
         }
 
         private void FixedUpdate()
         {
+            // Lock out all movement while the AI is burrowing
+            if (burrowController != null && burrowController.IsBurrowing)
+            {
+                SetState("BURROWING");
+                return;
+            }
+
             if (target == null)
             {
                 SetState("NO TARGET");
