@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fbd2a31b9e68e8f42b1eab1bd861cd4d
+guid: 375572426af44794b89cccb3702e632a
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -83,7 +83,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: c8535b44ff5f87744b74dfb792b0a19a
+    spriteID: be416063b3c455341b46f4e99d4cd582
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -95,7 +95,29 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: King_Shroom_Bent_Spore
+  - name: Layer 37
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 169
+      width: 38
+      height: 24
+    spriteID: 492b6d3208406274c818b0f6245ac4be
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 169}
+    spritePosition: {x: 71, y: 127}
+  - name: Layer 36
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -105,9 +127,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 747
-      height: 432
-    spriteID: 0226bd74e0abb2b4595fae3a73b5920c
+      width: 180
+      height: 157
+    spriteID: 3b3a2d5a286b5654b8dba29a5ceb4c39
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -164,11 +186,31 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
-  - name: King_Shroom_Bent_Spore
-    spriteName: King_Shroom_Bent_Spore
+  - name: Layer 38
+    spriteName: 
     isGroup: 0
     parentIndex: -1
-    spriteID: 0226bd74e0abb2b4595fae3a73b5920c
+    spriteID: 5b307e1f9b0ead447b31674187d5e814
+    layerID: 3
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 0
+  - name: Layer 37
+    spriteName: Layer 37
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 492b6d3208406274c818b0f6245ac4be
+    layerID: 2
+    mosaicPosition: {x: 4, y: 169}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Layer 36
+    spriteName: Layer 36
+    isGroup: 0
+    parentIndex: -1
+    spriteID: 3b3a2d5a286b5654b8dba29a5ceb4c39
     layerID: 1
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
