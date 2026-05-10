@@ -109,20 +109,20 @@ ScriptedImporter:
       height: 133
     spriteID: 42845f79a43ecef4db38286b141bca70
     spriteBone:
-    - name: bone_5
+    - name: BONE_Lilly_Bent_Flower_Behind
       guid: 75f855f740d506b4a96e62e549789895
       position: {x: 83.502686, y: -5.4486694, z: 0}
       rotation: {x: 0, y: 0, z: 0.8178443, w: 0.57543963}
-      length: 35.935482
+      length: 35.935486
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4294901760
-    - name: bone_6
+    - name: BONE_Lilly_Bent_Flower_Pistil
       guid: e4d0fe481694dad4796821a0da12ffe5
       position: {x: 35.935497, y: -0.000086430555, z: 0}
-      rotation: {x: 0, y: 0, z: -0.10376717, w: 0.99460167}
-      length: 104.08276
+      rotation: {x: 0, y: 0, z: -0.10376716, w: 0.9946016}
+      length: 104.08277
       parentId: 0
       color:
         serializedVersion: 2
@@ -562,7 +562,7 @@ ScriptedImporter:
     - position: {x: 44.591, y: 39.531}
       boneWeight:
         weight0: 0.53999996
-        weight1: 0.46
+        weight1: 0.46000004
         weight2: 0
         weight3: 0
         boneIndex0: 0
@@ -1332,7 +1332,7 @@ ScriptedImporter:
     - position: {x: 3, y: 21.161999}
       boneWeight:
         weight0: 0.53999996
-        weight1: 0.46
+        weight1: 0.46000004
         weight2: 0
         weight3: 0
         boneIndex0: 0
@@ -1342,7 +1342,7 @@ ScriptedImporter:
     - position: {x: 7.240998, y: 17.841}
       boneWeight:
         weight0: 0.53999996
-        weight1: 0.46
+        weight1: 0.46000004
         weight2: 0
         weight3: 0
         boneIndex0: 0
@@ -1382,7 +1382,7 @@ ScriptedImporter:
     - position: {x: 9.07, y: 17.023998}
       boneWeight:
         weight0: 0.53999996
-        weight1: 0.46
+        weight1: 0.46000004
         weight2: 0
         weight3: 0
         boneIndex0: 0
@@ -1570,19 +1570,19 @@ ScriptedImporter:
       height: 43
     spriteID: 2c7e6243c30aff24a89159c4f125eeba
     spriteBone:
-    - name: bone_3
+    - name: BONE_Lilly_Bent_Stem_High
       guid: 4c577fbb612b60f459300712b42a1041
       position: {x: 43.47972, y: -59.308777, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7124174, w: 0.701756}
-      length: 83.45804
+      rotation: {x: 0, y: 0, z: 0.71241754, w: 0.7017559}
+      length: 83.458046
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4278255360
-    - name: bone_4
+    - name: BONE_Lilly_Bent_Flower_Inner
       guid: b50ff731eac3c98439e4cc772ea43a43
-      position: {x: 83.45807, y: 0.0000091602615, z: 0}
-      rotation: {x: 0, y: 0, z: 0.17847437, w: 0.98394454}
+      position: {x: 83.45805, y: -0.000034995435, z: 0}
+      rotation: {x: 0, y: 0, z: 0.1784742, w: 0.9839446}
       length: 34.81771
       parentId: 0
       color:
@@ -1896,36 +1896,36 @@ ScriptedImporter:
       height: 82
     spriteID: fb50b0ee21af72d4d9c77dccc545e3cf
     spriteBone:
-    - name: bone_4
+    - name: BONE_Lilly_Bent_Flower_Inner
       guid: b50ff731eac3c98439e4cc772ea43a43
-      position: {x: 83.458046, y: 0.000033238804, z: 0}
-      rotation: {x: 0, y: 0, z: 0.17847438, w: 0.9839446}
+      position: {x: 83.458046, y: -0.00003761804, z: 0}
+      rotation: {x: 0, y: 0, z: 0.17847417, w: 0.98394465}
       length: 34.81771
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4294967040
-    - name: bone_3
+    - name: BONE_Lilly_Bent_Stem_High
       guid: 4c577fbb612b60f459300712b42a1041
       position: {x: 99.47972, y: -70.30876, z: 0}
-      rotation: {x: 0, y: 0, z: 0.7124174, w: 0.701756}
-      length: 83.45804
+      rotation: {x: 0, y: 0, z: 0.71241754, w: 0.7017559}
+      length: 83.458046
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4278255360
-    - name: bone_5
+    - name: BONE_Lilly_Bent_Flower_Behind
       guid: 75f855f740d506b4a96e62e549789895
-      position: {x: 34.817707, y: -0.00003034425, z: 0}
-      rotation: {x: 0, y: 0, z: -0.014717427, w: 0.9998917}
+      position: {x: 34.817726, y: 0.000034990506, z: 0}
+      rotation: {x: 0, y: 0, z: -0.014717373, w: 0.9998917}
       length: 35.935486
       parentId: 0
       color:
         serializedVersion: 2
         rgba: 4294901760
-    - name: bone_6
+    - name: BONE_Lilly_Bent_Flower_Pistil
       guid: e4d0fe481694dad4796821a0da12ffe5
-      position: {x: 35.935474, y: -0.000087645014, z: 0}
+      position: {x: 35.935482, y: -0.00009552401, z: 0}
       rotation: {x: 0, y: 0, z: -0.10376719, w: 0.99460167}
       length: 104.08277
       parentId: 2
@@ -2295,29 +2295,29 @@ ScriptedImporter:
       height: 75
     spriteID: 2d55347d2fb6079498a1603f41c36474
     spriteBone:
-    - name: bone_4
+    - name: BONE_Lilly_Bent_Flower_Inner
       guid: b50ff731eac3c98439e4cc772ea43a43
-      position: {x: 93.221405, y: -7.860199, z: 0}
+      position: {x: 93.221436, y: -7.860199, z: 0}
       rotation: {x: 0, y: 0, z: 0.82622474, w: 0.5633408}
       length: 34.817703
       parentId: -1
       color:
         serializedVersion: 2
         rgba: 4294967040
-    - name: bone_6
+    - name: BONE_Lilly_Bent_Flower_Pistil
       guid: e4d0fe481694dad4796821a0da12ffe5
-      position: {x: 35.935455, y: -0.00009924634, z: 0}
-      rotation: {x: 0, y: 0, z: -0.10376719, w: 0.99460167}
-      length: 104.08274
+      position: {x: 35.93547, y: -0.00007388224, z: 0}
+      rotation: {x: 0, y: 0, z: -0.103767194, w: 0.9946016}
+      length: 104.08275
       parentId: 2
       color:
         serializedVersion: 2
         rgba: 4294902015
-    - name: bone_5
+    - name: BONE_Lilly_Bent_Flower_Behind
       guid: 75f855f740d506b4a96e62e549789895
-      position: {x: 34.81771, y: 0.0000004573467, z: 0}
+      position: {x: 34.81773, y: 0.000030974923, z: 0}
       rotation: {x: 0, y: 0, z: -0.014717408, w: 0.9998917}
-      length: 35.935474
+      length: 35.93548
       parentId: 0
       color:
         serializedVersion: 2
@@ -2718,16 +2718,16 @@ ScriptedImporter:
       height: 173
     spriteID: 0e14c7d9e40ac304ea81d2dd1152ecdc
     spriteBone:
-    - name: bone_3
+    - name: BONE_Lilly_Bent_Stem_High
       guid: 4c577fbb612b60f459300712b42a1041
       position: {x: 112.11868, y: 0.000011324655, z: 0}
-      rotation: {x: 0, y: 0, z: 0.46975, w: 0.88279957}
-      length: 83.45804
+      rotation: {x: 0, y: 0, z: 0.4697501, w: 0.8827995}
+      length: 83.45806
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4278255360
-    - name: bone_2
+    - name: BONE_Lilly_Bent_Stem_Low
       guid: d75102b855c98834991b6c1768d8d163
       position: {x: 99.129906, y: -0.000020063442, z: 0}
       rotation: {x: 0, y: 0, z: -0.3653817, w: 0.93085784}
@@ -2736,7 +2736,7 @@ ScriptedImporter:
       color:
         serializedVersion: 2
         rgba: 4278255615
-    - name: bone_1
+    - name: BONE_Lilly_Bent_root
       guid: 4259a7b929a936e42ac61a1cf288dc02
       position: {x: 48.30979, y: -47.19171, z: 0}
       rotation: {x: 0, y: 0, z: 0.627215, w: 0.77884614}
@@ -3339,7 +3339,7 @@ ScriptedImporter:
       height: 237
     spriteID: 21d6e1b1ce3493e4a9cecc8f86285fea
     spriteBone:
-    - name: bone_1
+    - name: BONE_Lilly_Bent_root
       guid: 4259a7b929a936e42ac61a1cf288dc02
       position: {x: 5.3097916, y: -0.19171143, z: 0}
       rotation: {x: 0, y: 0, z: 0.627215, w: 0.77884614}
@@ -3348,7 +3348,7 @@ ScriptedImporter:
       color:
         serializedVersion: 2
         rgba: 4278190335
-    - name: bone_2
+    - name: BONE_Lilly_Bent_Stem_Low
       guid: d75102b855c98834991b6c1768d8d163
       position: {x: 99.12991, y: -0.000021336302, z: 0}
       rotation: {x: 0, y: 0, z: -0.3653817, w: 0.93085784}
@@ -3357,11 +3357,11 @@ ScriptedImporter:
       color:
         serializedVersion: 2
         rgba: 4278255615
-    - name: bone_3
+    - name: BONE_Lilly_Bent_Stem_High
       guid: 4c577fbb612b60f459300712b42a1041
       position: {x: 112.118675, y: -0.000004538728, z: 0}
-      rotation: {x: 0, y: 0, z: 0.46975, w: 0.88279957}
-      length: 83.45804
+      rotation: {x: 0, y: 0, z: 0.46975014, w: 0.8827995}
+      length: 83.45806
       parentId: 1
       color:
         serializedVersion: 2
@@ -3695,7 +3695,7 @@ ScriptedImporter:
     boneReadOnly: 0
   characterData:
     bones:
-    - name: bone_1
+    - name: BONE_Lilly_Bent_root
       guid: 4259a7b929a936e42ac61a1cf288dc02
       position: {x: 68.30979, y: 18.808289, z: 0}
       rotation: {x: 0, y: 0, z: 0.627215, w: 0.77884614}
@@ -3704,7 +3704,7 @@ ScriptedImporter:
       color:
         serializedVersion: 2
         rgba: 4278190335
-    - name: bone_2
+    - name: BONE_Lilly_Bent_Stem_Low
       guid: d75102b855c98834991b6c1768d8d163
       position: {x: 99.1299, y: -0.000018283943, z: 0}
       rotation: {x: 0, y: 0, z: -0.3653817, w: 0.93085784}
@@ -3713,37 +3713,37 @@ ScriptedImporter:
       color:
         serializedVersion: 2
         rgba: 4278255615
-    - name: bone_3
+    - name: BONE_Lilly_Bent_Stem_High
       guid: 4c577fbb612b60f459300712b42a1041
       position: {x: 112.11868, y: 0.000014900934, z: 0}
-      rotation: {x: 0, y: 0, z: 0.46974996, w: 0.8827995}
+      rotation: {x: 0, y: 0, z: 0.46975008, w: 0.88279945}
       length: 83.45805
       parentId: 1
       color:
         serializedVersion: 2
         rgba: 4278255360
-    - name: bone_4
+    - name: BONE_Lilly_Bent_Flower_Inner
       guid: b50ff731eac3c98439e4cc772ea43a43
-      position: {x: 83.458046, y: 0.000009005918, z: 0}
-      rotation: {x: 0, y: 0, z: 0.17847443, w: 0.9839446}
-      length: 34.817715
+      position: {x: 83.458046, y: -0.000018950923, z: 0}
+      rotation: {x: 0, y: 0, z: 0.17847425, w: 0.9839446}
+      length: 34.81771
       parentId: 2
       color:
         serializedVersion: 2
         rgba: 4294967040
-    - name: bone_5
+    - name: BONE_Lilly_Bent_Flower_Behind
       guid: 75f855f740d506b4a96e62e549789895
-      position: {x: 34.81771, y: -0.000009706046, z: 0}
+      position: {x: 34.817715, y: 0.000011322133, z: 0}
       rotation: {x: 0, y: 0, z: -0.0147174485, w: 0.9998917}
       length: 35.93549
       parentId: 3
       color:
         serializedVersion: 2
         rgba: 4294901760
-    - name: bone_6
+    - name: BONE_Lilly_Bent_Flower_Pistil
       guid: e4d0fe481694dad4796821a0da12ffe5
-      position: {x: 35.935497, y: -0.00006963962, z: 0}
-      rotation: {x: 0, y: 0, z: -0.103767216, w: 0.99460167}
+      position: {x: 35.93549, y: -0.000077048, z: 0}
+      rotation: {x: 0, y: 0, z: -0.10376714, w: 0.99460167}
       length: 104.08278
       parentId: 4
       color:
