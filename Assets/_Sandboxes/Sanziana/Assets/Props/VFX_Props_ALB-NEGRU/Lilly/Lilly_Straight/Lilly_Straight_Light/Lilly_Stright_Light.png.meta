@@ -1,28 +1,25 @@
 fileFormatVersion: 2
-guid: f9645716f9ad1db41be944b4b64d8855
+guid: 64535c66710beba41940cd4e2a3ce245
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1177769221349114398
-    second: Lilly_Bent_Light_0
+      213: 8412362562889071384
+    second: Lilly_Stright_Light_0
   - first:
-      213: 524588073854854269
-    second: Lilly_Bent_Light_1
+      213: -3784939656068595809
+    second: Lilly_Stright_Light_1
   - first:
-      213: -2118251002897633747
-    second: Lilly_Bent_Light_2
+      213: -1887904789400943408
+    second: Lilly_Stright_Light_2
   - first:
-      213: -2248308388893686974
-    second: Lilly_Bent_Light_3
+      213: -7001270877265782142
+    second: Lilly_Stright_Light_3
   - first:
-      213: -7808081505157747350
-    second: Lilly_Bent_Light_4
+      213: -5368953458032204636
+    second: Lilly_Stright_Light_4
   - first:
-      213: -2186936099279447497
-    second: Lilly_Bent_Light_5
-  - first:
-      213: -790508764457348372
-    second: Lilly_Bent_Light_6
+      213: -557166184365780242
+    second: Lilly_Stright_Light_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -118,145 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lilly_Bent_Light_0
-      rect:
-        serializedVersion: 2
-        x: 27
-        y: 9
-        width: 37
-        height: 79
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2edf81e1229b7afe0800000000000000
-      internalID: -1177769221349114398
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lilly_Bent_Light_1
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 86
-        width: 20
-        height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d746683e216b74700800000000000000
-      internalID: 524588073854854269
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lilly_Bent_Light_2
-      rect:
-        serializedVersion: 2
-        x: 54
-        y: 27
-        width: 64
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d2eeb239fe57a92e0800000000000000
-      internalID: -2118251002897633747
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lilly_Bent_Light_3
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 87
-        width: 16
-        height: 38
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 243067eae676cc0e0800000000000000
-      internalID: -2248308388893686974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lilly_Bent_Light_4
-      rect:
-        serializedVersion: 2
-        x: 112
-        y: 86
-        width: 12
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a6d66c37d3f14a390800000000000000
-      internalID: -7808081505157747350
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lilly_Bent_Light_5
-      rect:
-        serializedVersion: 2
-        x: 115
-        y: 27
-        width: 37
-        height: 61
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 73a58ff543176a1e0800000000000000
-      internalID: -2186936099279447497
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lilly_Bent_Light_6
+      name: Lilly_Stright_Light_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 27
-        height: 36
+        width: 65
+        height: 100
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,8 +130,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce2dfae877c8705f0800000000000000
-      internalID: -790508764457348372
+      spriteID: 81b3cca2e27beb470800000000000000
+      internalID: 8412362562889071384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lilly_Stright_Light_1
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 70
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9ffdbfaf61397bc0800000000000000
+      internalID: -3784939656068595809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lilly_Stright_Light_2
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 4
+        width: 24
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d48ff9b890dcc5e0800000000000000
+      internalID: -1887904789400943408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lilly_Stright_Light_3
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 1
+        width: 25
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28a19404b3d76de90800000000000000
+      internalID: -7001270877265782142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lilly_Stright_Light_4
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 0
+        width: 37
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a4a26e9645ad75b0800000000000000
+      internalID: -5368953458032204636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lilly_Stright_Light_5
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 8
+        width: 25
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee2940cae4c8448f0800000000000000
+      internalID: -557166184365780242
       vertices: []
       indices: 
       edges: []
@@ -285,13 +260,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Lilly_Bent_Light_0: -1177769221349114398
-      Lilly_Bent_Light_1: 524588073854854269
-      Lilly_Bent_Light_2: -2118251002897633747
-      Lilly_Bent_Light_3: -2248308388893686974
-      Lilly_Bent_Light_4: -7808081505157747350
-      Lilly_Bent_Light_5: -2186936099279447497
-      Lilly_Bent_Light_6: -790508764457348372
+      Lilly_Stright_Light_0: 8412362562889071384
+      Lilly_Stright_Light_1: -3784939656068595809
+      Lilly_Stright_Light_2: -1887904789400943408
+      Lilly_Stright_Light_3: -7001270877265782142
+      Lilly_Stright_Light_4: -5368953458032204636
+      Lilly_Stright_Light_5: -557166184365780242
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

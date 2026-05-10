@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ffe3ae6df7ae8934ea1cdb3547a4a9ca
+guid: ff9e1a703d6143a43a885b737bbe2ee9
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -11,7 +11,7 @@ ScriptedImporter:
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapsPreserveCoverage: 0
@@ -50,7 +50,7 @@ ScriptedImporter:
     flipbookColumns: 0
     ignorePngGamma: 0
     cookieMode: 0
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -83,7 +83,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: 1f5edb023268ff74d8b6d7e4af928455
+    spriteID: fcdfc5e41057eff4d875ce5757cf3c2d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -95,7 +95,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: Layer 15
+  - name: Lilly_Curvy_Flower_Outter
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -103,55 +103,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 819
-      width: 225
-      height: 142
-    spriteID: b017f4669f685c64eb4c89d14938dadf
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: -14, y: 433}
-    spritePosition: {x: 18, y: 386}
-  - name: Layer 13
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 4
-      width: 268
-      height: 430
-    spriteID: af22be0ef160bae49bcf596b9e8b2f69
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: -13, y: -21}
-    spritePosition: {x: 17, y: 25}
-  - name: Layer 17
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 280
-      y: 560
+      x: 227
+      y: 715
       width: 171
       height: 78
-    spriteID: b8fa17bbc78fda645950a1bc7cb9cc24
+    spriteID: c6adbbba1435ec24188ca8e1b5d2eb7a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -159,9 +115,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 198, y: 273}
+    uvTransform: {x: 227, y: 715}
     spritePosition: {x: 82, y: 287}
-  - name: Layer 19
+  - name: Lilly_Curvy_Leaves
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -170,10 +126,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 442
+      y: 4
       width: 215
       height: 214
-    spriteID: ba98b3bccb74e75488c3a9c9f2773633
+    spriteID: 983a59e4ef94d0a42ab4d90586c3d036
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -181,9 +137,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: -25, y: 404}
+    uvTransform: {x: 4, y: 4}
     spritePosition: {x: 29, y: 38}
-  - name: Layer 18
+  - name: Lilly_Curvy_Stem
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -191,11 +147,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 280
-      y: 154
+      x: 227
+      y: 309
       width: 112
       height: 275
-    spriteID: e765e64b945e01445b90448de191c6f5
+    spriteID: dbce887149fe95f4285f9929df630c79
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -203,9 +159,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 206, y: 129}
+    uvTransform: {x: 227, y: 309}
     spritePosition: {x: 74, y: 25}
-  - name: Layer 15
+  - name: Lilly_Curvy_Flower_Pistil
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -213,11 +169,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 280
-      y: 4
+      x: 227
+      y: 159
       width: 225
       height: 142
-    spriteID: a46083ad4e42bba489bdc87c62d8f5b9
+    spriteID: 31ed3caff32f8ac4dbd9b2efa28aeb25
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -225,9 +181,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 262, y: -382}
+    uvTransform: {x: 227, y: 159}
     spritePosition: {x: 18, y: 386}
-  - name: Layer 14
+  - name: Lilly_Curvy_Flower_Close
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -235,11 +191,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 664
+      x: 227
+      y: 4
       width: 268
       height: 147
-    spriteID: 19e6081e2631e584495badc95a1b657d
+    spriteID: 52bd0779175b3d1459b327c6246a093a
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -247,9 +203,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: -13, y: 356}
+    uvTransform: {x: 227, y: 4}
     spritePosition: {x: 17, y: 308}
-  - name: Layer 13
+  - name: Lilly_Curvy_Flower_Behind
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -257,11 +213,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 280
-      y: 437
+      x: 227
+      y: 592
       width: 206
       height: 115
-    spriteID: e59c912da8c630047a81a6e678667e20
+    spriteID: ad3e2c5a9f590f44283d1156a7dc5d3d
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -269,7 +225,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 229, y: 105}
+    uvTransform: {x: 227, y: 592}
     spritePosition: {x: 51, y: 332}
   spriteImportData: []
   rigSpriteImportData: []
@@ -289,7 +245,31 @@ ScriptedImporter:
     characterGroups: []
     pivot: {x: 0, y: 0}
     boneReadOnly: 0
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
@@ -318,121 +298,81 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
-  - name: New group
+  - name: Lilly_Curvy_Color
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 2be3cab53ad867f41b6ef3f81f4ca5c1
-    layerID: 13
+    spriteID: 813e58083a91dd840a976bbbbbbbde66
+    layerID: 8
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
     isVisible: 1
-  - name: Layer 15
-    spriteName: Layer 15
+  - name: Lilly_Curvy_Flower_Outter
+    spriteName: Lilly_Curvy_Flower_Outter
     isGroup: 0
     parentIndex: 0
-    spriteID: b017f4669f685c64eb4c89d14938dadf
-    layerID: 12
-    mosaicPosition: {x: 4, y: 819}
+    spriteID: c6adbbba1435ec24188ca8e1b5d2eb7a
+    layerID: 7
+    mosaicPosition: {x: 227, y: 715}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Layer 13
-    spriteName: Layer 13
+  - name: Lilly_Curvy_Leaves
+    spriteName: Lilly_Curvy_Leaves
     isGroup: 0
     parentIndex: 0
-    spriteID: af22be0ef160bae49bcf596b9e8b2f69
-    layerID: 11
+    spriteID: 983a59e4ef94d0a42ab4d90586c3d036
+    layerID: 6
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: New group
-    spriteName: 
-    isGroup: 1
-    parentIndex: -1
-    spriteID: 448cb199f28ef0546a2f243655a7fa54
-    layerID: 9
-    mosaicPosition: {x: 0, y: 0}
-    flatten: 0
-    isImported: 0
-    isVisible: 1
-  - name: Layer 17
-    spriteName: Layer 17
+  - name: Lilly_Curvy_Stem
+    spriteName: Lilly_Curvy_Stem
     isGroup: 0
-    parentIndex: 3
-    spriteID: b8fa17bbc78fda645950a1bc7cb9cc24
-    layerID: 8
-    mosaicPosition: {x: 280, y: 560}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Layer 19
-    spriteName: Layer 19
-    isGroup: 0
-    parentIndex: 3
-    spriteID: ba98b3bccb74e75488c3a9c9f2773633
-    layerID: 7
-    mosaicPosition: {x: 4, y: 442}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Layer 18
-    spriteName: Layer 18
-    isGroup: 0
-    parentIndex: 3
-    spriteID: e765e64b945e01445b90448de191c6f5
-    layerID: 6
-    mosaicPosition: {x: 280, y: 154}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Layer 15
-    spriteName: Layer 15
-    isGroup: 0
-    parentIndex: 3
-    spriteID: a46083ad4e42bba489bdc87c62d8f5b9
+    parentIndex: 0
+    spriteID: dbce887149fe95f4285f9929df630c79
     layerID: 5
-    mosaicPosition: {x: 280, y: 4}
+    mosaicPosition: {x: 227, y: 309}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Layer 14
-    spriteName: Layer 14
+  - name: Lilly_Curvy_Flower_Pistil
+    spriteName: Lilly_Curvy_Flower_Pistil
     isGroup: 0
-    parentIndex: 3
-    spriteID: 19e6081e2631e584495badc95a1b657d
+    parentIndex: 0
+    spriteID: 31ed3caff32f8ac4dbd9b2efa28aeb25
     layerID: 4
-    mosaicPosition: {x: 4, y: 664}
+    mosaicPosition: {x: 227, y: 159}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Layer 13
-    spriteName: Layer 13
+  - name: Lilly_Curvy_Flower_Close
+    spriteName: Lilly_Curvy_Flower_Close
     isGroup: 0
-    parentIndex: 3
-    spriteID: e59c912da8c630047a81a6e678667e20
+    parentIndex: 0
+    spriteID: 52bd0779175b3d1459b327c6246a093a
     layerID: 3
-    mosaicPosition: {x: 280, y: 437}
+    mosaicPosition: {x: 227, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Background
-    spriteName: 
+  - name: Lilly_Curvy_Flower_Behind
+    spriteName: Lilly_Curvy_Flower_Behind
     isGroup: 0
-    parentIndex: -1
-    spriteID: 4da4c98de2f9203448985a28004c38a4
-    layerID: 1
-    mosaicPosition: {x: 0, y: 0}
+    parentIndex: 0
+    spriteID: ad3e2c5a9f590f44283d1156a7dc5d3d
+    layerID: 2
+    mosaicPosition: {x: 227, y: 592}
     flatten: 0
-    isImported: 0
-    isVisible: 0
+    isImported: 1
+    isVisible: 1
   mosaicPSDLayers: []
   rigPSDLayers: []
   sharedRigPSDLayers: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 639140288686654746
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 

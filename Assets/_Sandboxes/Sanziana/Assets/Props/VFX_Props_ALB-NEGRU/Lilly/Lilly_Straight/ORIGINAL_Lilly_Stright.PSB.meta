@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 27d5e8b769818b1448a940511cb12664
+guid: 831070a2f25c2464cb8f82fa68ccbc3c
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -11,7 +11,7 @@ ScriptedImporter:
   textureImporterSettings:
     alphaSource: 1
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapsPreserveCoverage: 0
@@ -50,7 +50,7 @@ ScriptedImporter:
     flipbookColumns: 0
     ignorePngGamma: 0
     cookieMode: 0
-    filterMode: 1
+    filterMode: 2
     aniso: 1
     mipBias: 0
     wrapU: 0
@@ -83,7 +83,7 @@ ScriptedImporter:
       y: 0
       width: 0
       height: 0
-    spriteID: 3511136ba3bf6aa438fec179554780d7
+    spriteID: f91d53a4c23e39d4fb5384b4741a0268
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -95,7 +95,7 @@ ScriptedImporter:
     spritePosition: {x: 0, y: 0}
   multiSpriteImportData: []
   layeredSpriteImportData:
-  - name: Layer 15
+  - name: Lilly_Straight_Flower_Outter
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -103,55 +103,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 771
-      width: 152
-      height: 101
-    spriteID: 06d414116982dbe4599adab89d6a8416
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: -22, y: 435}
-    spritePosition: {x: 26, y: 336}
-  - name: Layer 13
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 4
-      y: 4
-      width: 191
-      height: 317
-    spriteID: 7a2bf7606137b0d4d87868142d4ba106
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: -22, y: -27}
-    spritePosition: {x: 26, y: 31}
-  - name: Layer 17
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 388
-      y: 4
+      x: 271
+      y: 198
       width: 94
       height: 36
-    spriteID: 9c4be846121c77c4da4b9add8a34ea54
+    spriteID: f47fa52a6165a934693cff6818a0a4c9
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -159,9 +115,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 320, y: -250}
+    uvTransform: {x: 271, y: 198}
     spritePosition: {x: 68, y: 254}
-  - name: Layer 19
+  - name: Lilly_Straight_Leaves
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -170,10 +126,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 329
+      y: 4
       width: 182
       height: 186
-    spriteID: 40449fc60e33aa043a0c8bf0493bdaf1
+    spriteID: 0f55abe05e2d77f4798b5c7c8cb36152
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -181,9 +137,9 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: -31, y: 265}
+    uvTransform: {x: 4, y: 4}
     spritePosition: {x: 35, y: 64}
-  - name: Layer 18
+  - name: Lilly_Straight_Stem
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -191,11 +147,11 @@ ScriptedImporter:
     customData: 
     rect:
       serializedVersion: 2
-      x: 4
-      y: 523
+      x: 194
+      y: 4
       width: 69
       height: 240
-    spriteID: e569435dddb595d44988f1297e1c6ea4
+    spriteID: 3cd5f57c78b6e1e47b1e25ea7baab149
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -203,9 +159,53 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: -86, y: 492}
+    uvTransform: {x: 194, y: 4}
     spritePosition: {x: 90, y: 31}
-  - name: Layer 15
+  - name: Lilly_Straight_Flower_Pistil
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 271
+      y: 4
+      width: 152
+      height: 101
+    spriteID: c104cea677330de4bb15f02e80aa1b23
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 271, y: 4}
+    spritePosition: {x: 26, y: 336}
+  - name: Lilly_Straight_Flower_Close
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 271
+      y: 113
+      width: 177
+      height: 77
+    spriteID: 07d9b337ae3c0be4cac7ad59f36d4a19
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 271, y: 113}
+    spritePosition: {x: 26, y: 264}
+  - name: Lilly_Straight_Flower_Behind
     originalName: 
     pivot: {x: 0.5, y: 0.5}
     alignment: 0
@@ -214,54 +214,10 @@ ScriptedImporter:
     rect:
       serializedVersion: 2
       x: 4
-      y: 880
-      width: 152
-      height: 101
-    spriteID: ec9e98b1f2189034c9dc0019ce524c82
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: -22, y: 544}
-    spritePosition: {x: 26, y: 336}
-  - name: Layer 14
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 203
-      y: 4
-      width: 177
-      height: 77
-    spriteID: 4cf67b1a108dbe94e9869c6865b06830
-    spriteBone: []
-    spriteOutline: []
-    vertices: []
-    spritePhysicsOutline: []
-    indices: 
-    edges: []
-    tessellationDetail: 0
-    uvTransform: {x: 177, y: -260}
-    spritePosition: {x: 26, y: 264}
-  - name: Layer 13
-    originalName: 
-    pivot: {x: 0.5, y: 0.5}
-    alignment: 0
-    border: {x: 0, y: 0, z: 0, w: 0}
-    customData: 
-    rect:
-      serializedVersion: 2
-      x: 203
-      y: 89
+      y: 198
       width: 144
       height: 43
-    spriteID: 6637295ef22c2d64190fd79da0f32b47
+    spriteID: dfd2e22b526ba5045a8da740b3eeb4fb
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -269,7 +225,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 152, y: -216}
+    uvTransform: {x: 4, y: 198}
     spritePosition: {x: 51, y: 305}
   spriteImportData: []
   rigSpriteImportData: []
@@ -289,7 +245,31 @@ ScriptedImporter:
     characterGroups: []
     pivot: {x: 0, y: 0}
     boneReadOnly: 0
-  platformSettings: []
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
   mosaicLayers: 1
   characterMode: 1
   documentPivot: {x: 0, y: 0}
@@ -318,121 +298,81 @@ ScriptedImporter:
   resliceFromLayer: 0
   pSDLayerImportSetting: []
   psdLayers:
-  - name: New group
+  - name: Lilly_Straight_Color
     spriteName: 
     isGroup: 1
     parentIndex: -1
-    spriteID: 50a97fbf59ae2064a8f751975af513d2
-    layerID: 13
+    spriteID: cbb5bae0e28396c4e95cc3020637d7b6
+    layerID: 8
     mosaicPosition: {x: 0, y: 0}
     flatten: 0
     isImported: 0
     isVisible: 1
-  - name: Layer 15
-    spriteName: Layer 15
+  - name: Lilly_Straight_Flower_Outter
+    spriteName: Lilly_Straight_Flower_Outter
     isGroup: 0
     parentIndex: 0
-    spriteID: 06d414116982dbe4599adab89d6a8416
-    layerID: 12
-    mosaicPosition: {x: 4, y: 771}
+    spriteID: f47fa52a6165a934693cff6818a0a4c9
+    layerID: 7
+    mosaicPosition: {x: 271, y: 198}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Layer 13
-    spriteName: Layer 13
+  - name: Lilly_Straight_Leaves
+    spriteName: Lilly_Straight_Leaves
     isGroup: 0
     parentIndex: 0
-    spriteID: 7a2bf7606137b0d4d87868142d4ba106
-    layerID: 11
+    spriteID: 0f55abe05e2d77f4798b5c7c8cb36152
+    layerID: 6
     mosaicPosition: {x: 4, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: New group
-    spriteName: 
-    isGroup: 1
-    parentIndex: -1
-    spriteID: a4b4263858f4b0e4f9babb70c5e0aadb
-    layerID: 9
-    mosaicPosition: {x: 0, y: 0}
-    flatten: 0
-    isImported: 0
-    isVisible: 1
-  - name: Layer 17
-    spriteName: Layer 17
+  - name: Lilly_Straight_Stem
+    spriteName: Lilly_Straight_Stem
     isGroup: 0
-    parentIndex: 3
-    spriteID: 9c4be846121c77c4da4b9add8a34ea54
-    layerID: 8
-    mosaicPosition: {x: 388, y: 4}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Layer 19
-    spriteName: Layer 19
-    isGroup: 0
-    parentIndex: 3
-    spriteID: 40449fc60e33aa043a0c8bf0493bdaf1
-    layerID: 7
-    mosaicPosition: {x: 4, y: 329}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Layer 18
-    spriteName: Layer 18
-    isGroup: 0
-    parentIndex: 3
-    spriteID: e569435dddb595d44988f1297e1c6ea4
-    layerID: 6
-    mosaicPosition: {x: 4, y: 523}
-    flatten: 0
-    isImported: 1
-    isVisible: 1
-  - name: Layer 15
-    spriteName: Layer 15
-    isGroup: 0
-    parentIndex: 3
-    spriteID: ec9e98b1f2189034c9dc0019ce524c82
+    parentIndex: 0
+    spriteID: 3cd5f57c78b6e1e47b1e25ea7baab149
     layerID: 5
-    mosaicPosition: {x: 4, y: 880}
+    mosaicPosition: {x: 194, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Layer 14
-    spriteName: Layer 14
+  - name: Lilly_Straight_Flower_Pistil
+    spriteName: Lilly_Straight_Flower_Pistil
     isGroup: 0
-    parentIndex: 3
-    spriteID: 4cf67b1a108dbe94e9869c6865b06830
+    parentIndex: 0
+    spriteID: c104cea677330de4bb15f02e80aa1b23
     layerID: 4
-    mosaicPosition: {x: 203, y: 4}
+    mosaicPosition: {x: 271, y: 4}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Layer 13
-    spriteName: Layer 13
+  - name: Lilly_Straight_Flower_Close
+    spriteName: Lilly_Straight_Flower_Close
     isGroup: 0
-    parentIndex: 3
-    spriteID: 6637295ef22c2d64190fd79da0f32b47
+    parentIndex: 0
+    spriteID: 07d9b337ae3c0be4cac7ad59f36d4a19
     layerID: 3
-    mosaicPosition: {x: 203, y: 89}
+    mosaicPosition: {x: 271, y: 113}
     flatten: 0
     isImported: 1
     isVisible: 1
-  - name: Background
-    spriteName: 
+  - name: Lilly_Straight_Flower_Behind
+    spriteName: Lilly_Straight_Flower_Behind
     isGroup: 0
-    parentIndex: -1
-    spriteID: aaf3e72ebf2bc794ca8dc94fbd57046b
-    layerID: 1
-    mosaicPosition: {x: 0, y: 0}
+    parentIndex: 0
+    spriteID: dfd2e22b526ba5045a8da740b3eeb4fb
+    layerID: 2
+    mosaicPosition: {x: 4, y: 198}
     flatten: 0
-    isImported: 0
-    isVisible: 0
+    isImported: 1
+    isVisible: 1
   mosaicPSDLayers: []
   rigPSDLayers: []
   sharedRigPSDLayers: []
   importFileNodeState: 1
-  platformSettingsDirtyTick: 0
+  platformSettingsDirtyTick: 639140289913016680
   spriteSizeExpandChanged: 0
   generateGOHierarchy: 0
   textureAssetName: 
