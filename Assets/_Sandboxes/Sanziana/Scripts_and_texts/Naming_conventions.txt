@@ -107,9 +107,23 @@
             Ghiocel_Light
                 ///(separate folder)
             Ghiocel_Flower
+                Ghiocel_Flower_Behind
+                Ghiocel_Flower_Pistil
+                Ghiocel_Flower_Inner
+                Ghiocel_Flower_Outter
             Ghiocel_Leaves
             Ghiocel_Stem
             Ghiocel_Shadow
+
+            BONE_Ghiocel_root
+            BONE_Ghiocel_Stem_Low
+            BONE_Ghiocel_Stem_Middle
+            BONE_Ghiocel_Stem_High
+            BONE_Ghiocel_Leaves_Low
+            BONE_Ghiocel_Leaves_High
+            BONE_Ghiocel_Flower_Inner
+            BONE_Ghiocel_Flower_Behind
+            BONE_Ghiocel_Flower_Pistil
 
     King_Shroom_Bent
         King_Shroom_Bent
@@ -120,6 +134,7 @@
             King_Shroom_Bent_Stem
             King_Shroom_Bent_Spore
             King_Shroom_Bent_Shadow
+
     Lilly
         Lilly_Bent
             SPRITES
@@ -129,6 +144,17 @@
                 Lilly_Bent_Leaves
                 Lilly_Bent_Stem
                 Lilly_Bent_Shadow
+        
+        BONE_Lilly_Bent_root
+        BONE_Lilly_Bent_Stem_Low
+        BONE_Lilly_Bent_Stem_Middle
+        BONE_Lilly_Bent_Stem_High
+        BONE_Lilly_Bent_Leaves_Low
+        BONE_Lilly_Bent_Leaves_High
+        BONE_Lilly_Bent_Flower_Inner
+        BONE_Lilly_Bent_Flower_Behind
+        BONE_Lilly_Bent_Flower_Pistil
+
         Lilly_Curvy
             SPRITES
                 Lilly_Curvy_Light
@@ -137,6 +163,17 @@
                 Lilly_Curvy_Leaves
                 Lilly_Curvy_Stem
                 Lilly_Curvy_Shadow
+
+        BONE_Lilly_Curvy_root
+        BONE_Lilly_Curvy_Stem_Low
+        BONE_Lilly_Curvy_Stem_Middle
+        BONE_Lilly_Curvy_Stem_High
+        BONE_Lilly_Curvy_Leaves_Low
+        BONE_Lilly_Curvy_Leaves_High
+        BONE_Lilly_Curvy_Flower_Inner
+        BONE_Lilly_Curvy_Flower_Behind
+        BONE_Lilly_Curvy_Flower_Pistil
+
         Lilly_Straight
             SPRITES
                 Lilly_Straight_Light
@@ -146,11 +183,136 @@
                 Lilly_Straight_Stem
                 Lilly_Straight_Shadow
 
+        BONE_Lilly_Straight_root
+        BONE_Lilly_Straight_Stem_Low
+        BONE_Lilly_Straight_Stem_Middle
+        BONE_Lilly_Straight_Stem_High
+        BONE_Lilly_Straight_Leaves_Low
+        BONE_Lilly_Straight_Leaves_High
+        BONE_Lilly_Straight_Flower_Inner
+        BONE_Lilly_Straight_Flower_Behind
+        BONE_Lilly_Straight_Flower_Pistil
+
     Rafflesia
         Rafflesia_Light
                     ///(separate folder)
             Rafflesia_Flower
+                Rafflesia_Flower_Outter_Close
+                Rafflesia_Flower_Pistil
+                Rafflesia_Flower_Core
+                Rafflesia_Flower_Inner_Behind
+                Rafflesia_Flower_Outter_behind
             Rafflesia_Leaves
+                Rafflesia_Leaves_Inner
+                Rafflesia_Leaves_Outter
             Rafflesia_Shadow
 
-            
+
+    Exploding_Mushroom
+
+        Exploding_Mushroom_Full
+        Exploding_Mushroom_Exploded
+
+
+"NAMING_CONVENTIONS-CHARACTER_RIGG"   
+
+COMPANION - BONES
+
+    HEAD_SIDE-CLOSED-MOUTH_HEAD
+    HEAD_SIDE-CLOSED-MOUTH_NECK
+    HEAD_SIDE-CLOSED-MOUTH_EYE
+
+    HEAD_SIDE-OPEN-MOUTH_HEAD
+    HEAD_SIDE-OPEN-MOUTH_NECK
+    HEAD_SIDE-OPEN-MOUTH_EYE
+
+    HEAD_FRONT_HEAD
+    HEAD_FRONT_NECK
+    HEAD_FRONT_L_EYE
+    HEAD_FRONT_R_EYE
+
+    HEAD_3QUARTER_HEAD
+    HEAD_3QUARTER_NECK
+    HEAD_3QUARTER_L_EYE
+    HEAD_3QUARTER_R_EYE
+
+    BODY_NECK
+    BODY_MAIN
+
+    TAIL_1
+    TAIL_2
+    TAIL_3
+    TAIL_4
+    TAIL_5
+    TAIL_WINGS_1
+    TAIL_WINGS_2
+
+    FRONT_LEG_ForeG_FEMUR
+    FRONT_LEG_ForeG_TIBIA
+    FRONT_LEG_ForeG_FINGER_BACK
+    FRONT_LEG_ForeG_FINGER_INDEX
+    FRONT_LEG_ForeG_FINGER_MIDDLE
+    FRONT_LEG_ForeG_FINGER_PINKY
+
+    FRONT_LEG_BG
+    
+    FRONT_LEG_BackG_FEMUR
+    FRONT_LEG_BackG_TIBIA
+    FRONT_LEG_BackG_FINGER_BACK
+    FRONT_LEG_BackG_FINGER_INDEX
+    FRONT_LEG_BackG_FINGER_MIDDLE
+    FRONT_LEG_BackG_FINGER_PINKY
+    
+    BACK_LEG_FG
+
+    BACK_LEG_ForeG_FEMUR
+    BACK_LEG_ForeG_TIBIA
+    BACK_LEG_ForeG_FINGER_BACK
+    BACK_LEG_ForeG_FINGER_INDEX
+    BACK_LEG_ForeG_FINGER_MIDDLE
+    BACK_LEG_ForeG_FINGER_PINKY
+
+    BACK_LEG_BG
+
+    BACK_LEG_BackG_FEMUR
+    BACK_LEG_BackG_TIBIA
+    BACK_LEG_BackG_FINGER_BACK
+    BACK_LEG_BackG_FINGER_INDEX
+    BACK_LEG_BackG_FINGER_MIDDLE
+    BACK_LEG_BackG_FINGER_PINKY
+
+ ROLLY_POLLY - BONES
+
+    ROOT
+        HEAD_BONE
+            ANTENNAE_LOW_R
+            ANTENNAE_HIGH_R
+            ANTENNAE_LIGHT_R
+
+            ANTENNAE_LOW_L
+            ANTENNAE_HIGH_L
+            ANTENNAE_LIGHT_L
+
+    BODY_1
+
+    BODY_2
+
+    BODY_3
+
+    BODY_4
+
+    BODY_5
+
+    BODY_6
+
+    FRONT_LEG_1
+    FRONT_LEG_2
+    FRONT_LEG_3
+    FRONT_LEG_4
+    FRONT_LEG_5
+
+    BACK_LEG_1
+    BACK_LEG_2
+    BACK_LEG_3
+    BACK_LEG_4
+    BACK_LEG_5
