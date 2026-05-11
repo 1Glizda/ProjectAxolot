@@ -12,9 +12,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - Background
-  - Midground
+  - MAIN_Background_far
+  - MAIN_Background_closer
+  - MAIN_Midground
   - Ground
   - Movable
   - 
@@ -46,6 +46,15 @@ TagManager:
     locked: 0
   - name: BG1
     uniqueID: 1019581943
+    locked: 0
+  - name: MAIN_Background_far
+    uniqueID: 786453801
+    locked: 0
+  - name: MAIN_Background_closer
+    uniqueID: 3068488759
+    locked: 0
+  - name: MAIN_Midground
+    uniqueID: 3277822235
     locked: 0
   - name: Default
     uniqueID: 0
