@@ -12,9 +12,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - MAIN_Background_far
+  - MAIN_Background_closer
+  - MAIN_Midground
   - Ground
   - Movable
   - 
@@ -31,15 +31,42 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - PulseInteraction
   - 
   - 
   - 
   - 
   - 
   m_SortingLayers:
+  - name: BG3
+    uniqueID: 3206333333
+    locked: 0
+  - name: BG2
+    uniqueID: 4079452813
+    locked: 0
+  - name: BG1
+    uniqueID: 1019581943
+    locked: 0
+  - name: MAIN_Background_far
+    uniqueID: 786453801
+    locked: 0
+  - name: MAIN_Background_closer
+    uniqueID: 3068488759
+    locked: 0
+  - name: MAIN_Midground
+    uniqueID: 3277822235
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Pulse
+    uniqueID: 1550434611
+    locked: 0
+  - name: Foreground
+    uniqueID: 1553812633
+    locked: 0
+  - name: Macro Foreground
+    uniqueID: 166155245
     locked: 0
   m_RenderingLayers:
   - Default

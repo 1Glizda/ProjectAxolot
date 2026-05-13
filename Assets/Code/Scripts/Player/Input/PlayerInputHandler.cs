@@ -10,14 +10,12 @@ namespace Player.Input
         public InputAction JumpAction => _jumpAction;
         public InputAction InteractAction => _interactAction;
         public InputAction PulseAction => _pulseAction;
-        public InputAction PointAction => _pointAction;
         
         private InputAction _moveAction;
         private InputAction _jumpAction;
         private InputAction _interactAction;
         
         private InputAction _pulseAction;
-        private InputAction _pointAction;
         
         
         private InputSystem_Actions _inputActions;
@@ -31,7 +29,6 @@ namespace Player.Input
             _interactAction = _inputActions.Player.Interact;
             
             _pulseAction = _inputActions.Player.Pulse;
-            _pointAction = _inputActions.Player.Point;
             
             _inputActions.Player.Enable();
         }

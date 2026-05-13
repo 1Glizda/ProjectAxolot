@@ -56,9 +56,20 @@ namespace Player.StateMachine
 
             if (ctx.controller.IsNearValidWall)
             {
-                if (jumpAction.IsPressed() || stateMachine.IsInJumpBuffer)
+                bool canGrab = false;
+                if (stateMachine.WasDetached)
+                {
+                    canGrab = (_isCatchBuffered && _catchBuffer > 0f) || stateMachine.IsInJumpBuffer;
+                }
+                else
+                {
+                    canGrab = jumpAction.IsPressed() || stateMachine.IsInJumpBuffer;
+                }
+
+                if (canGrab)
                 {
                     stateMachine.ConsumeJumpBuffer();
+                    _isCatchBuffered = false;
                     stateMachine.ChangeState<PlayerClimbingState>();
                     return;
                 }
@@ -82,6 +93,7 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             jumpAction.performed -= BufferCatch;
+            stateMachine.WasDetached = false;
         }
     }
 }

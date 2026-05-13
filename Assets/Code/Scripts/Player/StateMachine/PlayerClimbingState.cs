@@ -17,6 +17,7 @@ namespace Player.StateMachine
         {
             ctx.rb.linearVelocity = Vector2.zero;
             _jumpTriggered = false;
+            _isDetached = false;
             _attachTimer = settings.WallAttachGraceTime;
         }
         
@@ -27,6 +28,7 @@ namespace Player.StateMachine
             if (_isDetached)
             {
                 stateMachine.ChangeState<PlayerFallingState>();
+                return;
             }
             
             if (ctx.controller.CanVault && ctx.controller.IsFootNearValidWall)
@@ -81,6 +83,8 @@ namespace Player.StateMachine
             {
                 Vector2 dir = ctx.controller.WallHitNormal;
                 ctx.rb.AddForce(settings.WallDetachForce * ctx.rb.mass * dir, ForceMode2D.Impulse);
+                stateMachine.WasDetached = true;
+                _isDetached = true;
                 return;
             }
             

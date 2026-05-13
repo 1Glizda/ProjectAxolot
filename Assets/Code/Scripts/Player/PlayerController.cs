@@ -10,7 +10,6 @@ namespace Player
     internal class PlayerController : MonoBehaviour, IPlayerController
     {
         public bool IsGrounded => _isGrounded;
-        public float DistanceToGround => _distanceToGround;
         public bool IsInCoyoteTime => _isInCoyoteTime;
         public bool IsNearValidWall => _isNearValidWall;
         public bool IsFootNearValidWall => _isFootNearValidWall;
@@ -20,6 +19,9 @@ namespace Player
         public bool CanVault => _canVault;
         public Vector2 VaultTarget => _vaultTarget;
         
+        public PlayerContext PlayerContext => _context;
+
+
         [Header("Debug")]
         [SerializeField] private bool _debugMode;
         
@@ -39,7 +41,6 @@ namespace Player
         private PlayerContext _context;
 
         private bool _isGrounded;
-        private float _distanceToGround;
         private bool _isInCoyoteTime;
         
         private bool _isNearValidWall;
@@ -138,9 +139,22 @@ namespace Player
                 
                 if (downHit.collider)
                 {
-                    _canVault = true;
-                    _vaultTarget = downHit.point;
-                    if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.cyan);
+                    // check head room
+                    Vector2 boxSize = new Vector2(_bodyCollider.bounds.size.x * 0.8f, 0.1f);
+                    float requiredHeight = _bodyCollider.bounds.size.y;
+                    RaycastHit2D clearanceCheck = Physics2D.BoxCast(downHit.point + Vector2.up * 0.1f, boxSize, 0f, Vector2.up, requiredHeight, mask);
+
+                    if (!clearanceCheck.collider)
+                    {
+                        _canVault = true;
+                        _vaultTarget = downHit.point;
+                        if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.cyan);
+                    }
+                    else
+                    {
+                        _canVault = false;
+                        if (_debugMode) Debug.DrawRay(downHit.point + Vector2.up * 0.1f, Vector2.up * requiredHeight, Color.red);
+                    }
                 }
                 else if (_debugMode) Debug.DrawRay(downRayOrigin, Vector2.down * downRayDistance, Color.yellow);
             }
@@ -167,31 +181,29 @@ namespace Player
         private void CheckGrounded()
         {
             Bounds bounds = _feetCollider.bounds;
-            _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y);
-            _checkOrigins[1] = new Vector2(bounds.center.x, bounds.min.y);
-            _checkOrigins[2] = new Vector2(bounds.max.x, bounds.min.y);
+            float yOffset = 0.05f;
+            _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y + yOffset);
+            _checkOrigins[1] = new Vector2(bounds.center.x, bounds.min.y + yOffset);
+            _checkOrigins[2] = new Vector2(bounds.max.x, bounds.min.y + yOffset);
 
             Vector2 middleOrigin = _checkOrigins[1];
             
-            float distance = _settings.GroundCheckDistance;
+            float distance = _settings.GroundCheckDistance + yOffset;
             LayerMask mask = _settings.GroundLayers;
 
 
             bool didHit = MultiRaycast(_groundHits, _checkOrigins, Vector2.down, distance, mask);
             
             
-            if (didHit && _groundHits[1].collider)
+            if (didHit)
             {
-                _distanceToGround = 0f;
-                
+               
                 _isGrounded = true;
                 _isInCoyoteTime = false;
             }
             else
             {
                 RaycastHit2D hit = Physics2D.Raycast(middleOrigin, Vector2.down, Mathf.Infinity, mask);
-                _distanceToGround = hit.distance;
-                
                 _isGrounded = false;
                 
                 if (!_isInCoyoteTime)
@@ -213,13 +225,25 @@ namespace Player
         private Vector2 ComputeSlopeTangent()
         {
             Vector2 normal = Vector2.zero;
+            int validHits = 0;
             foreach (RaycastHit2D hit in _groundHits)
             {
-                normal +=  hit.normal;
+                if (hit.collider)
+                {
+                    normal += hit.normal;
+                    validHits++;
+                }
             }
             
-            normal /= _groundHits.Length;
-            normal.Normalize();
+            if (validHits > 0)
+            {
+                normal /= validHits;
+                normal.Normalize();
+            }
+            else
+            {
+                normal = Vector2.up;
+            }
             
             Vector2 slope = new (normal.y, -normal.x);
             
