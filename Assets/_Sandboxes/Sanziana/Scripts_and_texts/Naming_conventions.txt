@@ -1,0 +1,318 @@
+"NAMING_CONVENTIONS-PROP_ASSETS"
+
+///////RULE///////
+    Main_Interactible_Type_Particularity
+        Type_Particularity_NR
+            SPRITE
+            NR_Type_Particularity_part
+            BONE
+            NR_BONE_Type_Particularity_part
+
+//ROOT_FOLDER//
+ 
+    Collar_Shrooms
+        Collar_Shrooms_Lights
+        Collar_Shrooms_Sprites
+            ///(mandatory)
+        Collar_Shrooms_Animations
+        Collar_Shrooms_Materials
+            ///(optional)
+
+    Glowing_Moss
+        Glowing_Moss_Lights
+        Glowing_Moss_Sprites
+            ///(mandatory)
+        Glowing_Moss_Animations
+        Glowing_Moss_Materials
+            ///(optional)
+
+    Ghiocel
+        Ghiocel_Lights
+        Ghiocel_Sprites
+            ///(mandatory)
+        Ghiocel_Animations
+        Ghiocel_Materials
+
+    King_Shroom_Bent
+        King_Shroom_Bent_Lights
+        King_Shroom_Bent_Sprites
+            ///(mandatory)  
+        King_Shroom_Bent_Animations
+        King_Shroom_Bent_Materials
+            ///(optional)
+
+    Lilly
+        Lilly_Lights
+        Lilly_Sprites
+            ///(mandatory)
+        Lilly_Animations
+        Lilly_Materials
+            ///(optional)
+
+    Rafflesia
+        Rafflesia_Lights
+        Rafflesia_Sprites
+            ///(mandatory)
+        Rafflesia_Animations
+        Rafflesia_Materials
+            ///(optional)
+
+
+//HIERARCHY//
+    Collar_Shrooms
+        Collar_Shroom_x
+            SPRITES
+            x_Collar_Shroom_Light
+                ///(separate folder)
+            x_Collar_Shroom_Shadow
+            x_Collar_Shroom_Tip
+            x_Collar_Shroom_Collar
+            x_Collar_Shroom_Leaves
+            x_Collar_Shroom_Stem
+        
+            BONES
+            x_BONE_Collar_Shroom_root
+            x_BONE_Collar_Shroom_Stem_low
+            x_BONE_Collar_Shroom_Stem_high
+            x_BONE_Collar_Shroom_Flower
+
+    Glowing_Moss
+        Glowing_Horizontal_Moss_x
+            SPRITES
+            x_Glowing_Horizontal_Moss_Shrooms
+            x_Glowing_Horizontal_Moss_Light
+                ///(separate folder)
+            x_Glowing_Horizontal_Moss_Color
+            x_Glowing_Horizontal_Moss_Shadow
+
+        Glowing_Vertical_Moss_x
+            SPRITES
+            x_Glowing_Vertical_Moss_Shrooms
+            x_Glowing_Vertical_Moss_Light
+                ///(separate folder)
+            x_Glowing_Vertical_Moss_Color
+            x_Glowing_Vertical_Moss_Shadow
+
+        Glowing_Huge_Moss_x
+            SPRITES
+            x_Glowing_Huge_Moss_Shrooms
+            x_Glowing_Huge_Moss_Light
+                ///(separate folder)
+            x_Glowing_Huge_Moss_Color
+            x_Glowing_Huge_Moss_Shadow
+
+    Ghiocel
+        Ghiocel
+            SPRITES
+            Ghiocel_Light
+                ///(separate folder)
+            Ghiocel_Flower
+                Ghiocel_Flower_Behind
+                Ghiocel_Flower_Pistil
+                Ghiocel_Flower_Inner
+                Ghiocel_Flower_Outter
+            Ghiocel_Leaves
+            Ghiocel_Stem
+            Ghiocel_Shadow
+
+            BONE_Ghiocel_root
+            BONE_Ghiocel_Stem_Low
+            BONE_Ghiocel_Stem_Middle
+            BONE_Ghiocel_Stem_High
+            BONE_Ghiocel_Leaves_Low
+            BONE_Ghiocel_Leaves_High
+            BONE_Ghiocel_Flower_Inner
+            BONE_Ghiocel_Flower_Behind
+            BONE_Ghiocel_Flower_Pistil
+
+    King_Shroom_Bent
+        King_Shroom_Bent
+            SPRITES
+            King_Shroom_Bent_Light
+                ///(separate folder)
+            King_Shroom_Bent_Cap
+            King_Shroom_Bent_Stem
+            King_Shroom_Bent_Spore
+            King_Shroom_Bent_Shadow
+
+    Lilly
+        Lilly_Bent
+            SPRITES
+                Lilly_Bent_Light
+                    ///(separate folder)
+                Lilly_Bent_Flower
+                Lilly_Bent_Leaves
+                Lilly_Bent_Stem
+                Lilly_Bent_Shadow
+        
+        BONE_Lilly_Bent_root
+        BONE_Lilly_Bent_Stem_Low
+        BONE_Lilly_Bent_Stem_Middle
+        BONE_Lilly_Bent_Stem_High
+        BONE_Lilly_Bent_Leaves_Low
+        BONE_Lilly_Bent_Leaves_High
+        BONE_Lilly_Bent_Flower_Inner
+        BONE_Lilly_Bent_Flower_Behind
+        BONE_Lilly_Bent_Flower_Pistil
+
+        Lilly_Curvy
+            SPRITES
+                Lilly_Curvy_Light
+                    ///(separate folder)
+                Lilly_Curvy_Flower
+                Lilly_Curvy_Leaves
+                Lilly_Curvy_Stem
+                Lilly_Curvy_Shadow
+
+        BONE_Lilly_Curvy_root
+        BONE_Lilly_Curvy_Stem_Low
+        BONE_Lilly_Curvy_Stem_Middle
+        BONE_Lilly_Curvy_Stem_High
+        BONE_Lilly_Curvy_Leaves_Low
+        BONE_Lilly_Curvy_Leaves_High
+        BONE_Lilly_Curvy_Flower_Inner
+        BONE_Lilly_Curvy_Flower_Behind
+        BONE_Lilly_Curvy_Flower_Pistil
+
+        Lilly_Straight
+            SPRITES
+                Lilly_Straight_Light
+                    ///(separate folder)
+                Lilly_Straight_Flower
+                Lilly_Straight_Leaves
+                Lilly_Straight_Stem
+                Lilly_Straight_Shadow
+
+        BONE_Lilly_Straight_root
+        BONE_Lilly_Straight_Stem_Low
+        BONE_Lilly_Straight_Stem_Middle
+        BONE_Lilly_Straight_Stem_High
+        BONE_Lilly_Straight_Leaves_Low
+        BONE_Lilly_Straight_Leaves_High
+        BONE_Lilly_Straight_Flower_Inner
+        BONE_Lilly_Straight_Flower_Behind
+        BONE_Lilly_Straight_Flower_Pistil
+
+    Rafflesia
+        Rafflesia_Light
+                    ///(separate folder)
+            Rafflesia_Flower
+                Rafflesia_Flower_Outter_Close
+                Rafflesia_Flower_Pistil
+                Rafflesia_Flower_Core
+                Rafflesia_Flower_Inner_Behind
+                Rafflesia_Flower_Outter_behind
+            Rafflesia_Leaves
+                Rafflesia_Leaves_Inner
+                Rafflesia_Leaves_Outter
+            Rafflesia_Shadow
+
+
+    Exploding_Mushroom
+
+        Exploding_Mushroom_Full
+        Exploding_Mushroom_Exploded
+
+
+"NAMING_CONVENTIONS-CHARACTER_RIGG"   
+
+COMPANION - BONES
+
+    HEAD_SIDE-CLOSED-MOUTH_HEAD
+    HEAD_SIDE-CLOSED-MOUTH_NECK
+    HEAD_SIDE-CLOSED-MOUTH_EYE
+
+    HEAD_SIDE-OPEN-MOUTH_HEAD
+    HEAD_SIDE-OPEN-MOUTH_NECK
+    HEAD_SIDE-OPEN-MOUTH_EYE
+
+    HEAD_FRONT_HEAD
+    HEAD_FRONT_NECK
+    HEAD_FRONT_L_EYE
+    HEAD_FRONT_R_EYE
+
+    HEAD_3QUARTER_HEAD
+    HEAD_3QUARTER_NECK
+    HEAD_3QUARTER_L_EYE
+    HEAD_3QUARTER_R_EYE
+
+    BODY_NECK
+    BODY_MAIN
+
+    TAIL_1
+    TAIL_2
+    TAIL_3
+    TAIL_4
+    TAIL_5
+    TAIL_WINGS_1
+    TAIL_WINGS_2
+
+    FRONT_LEG_ForeG_FEMUR
+    FRONT_LEG_ForeG_TIBIA
+    FRONT_LEG_ForeG_FINGER_BACK
+    FRONT_LEG_ForeG_FINGER_INDEX
+    FRONT_LEG_ForeG_FINGER_MIDDLE
+    FRONT_LEG_ForeG_FINGER_PINKY
+
+    FRONT_LEG_BG
+    
+    FRONT_LEG_BackG_FEMUR
+    FRONT_LEG_BackG_TIBIA
+    FRONT_LEG_BackG_FINGER_BACK
+    FRONT_LEG_BackG_FINGER_INDEX
+    FRONT_LEG_BackG_FINGER_MIDDLE
+    FRONT_LEG_BackG_FINGER_PINKY
+    
+    BACK_LEG_FG
+
+    BACK_LEG_ForeG_FEMUR
+    BACK_LEG_ForeG_TIBIA
+    BACK_LEG_ForeG_FINGER_BACK
+    BACK_LEG_ForeG_FINGER_INDEX
+    BACK_LEG_ForeG_FINGER_MIDDLE
+    BACK_LEG_ForeG_FINGER_PINKY
+
+    BACK_LEG_BG
+
+    BACK_LEG_BackG_FEMUR
+    BACK_LEG_BackG_TIBIA
+    BACK_LEG_BackG_FINGER_BACK
+    BACK_LEG_BackG_FINGER_INDEX
+    BACK_LEG_BackG_FINGER_MIDDLE
+    BACK_LEG_BackG_FINGER_PINKY
+
+ ROLLY_POLLY - BONES
+
+    ROOT
+        HEAD_BONE
+            ANTENNAE_LOW_R
+            ANTENNAE_HIGH_R
+            ANTENNAE_LIGHT_R
+
+            ANTENNAE_LOW_L
+            ANTENNAE_HIGH_L
+            ANTENNAE_LIGHT_L
+
+    BODY_1
+
+    BODY_2
+
+    BODY_3
+
+    BODY_4
+
+    BODY_5
+
+    BODY_6
+
+    FRONT_LEG_1
+    FRONT_LEG_2
+    FRONT_LEG_3
+    FRONT_LEG_4
+    FRONT_LEG_5
+
+    BACK_LEG_1
+    BACK_LEG_2
+    BACK_LEG_3
+    BACK_LEG_4
+    BACK_LEG_5
