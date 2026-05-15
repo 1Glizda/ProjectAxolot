@@ -7,6 +7,7 @@ namespace Player
         //animator properties
         private static readonly int Jump = Animator.StringToHash("Jump");
         private static readonly int IsClimbing = Animator.StringToHash("IsClimbing");
+        private static readonly int IsPreparingWallJump = Animator.StringToHash("IsPreparingWallJump");
         private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
         private static readonly int HorizontalVelocity = Animator.StringToHash("HorizontalVelocity");
         private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
@@ -24,6 +25,7 @@ namespace Player
         {
             if (!_isInitialized) return;
             _animator.SetBool(IsClimbing,  _playerState.IsClimbing);
+            _animator.SetBool(IsPreparingWallJump, _playerState.IsPreparingWallJump);
             _animator.SetFloat(VerticalVelocity, _playerState.VerticalVelocity);
             _animator.SetFloat(HorizontalVelocity, Mathf.Abs(_playerState.HorizontalVelocity));
             _animator.SetBool(IsGrounded, _playerState.IsGrounded);

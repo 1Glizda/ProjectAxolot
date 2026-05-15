@@ -19,7 +19,7 @@ namespace Player.StateMachine
         {
             jumpAction.performed += BufferCatch;
             _isCatchBuffered = false;
-            _graceTimer = 0.15f; // prevent immediate regrab
+            _graceTimer = 0.35f; // Prevent immediate regrab and allow clearing the trigger for auto-grab
         }
         
         public override void Tick(float dt)
@@ -48,7 +48,9 @@ namespace Player.StateMachine
                 return;
             }
 
-            if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing && _graceTimer <= 0)
+            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
+            bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || (_isCatchBuffered && _catchBuffer > 0f);
+            if (wantsToGrab && ctx.collisionHandler.CanSwing && _graceTimer <= 0)
             {
                 stateMachine.ChangeState<PlayerSwingingState>();
                 return;
@@ -56,12 +58,8 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.IsNearValidWall)
             {
-                bool canGrab = true;
-                if (stateMachine.WasDetached)
-                {
-                    float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.stateProvider.WallHitNormal);
-                    canGrab = dot < 0f;
-                }
+                float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
+                bool canGrab = dot <= 0.01f;
 
                 if (canGrab)
                 {

@@ -6,6 +6,11 @@ namespace Player.StateMachine
         {
         }
 
+        public override void EnterState()
+        {
+            stateMachine.LastVine = null;
+        }
+
         public override void Tick(float dt)
         {
             base.Tick(dt);

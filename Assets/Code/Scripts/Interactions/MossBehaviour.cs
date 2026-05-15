@@ -36,5 +36,11 @@ namespace Interactions
         {
             gameObject.layer = toggle ? _climbableLayer : _initialLayer;
         }
+
+        public override void PulseInteract()
+        {
+            if (_isPermanent) return;
+            base.PulseInteract();
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace Player
         public event System.Action OnJump;
         public event System.Action OnStartClimb;
         public bool IsClimbing { get; }
+        public bool IsPreparingWallJump { get; }
+        public bool IsJumping { get; }
         public float VerticalVelocity { get; }
         public float HorizontalVelocity { get; }
         
@@ -16,6 +18,7 @@ namespace Player
 
         public bool IsNearValidWall { get; }
         public bool IsFootNearValidWall { get; }
+        public bool IsHeadBlocked { get; }
         public Vector2 WallHitNormal { get; }
         
         public bool IsFootNearPushable { get; }

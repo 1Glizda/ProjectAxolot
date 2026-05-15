@@ -18,6 +18,8 @@ namespace Player
         public readonly Rigidbody2D rb;
         public readonly HingeJoint2D swingHinge;
 
+        public Vector2 PendingKnockbackVelocity;
+
         public PlayerContext(
             IPlayerInputManager manager,
             IPlayerStateProvider stateProvider,
