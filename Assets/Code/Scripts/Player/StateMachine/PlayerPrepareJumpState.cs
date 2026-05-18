@@ -37,10 +37,11 @@ namespace Player.StateMachine
         {
             base.FixedTick(dt);
 
-            float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
+            float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.stateProvider.WallHitNormal);
             if (dot > 0f && _jumpTriggered)
             { 
                 TryFlipSprite();
+                ctx.stateProvider.NotifyJump();
                 ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
                 stateMachine.WasDetached = true;
                 stateMachine.ChangeState<PlayerFallingState>();
@@ -51,7 +52,7 @@ namespace Player.StateMachine
 
         private Vector2 GetAngledVector()
         {
-            Vector2 wallNormal = ctx.controller.WallHitNormal;
+            Vector2 wallNormal = ctx.stateProvider.WallHitNormal;
             float rotationAngle = wallNormal.x > 0 ? settings.WallJumpAngle : -settings.WallJumpAngle;
             
             Quaternion rotation = Quaternion.Euler(0f, 0f, rotationAngle);

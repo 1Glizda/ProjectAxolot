@@ -10,14 +10,14 @@ namespace Player.StateMachine
 
         public override void EnterState()
         {
-            _pushable = ctx.controller.Pushable;
+            _pushable = ctx.stateProvider.Pushable;
         }
 
         public override void Tick(float dt)
         {
             base.Tick(dt);
 
-            if (_pushable == null || ctx.controller.Pushable == null)
+            if (_pushable == null || ctx.stateProvider.Pushable == null)
             {
                 stateMachine.ChangeState<PlayerIdleState>();
                 return;
@@ -47,6 +47,14 @@ namespace Player.StateMachine
             if (horizontalInput == 0f)
             {
                 stateMachine.ChangeState<PlayerIdleState>();
+                return;
+            }
+
+            float facingDir = Mathf.Abs(ctx.spriteObject.transform.localEulerAngles.y) < 90f ? 1f : -1f;
+            if (Mathf.Sign(horizontalInput) != Mathf.Sign(facingDir))
+            {
+                stateMachine.ChangeState<PlayerRunState>();
+                return;
             }
             
         }
@@ -58,7 +66,9 @@ namespace Player.StateMachine
             
             _pushable.ApplyPushForce(groundData.slopeTangent * forceMag);
             
-            ApplyAccel(dt, settings.GroundedAcceleration, settings.GroundedDeceleration, settings.MaxHorizontalVelocity);
+            // Sync player velocity with the boulder to prevent physics jitter/bouncing
+            ctx.rb.linearVelocityX = _pushable.Velocity.x;
+            
             ApplyGravity(dt, settings.BaseGravity);
         }
     }

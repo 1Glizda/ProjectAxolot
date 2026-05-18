@@ -34,7 +34,13 @@ namespace Player.StateMachine
             }
 
 
-            if (ctx.controller.IsFootNearPushable)
+            if (ctx.stateProvider.IsNearValidWall && verticalInput > 0f)
+            {
+                stateMachine.ChangeState<PlayerClimbingState>();
+                return;
+            }
+
+            if (ctx.stateProvider.IsFootNearPushable)
             {
                 stateMachine.ChangeState<PlayerPushPullState>();
             }
@@ -50,7 +56,6 @@ namespace Player.StateMachine
         {
             base.FixedTick(dt);
             ApplyAccel(dt, settings.GroundedAcceleration, settings.GroundedDeceleration, settings.MaxHorizontalVelocity);
-            if(horizontalInput == 0f) ApplyDecel(dt, settings.GroundedDeceleration);
             ApplyGravity(dt, settings.BaseGravity);
 
         }

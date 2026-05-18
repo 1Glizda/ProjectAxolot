@@ -7,25 +7,25 @@ namespace Player
     {
 
         public readonly IPlayerInputManager manager;
-        public readonly IPlayerController controller;
+        public readonly IPlayerStateProvider stateProvider;
 
         
         public readonly PlayerCollisionHandler collisionHandler;
         public readonly PlayerSettingsSo settings;
-        public readonly Animator animator;
-        public readonly SpriteRenderer spriteRenderer;
+        public readonly GameObject spriteObject;
         public readonly Collider2D bodyCollider;
         public readonly Collider2D feetCollider;
         public readonly Rigidbody2D rb;
         public readonly HingeJoint2D swingHinge;
 
+        public Vector2 PendingKnockbackVelocity;
+
         public PlayerContext(
             IPlayerInputManager manager,
-            IPlayerController controller,
+            IPlayerStateProvider stateProvider,
             PlayerCollisionHandler collisionHandler,
             PlayerSettingsSo settings,
-            Animator animator,
-            SpriteRenderer spriteRenderer,
+            GameObject spriteObject,
             Collider2D bodyCollider,
             Collider2D feetCollider,
             Rigidbody2D rb,
@@ -33,11 +33,10 @@ namespace Player
         )
         {
             this.manager = manager;
-            this.controller = controller;
+            this.stateProvider = stateProvider;
             this.collisionHandler = collisionHandler;
             this.settings = settings;
-            this.animator = animator;
-            this.spriteRenderer = spriteRenderer;
+            this.spriteObject = spriteObject;
             this.bodyCollider = bodyCollider;
             this.feetCollider = feetCollider;
             this.rb = rb;

@@ -6,6 +6,11 @@ namespace Player.StateMachine
         {
         }
 
+        public override void EnterState()
+        {
+            stateMachine.LastVine = null;
+        }
+
         public override void Tick(float dt)
         {
             base.Tick(dt);
@@ -32,6 +37,12 @@ namespace Player.StateMachine
                 //TODO add physics ground force
                 return;
             }
+            if (ctx.stateProvider.IsNearValidWall && verticalInput > 0f)
+            {
+                stateMachine.ChangeState<PlayerClimbingState>();
+                return;
+            }
+
             if (horizontalInput != 0f)
             { 
                 stateMachine.ChangeState<PlayerRunState>();
