@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a075a3deac0646719d5f52b468b6e730, type: 3}
   m_Name: SO_PlayerSettings
   m_EditorClassIdentifier: Assembly-CSharp::Player.PlayerSettingsSo
-  _groundedAcceleration: 60
+  _groundedAcceleration: 100
   _groundedDeceleration: 100
-  _jumpAcceleration: 30
-  _jumpDeceleration: 0
+  _jumpAcceleration: 100
+  _jumpDeceleration: 5
   _maxHorizontalVelocity: 6
   _terminalVerticalVelocity: -35
-  _baseGravity: 10
+  _baseGravity: 25
   _jumpGravityCurve:
     serializedVersion: 2
     m_Curve:
@@ -43,18 +43,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _jumpInitialGravity: 5
+  _jumpInitialGravity: 15
   _fallingGravity: 25
   _standstillThreshold: 0.02
   _initialJumpForce: 5
+  _useDiagonalJump: 0
   _jumpRunningMaxAngle: 15
-  _jumpHoldAccel: 5
+  _jumpHoldAccel: 10
   _maxJumpTime: 0.3
   _minJumpTime: 0
-  _jumpBufferTime: 0.3
+  _jumpBufferTime: 0.2
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 35840
+    m_Bits: 3072
   _groundCheckDistance: 0.2
   _coyoteTime: 0.2
   _applyRotationThreshold: 15
@@ -62,19 +63,24 @@ MonoBehaviour:
   _wallDetectionRange: 0.1
   _wallLayers:
     serializedVersion: 2
-    m_Bits: 35840
+    m_Bits: 32768
   _wallAcceleration: 200
   _wallDeceleration: 200
   _maxClimbSpeed: 6
+  _wallSlideSpeed: 0.5
   _wallDetachForce: 2
   _wallAttachGraceTime: 0.15
   _wallJumpForce: 10
   _wallJumpAngle: 60
   _vaultDuration: 0.3
-  _swingAcceleration: 25
+  _swingAcceleration: 20
   _swingAngularDrag: 1
   _swingEntryMomentumTransfer: 1
-  _vineClimbSpeed: 0.15
-  _vineJumpForce: 6
-  _vineReleaseHoldTime: 0.5
+  _vineJumpForce: 7
+  _autoGrabVines: 1
+  _vineReleaseHoldTime: 0.25
+  _vineCatchTranslationDuration: 0.2
   _pushPullForce: 1000
+  _pushableCheckYOffset: 0.29
+  _pushableCheckDistance: 0.5
+  _knockbackAirAcceleration: 3

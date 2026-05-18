@@ -7,6 +7,7 @@ namespace Platforming
     internal class BoulderBehaviour : MonoBehaviour, IPushable
     {
         public Rigidbody2D Rb => _rb;
+        public Vector2 Velocity => _rb.linearVelocity;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private float _maxSpeed = 3f;
         

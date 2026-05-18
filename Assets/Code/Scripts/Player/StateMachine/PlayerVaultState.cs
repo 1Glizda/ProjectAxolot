@@ -18,7 +18,7 @@ namespace Player.StateMachine
         {
             _timer = 0f;
             
-            _p2 = ctx.controller.VaultTarget;
+            _p2 = ctx.stateProvider.VaultTarget;
             _p1 = new Vector2(ctx.rb.position.x, _p2.y);
             
             ctx.rb.bodyType = RigidbodyType2D.Kinematic;

@@ -1,8 +1,11 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace CameraScripts
 {
+ 
+    [Obsolete("CameraScripts.CameraZoomZone is deprecated. We use Cinemachine and CameraScripts.CameraTriggerSwitch instead.")]
     [RequireComponent(typeof(BoxCollider2D))]
     public class CameraZoomZone : MonoBehaviour
     {
