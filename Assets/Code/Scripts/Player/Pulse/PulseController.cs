@@ -7,6 +7,7 @@ namespace Player.Pulse
 {
     internal class PulseController : MonoBehaviour
     {
+        public event System.Action OnPulse;
         [FormerlySerializedAs("playerStateProvider")]
         [FormerlySerializedAs("_playerController")]
         [Header("References")]
@@ -42,6 +43,7 @@ namespace Player.Pulse
             _timer = _cooldownTimer;
             
             Instantiate(_pulsePrefab, transform.position, Quaternion.identity);
+            OnPulse?.Invoke();
         }
         
         

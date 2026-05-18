@@ -28,6 +28,11 @@ namespace Player.AI
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
 
+        // ─── Public read-only state for AiSoundController ──────────
+        public bool IsGrounded => _isGrounded;
+        public string CurrentState => _currentStateStr;
+        public Rigidbody2D Rb => _rb;
+
         private Rigidbody2D _rb;
         private float _defaultGravity;
 

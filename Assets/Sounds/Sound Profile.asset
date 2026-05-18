@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4360f9ae3d5624ebe8e2b865d7568799, type: 3}
+  m_Name: Sound Profile
+  m_EditorClassIdentifier: Game.Player::Player.Sound.SoundProfileSo
+  footstepLoop: {fileID: 0}
+  footstepVolume: 0.6
+  idleChirps: []
+  idleChirpVolume: 0.4
+  idleChirpInitialDelay: 3
+  idleChirpMinInterval: 4
+  idleChirpMaxInterval: 8
+  jumpClip: {fileID: 0}
+  jumpVolume: 0.7
+  landClip: {fileID: 0}
+  landVolume: 0.7
+  pulseClip: {fileID: 0}
+  pulseVolume: 0.8
+  singingClips: []
+  singingVolume: 0.5
+  singingMinDelay: 8
+  singingMaxDelay: 20
+  pitchVariance: 0.05
