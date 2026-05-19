@@ -85,7 +85,7 @@ namespace Interactions
                     falloff = 1f - Mathf.Clamp01((distance - _innerRadius) / falloffRange);
                 }
 
-                rb.AddForce(dir * (_explosionForce * falloff * rb.mass), ForceMode2D.Impulse);
+                rb.linearVelocity = dir * (_explosionForce * falloff);
 
                 if (rb.TryGetComponent<Platforming.BreakableWall>(out var wall))
                 {

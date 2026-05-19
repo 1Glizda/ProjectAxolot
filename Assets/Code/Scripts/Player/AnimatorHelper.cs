@@ -12,6 +12,7 @@ namespace Player
         private static readonly int HorizontalVelocity = Animator.StringToHash("HorizontalVelocity");
         private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         private static readonly int StartClimb = Animator.StringToHash("StartClimb");
+        private static readonly int GrabVine = Animator.StringToHash("GrabVine");
 
 
         [SerializeField] private Animator _animator;
@@ -38,6 +39,7 @@ namespace Player
             _isInitialized = true;
             _playerState.OnJump+=OnJump;
             _playerState.OnStartClimb+=OnStartClimb;
+            _playerState.OnGrabVine+=OnGrabVine;
         }
 
         private void OnEnable()
@@ -45,12 +47,14 @@ namespace Player
             if (!_isInitialized) return;
             _playerState.OnJump += OnJump;
             _playerState.OnStartClimb += OnStartClimb;
+            _playerState.OnGrabVine += OnGrabVine;
         }
         private void OnDisable()
         {
             if (!_isInitialized) return;
             _playerState.OnJump -= OnJump;
             _playerState.OnStartClimb -= OnStartClimb;
+            _playerState.OnGrabVine -= OnGrabVine;
         }
         
         private void OnJump()
@@ -61,6 +65,11 @@ namespace Player
         private void OnStartClimb()
         {
             _animator.SetTrigger(StartClimb);
+        }
+
+        private void OnGrabVine()
+        {
+            _animator.SetTrigger(GrabVine);
         }
 
     }

@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 1928889167433844952}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 2.46, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1125527415066863817}
@@ -84,12 +84,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 6e188504d831daa41a9832b983c36048, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 726411b70ecf626468361e8515111f2e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.51, y: 4.94}
+  m_Size: {x: 5.84, y: 4.615}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b65e45180f2084749a1e4d681dd4c618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.BouncePad
-  _pushForce: 5
-  _angleOffset: 0
+  _pushForce: 15
+  _angleOffset: 5
 --- !u!68 &4743226209775204224
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -145,10 +145,11 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0.15
   m_Points:
-  - {x: -1.8144484, y: 0.88310814}
-  - {x: -0.7305298, y: 1.4644451}
-  - {x: 0.62286377, y: 1.7710266}
-  - {x: 1.7570143, y: 1.8523712}
+  - {x: -1.8144484, y: 1.3263378}
+  - {x: -0.92755127, y: 1.7951069}
+  - {x: -0.0032958984, y: 1.9609814}
+  - {x: 0.9717407, y: 1.7629223}
+  - {x: 1.7640333, y: 1.3809986}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
@@ -165,10 +166,10 @@ PlatformEffector2D:
   m_ColliderMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RotationalOffset: 13.3
+  m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 193.97
+  m_SurfaceArc: 200
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
@@ -182,7 +183,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1125527415066863817}
   m_Layer: 0
-  m_Name: PRP_Main_mushroom_bouncy
+  m_Name: PRP_Main_mushroom_bouncy_Angle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

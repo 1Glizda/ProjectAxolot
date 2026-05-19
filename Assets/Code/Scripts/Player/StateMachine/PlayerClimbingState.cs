@@ -68,7 +68,7 @@ namespace Player.StateMachine
                 }
             }
             
-            if(!_jumpTriggered && horizontalInput == 0f) _jumpTriggered = jumpAction.triggered;
+            if(!_jumpTriggered) _jumpTriggered = jumpAction.triggered;
             
         }
         

@@ -12,6 +12,8 @@ namespace Player
     {
         public event System.Action OnJump;
         public event System.Action OnStartClimb;
+        public event System.Action OnLand;
+        public event System.Action OnGrabVine;
         public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
         public bool IsPreparingWallJump => _isPreparingWallJump;
         public bool IsJumping => _isJumping;
@@ -154,6 +156,16 @@ namespace Player
             OnStartClimb?.Invoke();
         }
 
+        public void NotifyLand()
+        {
+            OnLand?.Invoke();
+        }
+        
+        public void NotifyGrabVine()
+        {
+            OnGrabVine?.Invoke();
+        }
+
         public void ApplyKnockback(Vector2 velocity)
         {
             _context.PendingKnockbackVelocity = velocity;
@@ -271,7 +283,7 @@ namespace Player
             float distance = _settings.GroundCheckDistance + yOffset;
             LayerMask mask = _settings.GroundLayers;
 
-
+            bool wasGrounded = _isGrounded;
             bool didHit = MultiRaycast(_groundHits, _checkOrigins, Vector2.down, distance, mask);
             
             
@@ -280,6 +292,9 @@ namespace Player
                
                 _isGrounded = true;
                 _isInCoyoteTime = false;
+                
+                // Fire landing event on the frame we touch the ground
+                if (!wasGrounded) NotifyLand();
             }
             else
             {

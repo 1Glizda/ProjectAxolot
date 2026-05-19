@@ -200,7 +200,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2.75, y: 2.75}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.05
 --- !u!114 &6049142644701203849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,8 +250,8 @@ MonoBehaviour:
   m_ShadowMesh:
     m_Mesh: {fileID: 0}
     m_LocalBounds:
-      m_Center: {x: 0.0000076293945, y: 0.0000076293945, z: 0}
-      m_Extent: {x: 1.2749863, y: 1.2749863, z: 0}
+      m_Center: {x: 0, y: 0, z: 0}
+      m_Extent: {x: 0, y: 0, z: 0}
     m_EdgeProcessing: 1
     m_TrimEdge: 0.1
     m_FlipX: 0

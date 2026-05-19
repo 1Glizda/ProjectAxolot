@@ -15,7 +15,7 @@ MonoBehaviour:
   _groundedAcceleration: 100
   _groundedDeceleration: 100
   _jumpAcceleration: 100
-  _jumpDeceleration: 5
+  _jumpDeceleration: 100
   _maxHorizontalVelocity: 6
   _terminalVerticalVelocity: -35
   _baseGravity: 25
@@ -46,16 +46,16 @@ MonoBehaviour:
   _jumpInitialGravity: 15
   _fallingGravity: 25
   _standstillThreshold: 0.02
-  _initialJumpForce: 5
+  _initialJumpForce: 7
   _useDiagonalJump: 0
   _jumpRunningMaxAngle: 15
-  _jumpHoldAccel: 10
+  _jumpHoldAccel: 5
   _maxJumpTime: 0.3
   _minJumpTime: 0
   _jumpBufferTime: 0.2
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 3072
+    m_Bits: 16780288
   _groundCheckDistance: 0.2
   _coyoteTime: 0.2
   _applyRotationThreshold: 15
@@ -75,11 +75,11 @@ MonoBehaviour:
   _vaultDuration: 0.3
   _swingAcceleration: 20
   _swingAngularDrag: 1
-  _swingEntryMomentumTransfer: 1
-  _vineJumpForce: 7
+  _swingEntryMomentumTransfer: 2
+  _vineJumpForce: 10
   _autoGrabVines: 1
   _vineReleaseHoldTime: 0.25
-  _vineCatchTranslationDuration: 0.2
+  _vineCatchTranslationDuration: 0.25
   _pushPullForce: 1000
   _pushableCheckYOffset: 0.29
   _pushableCheckDistance: 0.5
