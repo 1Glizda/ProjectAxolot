@@ -15,6 +15,11 @@ namespace Player.StateMachine
 
         public override void EnterState()
         {
+            stateMachine.LastVine = null;
+            if (stateMachine.PreviousStateType != typeof(PlayerPrepareJumpState))
+            {
+                ctx.stateProvider.NotifyStartClimb();
+            }
             ctx.rb.linearVelocity = Vector2.zero;
             _jumpTriggered = false;
             _isDetached = false;
@@ -31,13 +36,13 @@ namespace Player.StateMachine
                 return;
             }
             
-            if (ctx.controller.CanVault && ctx.controller.IsFootNearValidWall)
+            if (ctx.stateProvider.CanVault && ctx.stateProvider.IsFootNearValidWall)
             {
                 stateMachine.ChangeState<PlayerVaultState>();
                 return;
             }
 
-            if (!ctx.controller.IsNearValidWall)
+            if (!ctx.stateProvider.IsNearValidWall)
             {
                 stateMachine.ChangeState<PlayerFallingState>();
                 return;
@@ -48,7 +53,7 @@ namespace Player.StateMachine
                 _attachTimer -= dt;
             }
 
-            float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.controller.WallHitNormal);
+            float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.stateProvider.WallHitNormal);
             
             if (dot > 0f && _attachTimer <= 0f)
             {
@@ -74,14 +79,14 @@ namespace Player.StateMachine
             {
                 Climb(dt);
             }
-            else if (ctx.rb.linearVelocityY != 0f && !_jumpTriggered)
+            else if (!_jumpTriggered)
             {
                 Stop(dt);
             }
             
             if (_jumpTriggered)
             {
-                Vector2 dir = ctx.controller.WallHitNormal;
+                Vector2 dir = ctx.stateProvider.WallHitNormal;
                 ctx.rb.AddForce(settings.WallDetachForce * ctx.rb.mass * dir, ForceMode2D.Impulse);
                 stateMachine.WasDetached = true;
                 _isDetached = true;
@@ -93,25 +98,20 @@ namespace Player.StateMachine
         private void Climb(float dt)
         {
             float currentV = ctx.rb.linearVelocityY;
-           
-            float deltaV = Mathf.Min(settings.WallAcceleration * dt, settings.MaxClimbSpeed - Mathf.Abs(currentV));
-            deltaV *= verticalInput;
-
-            float force = deltaV * ctx.rb.mass;
+            float targetV = verticalInput * settings.MaxClimbSpeed;
             
-            ctx.rb.AddForce(force * Vector3.up, ForceMode2D.Impulse);
+            if (verticalInput > 0f && ctx.stateProvider.IsHeadBlocked)
+            {
+                targetV = 0f;
+            }
+            
+            ctx.rb.linearVelocityY = Mathf.MoveTowards(currentV, targetV, settings.WallAcceleration * dt);
         }
         
         private void Stop(float dt)
         {
             float currentV = ctx.rb.linearVelocityY;
-            float deltaV = settings.WallDeceleration * dt; 
-            deltaV = Mathf.Min(deltaV, Mathf.Abs(currentV));
-            deltaV *= -Mathf.Sign(currentV);
-
-            float force = deltaV * ctx.rb.mass;
-            
-            ctx.rb.AddForce(force * Vector3.up, ForceMode2D.Impulse);
+            ctx.rb.linearVelocityY = Mathf.MoveTowards(currentV, -settings.WallSlideSpeed, settings.WallDeceleration * dt);
         }
         
     }

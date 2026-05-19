@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - AI
   layers:
   - Default
   - TransparentFX
@@ -12,27 +13,27 @@ TagManager:
   - Water
   - UI
   - 
-  - MAIN_Background_far
-  - MAIN_Background_closer
-  - MAIN_Midground
+  - 
+  - 
+  - 
   - Ground
   - Movable
   - 
+  - Player
   - 
-  - WallGrabCheck
-  - WallClimbable
-  - Vault
+  - MossClimbable
+  - Vaul
   - Swing
   - 
-  - 
+  - AI
   - Pulse
   - 
-  - 
-  - 
+  - PulseInterac
+  - GeyserStream
+  - GeyserPlatform
   - 
   - 
   - PulseInteraction
-  - 
   - 
   - 
   - 
@@ -43,19 +44,10 @@ TagManager:
     locked: 0
   - name: BG2
     uniqueID: 4079452813
-    locked: 0
+    locked: 1
   - name: BG1
     uniqueID: 1019581943
-    locked: 0
-  - name: MAIN_Background_far
-    uniqueID: 786453801
-    locked: 0
-  - name: MAIN_Background_closer
-    uniqueID: 3068488759
-    locked: 0
-  - name: MAIN_Midground
-    uniqueID: 3277822235
-    locked: 0
+    locked: 1
   - name: Default
     uniqueID: 0
     locked: 0

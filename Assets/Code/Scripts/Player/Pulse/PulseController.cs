@@ -1,13 +1,17 @@
 using Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 namespace Player.Pulse
 {
     internal class PulseController : MonoBehaviour
     {
+        public event System.Action OnPulse;
+        [FormerlySerializedAs("playerStateProvider")]
+        [FormerlySerializedAs("_playerController")]
         [Header("References")]
-        [SerializeField] private PlayerController _playerController;
+        [SerializeField] private PlayerController playerController;
         [SerializeField] private GameObject _pulsePrefab;
         
         [Header("Settings")]
@@ -21,7 +25,7 @@ namespace Player.Pulse
             
         private void Start()
         {
-            _ctx = _playerController.PlayerContext;
+            _ctx = playerController.PlayerContext;
             _pulseAction = _ctx.manager.PulseAction;
 
             _pulseAction.performed += Pulse;
@@ -39,6 +43,7 @@ namespace Player.Pulse
             _timer = _cooldownTimer;
             
             Instantiate(_pulsePrefab, transform.position, Quaternion.identity);
+            OnPulse?.Invoke();
         }
         
         

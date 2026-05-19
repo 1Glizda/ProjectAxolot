@@ -6,6 +6,8 @@ using UnityEngine;
 public class SpriteImportProcessor : AssetPostprocessor
 {
     private const string SpritesFolderPath = "Assets/Art/Sprites";
+    
+    
     private readonly Dictionary<string, int> _ppuByLayer = new()
     {
         //PPU values for each layer
@@ -42,6 +44,8 @@ public class SpriteImportProcessor : AssetPostprocessor
                 break;
             }
         }
+        
+        
         int texWidth;
         int texHeight;
         importer.GetSourceTextureWidthAndHeight(out  texWidth, out texHeight);

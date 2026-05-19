@@ -10,6 +10,8 @@ namespace Player.StateMachine
         private bool _isCatchBuffered;
         
         private float _graceTimer;
+
+        protected override bool IsGroundedState => false;
         
         public PlayerFallingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
@@ -19,7 +21,7 @@ namespace Player.StateMachine
         {
             jumpAction.performed += BufferCatch;
             _isCatchBuffered = false;
-            _graceTimer = 0.15f; // prevent immediate regrab
+            _graceTimer = 0.35f; // Prevent immediate regrab and allow clearing the trigger for auto-grab
         }
         
         public override void Tick(float dt)
@@ -48,23 +50,24 @@ namespace Player.StateMachine
                 return;
             }
 
-            if (_isCatchBuffered && _catchBuffer > 0f && ctx.collisionHandler.CanSwing && _graceTimer <= 0)
+            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
+            bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || (_isCatchBuffered && _catchBuffer > 0f);
+            
+            bool isSameVine = ctx.collisionHandler.SwingBone != null && ctx.collisionHandler.SwingBone.VineHelper == stateMachine.LastVine;
+            // Cooldown only applies to auto-grabbing the same vine.
+            // Explicit player actions (manual catch buffer) bypass the cooldown for maximum responsiveness.
+            bool grabCooldownActive = isSameVine && _graceTimer > 0f && !_isCatchBuffered;
+
+            if (wantsToGrab && ctx.collisionHandler.CanSwing && !grabCooldownActive)
             {
                 stateMachine.ChangeState<PlayerSwingingState>();
                 return;
             }
 
-            if (ctx.controller.IsNearValidWall)
+            if (ctx.stateProvider.IsNearValidWall)
             {
-                bool canGrab = false;
-                if (stateMachine.WasDetached)
-                {
-                    canGrab = (_isCatchBuffered && _catchBuffer > 0f) || stateMachine.IsInJumpBuffer;
-                }
-                else
-                {
-                    canGrab = jumpAction.IsPressed() || stateMachine.IsInJumpBuffer;
-                }
+                float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
+                bool canGrab = dot <= 0.01f;
 
                 if (canGrab)
                 {

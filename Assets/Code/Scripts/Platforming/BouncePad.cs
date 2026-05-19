@@ -1,4 +1,5 @@
 using System;
+using Player;
 using UnityEngine;
 
 namespace Platforming
@@ -9,16 +10,32 @@ namespace Platforming
         [Tooltip("Negative is left, positive is right.")]
         [SerializeField] private float _angleOffset = 0f;
 
+        private float _cooldown;
+
         private Vector2 GetBounceDirection()
         {
             return Quaternion.Euler(0, 0, -_angleOffset) * Vector3.up;
         }
 
+        private void Update()
+        {
+            if (_cooldown > 0f) _cooldown -= Time.deltaTime;
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.collider.CompareTag("Player"))
+            if (_cooldown > 0f) return;
+
+            if (other.collider.CompareTag("Player")
+                && other.collider.TryGetComponent<IPlayerStateProvider>(out var state)
+                && !state.IsJumping)
             {
                 other.rigidbody.AddForce(GetBounceDirection() * _pushForce, ForceMode2D.Impulse);
+                _cooldown = 0.2f;
+            } else if (other.collider.CompareTag("AI"))
+            {
+                other.rigidbody.AddForce(GetBounceDirection() * _pushForce * 0.45f, ForceMode2D.Impulse);
+                _cooldown = 0.2f;
             }
         }
 

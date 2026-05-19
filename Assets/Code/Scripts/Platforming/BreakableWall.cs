@@ -11,6 +11,25 @@ namespace Platforming
         [SerializeField] private List<Rigidbody2D> _wallPebbles;
         [SerializeField] private float _breakForceThreshold;
 
+        public void TryBreak(float force, Vector2 direction)
+        {
+            if (force >= _breakForceThreshold)
+            {
+                Break(direction);
+            }
+        }
+
+        public void Break(Vector2 direction)
+        {
+            _wallCollider.enabled = false;
+
+            foreach (var rb in _wallPebbles)
+            {
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.AddForce(direction.normalized * 20f, ForceMode2D.Impulse);
+            }
+        }
+
         private void OnCollisionEnter2D(Collision2D other)
         {
             float vel = other.relativeVelocity.magnitude;
@@ -19,16 +38,8 @@ namespace Platforming
 
             if (momentum >= _breakForceThreshold)
             {
-                _wallCollider.enabled = false;
-                
-                //TODO move logic to pebble maybe?
-                foreach (var rb in _wallPebbles)
-                {
-                    rb.bodyType = RigidbodyType2D.Dynamic;
-                    rb.AddForce(other.relativeVelocity.normalized * 20f, ForceMode2D.Impulse);
-                }
+                Break(other.relativeVelocity.normalized);
             }
-            
         }
     }
 }

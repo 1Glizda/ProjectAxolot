@@ -18,6 +18,7 @@ namespace Player
         public float FallingGravity => _fallingGravity;
         public float StandstillThreshold => _standstillThreshold;
         public float InitialJumpForce => _initialJumpForce;
+        public bool UseDiagonalJump => _useDiagonalJump;
         public float JumpRunningMaxAngle => _jumpRunningMaxAngle;
         public float JumpHoldAccel => _jumpHoldAccel;
         public float MaxJumpTime => _maxJumpTime;
@@ -34,6 +35,7 @@ namespace Player
         public float WallAcceleration => _wallAcceleration;
         public float WallDeceleration => _wallDeceleration;
         public float MaxClimbSpeed => _maxClimbSpeed;
+        public float WallSlideSpeed => _wallSlideSpeed;
         public float WallDetachForce => _wallDetachForce;
         public float WallAttachGraceTime => _wallAttachGraceTime;
         
@@ -45,11 +47,17 @@ namespace Player
         public float SwingAngularDrag => _swingAngularDrag;
         public float SwingEntryMomentumTransfer => _swingEntryMomentumTransfer;
         
-        public float VineClimbSpeed => _vineClimbSpeed;
+
         public float VineJumpForce => _vineJumpForce;
+        public bool AutoGrabVines => _autoGrabVines;
         public float VineReleaseHoldTime => _vineReleaseHoldTime;
+        public float VineCatchTranslationDuration => _vineCatchTranslationDuration;
             
         public float PushPullForce => _pushPullForce;
+        public float PushableCheckYOffset => _pushableCheckYOffset;
+        public float PushableCheckDistance => _pushableCheckDistance;
+        
+        public float KnockbackAirAcceleration => _knockbackAirAcceleration;
         
         [Header("Acceleration Settings")]
         [SerializeField] private float _groundedAcceleration = 30f;
@@ -81,6 +89,8 @@ namespace Player
         
         [Header("Jump")]
         [SerializeField] private float _initialJumpForce = 4f;
+
+        [SerializeField] private bool _useDiagonalJump = false;
 
         [SerializeField] private float _jumpRunningMaxAngle = 45f;
         
@@ -116,6 +126,8 @@ namespace Player
         [SerializeField] private float _wallDeceleration;
         
         [SerializeField] private float _maxClimbSpeed;
+        
+        [SerializeField] private float _wallSlideSpeed = 2f;
 
         [SerializeField] private float _wallDetachForce;
         
@@ -136,15 +148,22 @@ namespace Player
 
         [SerializeField] private float _swingEntryMomentumTransfer = 0.2f;
 
-        [SerializeField] private float _vineClimbSpeed = 0.15f;
-        
+
         [SerializeField] private float _vineJumpForce = 12f;
+        [SerializeField] private bool _autoGrabVines = true;
 
         [SerializeField] private float _vineReleaseHoldTime = 0.5f;
 
+        [SerializeField] private float _vineCatchTranslationDuration = 0.1f;
 
         [Header("Pushing Pulling")]
         [SerializeField] private float _pushPullForce;
+        
+        [SerializeField] private float _pushableCheckYOffset = 0.1f;
+        [SerializeField] private float _pushableCheckDistance = 0.5f;
+        
+        [Header("Knockback")]
+        [SerializeField] private float _knockbackAirAcceleration = 3f;
         
     }
 }

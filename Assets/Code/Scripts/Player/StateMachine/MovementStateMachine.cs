@@ -12,6 +12,8 @@ namespace Player.StateMachine
         public Action<Type> onChangeState;
         public bool IsInJumpBuffer { get {return _jumpBuffer > 0f && _isJumpBuffered;}}
         public bool WasDetached;
+        public Type PreviousStateType { get; private set; }
+        public VineHelper LastVine;
 
         public void ConsumeJumpBuffer()
         {
@@ -51,6 +53,7 @@ namespace Player.StateMachine
             _states.Add(typeof(PlayerSwingingState), new PlayerSwingingState(ctx, this));
             _states.Add(typeof(PlayerVaultState), new PlayerVaultState(ctx, this));
             _states.Add(typeof(PlayerPushPullState), new PlayerPushPullState(ctx, this));
+            _states.Add(typeof(PlayerKnockbackState), new PlayerKnockbackState(ctx, this));
             #endregion
         }
 
@@ -84,6 +87,7 @@ namespace Player.StateMachine
                 _jumpBuffer = _settings.JumpBufferTime;
             }
             
+            PreviousStateType = _activeState.GetType();
             _activeState.ExitState();
             _activeState = _states[newStateType];
             _activeState.EnterState();
