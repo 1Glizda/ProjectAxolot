@@ -29,7 +29,7 @@ namespace Player.StateMachine
             _currentBoneIndex = _vine.GetBoneIndex(swingBone);
             
             Vector2 entryV = ctx.rb.linearVelocity;
-            _currentBoneRb.AddForce(entryV * (settings.SwingEntryMomentumTransfer * _currentBoneRb.mass), ForceMode2D.Impulse);
+            _currentBoneRb.AddForce(entryV * (settings.SwingEntryMomentumTransfer * ctx.rb.mass), ForceMode2D.Impulse);
 
             _isTranslating = true;
             _translationTimer = 0f;
