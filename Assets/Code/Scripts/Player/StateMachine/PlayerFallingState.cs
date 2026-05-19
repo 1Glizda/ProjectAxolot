@@ -10,6 +10,8 @@ namespace Player.StateMachine
         private bool _isCatchBuffered;
         
         private float _graceTimer;
+
+        protected override bool IsGroundedState => false;
         
         public PlayerFallingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {

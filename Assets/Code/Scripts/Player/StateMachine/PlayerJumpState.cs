@@ -6,6 +6,8 @@ namespace Player.StateMachine
     {
         private float _timer;
         private bool _spaceReleased;
+
+        protected override bool IsGroundedState => false;
         
         public PlayerJumpState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {

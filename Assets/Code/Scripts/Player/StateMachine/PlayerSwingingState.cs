@@ -8,7 +8,6 @@ namespace Player.StateMachine
         private Rigidbody2D _currentBoneRb;
         private VineHelper _vine;
         private int _currentBoneIndex;
-        private float _releaseTimer;
         
         private Vector2 _entryVelocity;
         private bool _isTranslating;
@@ -22,7 +21,6 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             ctx.stateProvider.NotifyGrabVine();
-            _releaseTimer = 0f;
             SwingBone swingBone = ctx.collisionHandler.SwingBone;
             
             _currentBoneRb = swingBone.Rb;
@@ -72,22 +70,6 @@ namespace Player.StateMachine
             }
 
             if (_isTranslating) return;
-
-            if (verticalInput < -0.1f)
-            {
-                _releaseTimer += dt;
-                if (_releaseTimer >= settings.VineReleaseHoldTime)
-                {
-                    ctx.swingHinge.enabled = false;
-                    ctx.swingHinge.connectedBody = null;
-                    stateMachine.ChangeState<PlayerFallingState>();
-                    return;
-                }
-            }
-            else
-            {
-                _releaseTimer = 0f;
-            }
         }
         public override void FixedTick(float dt)
         {
