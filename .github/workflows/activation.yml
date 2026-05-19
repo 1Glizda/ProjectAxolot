@@ -1,0 +1,20 @@
+name: Get Unity Activation File
+
+on: workflow_dispatch # Allows you to run it manually
+
+jobs:
+  activation:
+    name: Request Activation File
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Request manual activation file
+        uses: game-ci/unity-request-activation-file@v2
+      
+      - name: Upload .alf file
+        uses: actions/upload-artifact@v4
+        with:
+          name: UnityActivationFile
+          path: ./*.alf

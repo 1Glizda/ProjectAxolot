@@ -7,6 +7,7 @@ namespace Player
     {
         public event System.Action OnJump;
         public event System.Action OnStartClimb;
+        public event System.Action OnLand;
         public bool IsClimbing { get; }
         public bool IsPreparingWallJump { get; }
         public bool IsJumping { get; }
