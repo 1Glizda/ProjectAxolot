@@ -118,20 +118,30 @@ namespace Platforming
                 float speed = targetMaxHeight / Mathf.Max(0.001f, currentDuration);
 
                 Rigidbody2D rb = _platform.GetComponent<Rigidbody2D>();
+                Vector3 newLocalPos;
                 if (rb != null)
                 {
-                    Vector3 newLocalPos = Vector3.MoveTowards(_platform.localPosition, targetLocalPos, speed * Time.fixedDeltaTime);
-                    rb.MovePosition(_platform.parent != null ? _platform.parent.TransformPoint(newLocalPos) : newLocalPos);
+                    Vector3 currentWorldPos = rb.position;
+                    Vector3 currentLocalPos = _platform.parent != null ? _platform.parent.InverseTransformPoint(currentWorldPos) : currentWorldPos;
+                    
+                    newLocalPos = Vector3.MoveTowards(currentLocalPos, targetLocalPos, speed * Time.fixedDeltaTime);
+                    Vector3 newWorldPos = _platform.parent != null ? _platform.parent.TransformPoint(newLocalPos) : newLocalPos;
+                    
+                    Vector2 velocity = ((Vector2)newWorldPos - rb.position) / Time.fixedDeltaTime;
+                    rb.linearVelocity = velocity;
+                    
+                    rb.MovePosition(newWorldPos);
                 }
                 else
                 {
-                    _platform.localPosition = Vector3.MoveTowards(_platform.localPosition, targetLocalPos, speed * Time.fixedDeltaTime);
+                    newLocalPos = Vector3.MoveTowards(_platform.localPosition, targetLocalPos, speed * Time.fixedDeltaTime);
+                    _platform.localPosition = newLocalPos;
                 }
 
                 // Move the stream sprite object to match platform height
                 if (_streamObject != null)
                 {
-                    float currentHeight = _platform.localPosition.y - _platformInitialLocalPos.y;
+                    float currentHeight = newLocalPos.y - _platformInitialLocalPos.y;
                     _streamObject.transform.localPosition = _streamInitialLocalPos + Vector3.up * currentHeight;
                 }
             }
