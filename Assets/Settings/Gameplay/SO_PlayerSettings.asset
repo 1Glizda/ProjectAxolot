@@ -55,7 +55,7 @@ MonoBehaviour:
   _jumpBufferTime: 0.2
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 3072
+    m_Bits: 16780288
   _groundCheckDistance: 0.2
   _coyoteTime: 0.2
   _applyRotationThreshold: 15
@@ -76,10 +76,10 @@ MonoBehaviour:
   _swingAcceleration: 20
   _swingAngularDrag: 1
   _swingEntryMomentumTransfer: 2
-  _vineJumpForce: 7
+  _vineJumpForce: 10
   _autoGrabVines: 1
   _vineReleaseHoldTime: 0.25
-  _vineCatchTranslationDuration: 0.2
+  _vineCatchTranslationDuration: 1
   _pushPullForce: 1000
   _pushableCheckYOffset: 0.29
   _pushableCheckDistance: 0.5

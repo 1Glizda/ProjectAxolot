@@ -50,7 +50,13 @@ namespace Player.StateMachine
 
             bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
             bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || (_isCatchBuffered && _catchBuffer > 0f);
-            if (wantsToGrab && ctx.collisionHandler.CanSwing && _graceTimer <= 0)
+            
+            bool isSameVine = ctx.collisionHandler.SwingBone != null && ctx.collisionHandler.SwingBone.VineHelper == stateMachine.LastVine;
+            // Cooldown only applies to auto-grabbing the same vine.
+            // Explicit player actions (manual catch buffer) bypass the cooldown for maximum responsiveness.
+            bool grabCooldownActive = isSameVine && _graceTimer > 0f && !_isCatchBuffered;
+
+            if (wantsToGrab && ctx.collisionHandler.CanSwing && !grabCooldownActive)
             {
                 stateMachine.ChangeState<PlayerSwingingState>();
                 return;

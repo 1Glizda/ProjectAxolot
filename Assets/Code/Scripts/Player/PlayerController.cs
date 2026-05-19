@@ -13,6 +13,7 @@ namespace Player
         public event System.Action OnJump;
         public event System.Action OnStartClimb;
         public event System.Action OnLand;
+        public event System.Action OnGrabVine;
         public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
         public bool IsPreparingWallJump => _isPreparingWallJump;
         public bool IsJumping => _isJumping;
@@ -158,6 +159,11 @@ namespace Player
         public void NotifyLand()
         {
             OnLand?.Invoke();
+        }
+        
+        public void NotifyGrabVine()
+        {
+            OnGrabVine?.Invoke();
         }
 
         public void ApplyKnockback(Vector2 velocity)

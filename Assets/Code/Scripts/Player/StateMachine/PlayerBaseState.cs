@@ -82,6 +82,11 @@ namespace Player.StateMachine
                 angle *= -1;
             }
             
+            if (Mathf.Abs(currentY) > 90f)
+            {
+                angle *= -1f;
+            }
+            
             rotation.z = angle;
             ApplySpriteRotation(rotation);
         }
