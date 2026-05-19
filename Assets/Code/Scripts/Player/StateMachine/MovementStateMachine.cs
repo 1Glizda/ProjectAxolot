@@ -1,6 +1,7 @@
 using Player.Helpers;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
@@ -98,6 +99,7 @@ namespace Player.StateMachine
 
         private void TryBufferJump(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0f) return;
             if (_activeState is PlayerFallingState || _activeState is PlayerIdleState || _activeState is PlayerRunState)
             {
                 _isJumpBuffered = true;

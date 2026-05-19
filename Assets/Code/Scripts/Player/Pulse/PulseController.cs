@@ -39,6 +39,7 @@ namespace Player.Pulse
         
         private void Pulse(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0f) return;
             if (_timer > 0f) return;
             _timer = _cooldownTimer;
             

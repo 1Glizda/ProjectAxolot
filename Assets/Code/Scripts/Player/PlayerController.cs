@@ -121,6 +121,8 @@ namespace Player
 
         private void Update()
         {
+            if (Time.timeScale == 0f) return;
+
             float dt = Time.deltaTime;
             CheckGrounded();
             CheckWall();
