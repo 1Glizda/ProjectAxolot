@@ -6,6 +6,8 @@ namespace Player.StateMachine
     {
         private float _timer;
         private bool _spaceReleased;
+
+        protected override bool IsGroundedState => false;
         
         public PlayerJumpState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
@@ -22,7 +24,7 @@ namespace Player.StateMachine
 
             Vector2 dir = Vector2.up;
             
-            if (!ctx.stateProvider.IsNearValidWall)
+            if (settings.UseDiagonalJump && !ctx.stateProvider.IsNearValidWall)
             {
                 float lAngle = ( 90f + settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
                 float rAngle = (90f - settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
@@ -47,7 +49,9 @@ namespace Player.StateMachine
             if(!jumpAction.IsPressed()) _spaceReleased = true;
             _timer += dt;
 
-            if (jumpAction.triggered && ctx.collisionHandler.CanSwing)
+            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
+            bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || jumpAction.triggered;
+            if (wantsToGrab && ctx.collisionHandler.CanSwing)
             {
                 stateMachine.ChangeState<PlayerSwingingState>();
                 return;
@@ -61,8 +65,12 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.IsNearValidWall)
             {
-                stateMachine.ChangeState<PlayerClimbingState>();
-                return;
+                float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
+                if (dot <= 0.01f)
+                {
+                    stateMachine.ChangeState<PlayerClimbingState>();
+                    return;
+                }
             }
             
         }

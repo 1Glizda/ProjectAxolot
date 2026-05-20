@@ -35,7 +35,7 @@ namespace Interactions
             }
         }
 
-        public void PulseInteract()
+        public virtual void PulseInteract()
         {
             if (!_isPulsing)
             {

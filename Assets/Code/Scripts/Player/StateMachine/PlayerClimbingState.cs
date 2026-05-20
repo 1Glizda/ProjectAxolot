@@ -15,7 +15,11 @@ namespace Player.StateMachine
 
         public override void EnterState()
         {
-            ctx.stateProvider.NotifyStartClimb();
+            stateMachine.LastVine = null;
+            if (stateMachine.PreviousStateType != typeof(PlayerPrepareJumpState))
+            {
+                ctx.stateProvider.NotifyStartClimb();
+            }
             ctx.rb.linearVelocity = Vector2.zero;
             _jumpTriggered = false;
             _isDetached = false;
@@ -95,6 +99,12 @@ namespace Player.StateMachine
         {
             float currentV = ctx.rb.linearVelocityY;
             float targetV = verticalInput * settings.MaxClimbSpeed;
+            
+            if (verticalInput > 0f && ctx.stateProvider.IsHeadBlocked)
+            {
+                targetV = 0f;
+            }
+            
             ctx.rb.linearVelocityY = Mathf.MoveTowards(currentV, targetV, settings.WallAcceleration * dt);
         }
         

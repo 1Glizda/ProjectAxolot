@@ -18,6 +18,8 @@ namespace Player.StateMachine
         protected float horizontalInput;
         protected float verticalInput;
 
+        protected virtual bool IsGroundedState => isGrounded;
+
         
         protected PlayerBaseState(PlayerContext ctx, MovementStateMachine stateMachine)
         {
@@ -82,6 +84,11 @@ namespace Player.StateMachine
                 angle *= -1;
             }
             
+            if (Mathf.Abs(currentY) > 90f)
+            {
+                angle *= -1f;
+            }
+            
             rotation.z = angle;
             ApplySpriteRotation(rotation);
         }
@@ -99,24 +106,50 @@ namespace Player.StateMachine
 
         protected void ApplyAccel(float dt, float acceleration, float deceleration, float maxV)
         {
-            float currentV = ctx.rb.linearVelocityX;
-            float targetV = horizontalInput * maxV;
-
-            if (horizontalInput != 0f)
+            if (IsGroundedState)
             {
-                // If we are turning (input and velocity have opposite signs)
-                bool isTurning = (horizontalInput > 0 && currentV < 0) || (horizontalInput < 0 && currentV > 0);
-                float speed = isTurning ? Mathf.Max(acceleration, deceleration) : acceleration;
-                ctx.rb.linearVelocityX = Mathf.MoveTowards(currentV, targetV, speed * dt);
+                // Move perfectly along the slope's tangent
+                Vector2 slopeTangent = groundData.slopeTangent;
+                float targetSpeed = horizontalInput * maxV;
+                Vector2 targetVelocity = targetSpeed * slopeTangent;
+
+                if (horizontalInput != 0f)
+                {
+                    ctx.rb.linearVelocity = Vector2.MoveTowards(ctx.rb.linearVelocity, targetVelocity, acceleration * dt);
+                }
+                else
+                {
+                    ApplyDecel(dt, deceleration);
+                }
             }
             else
             {
-                ApplyDecel(dt, deceleration);
+                // Traditional horizontal-only movement in the air
+                float currentV = ctx.rb.linearVelocityX;
+                float targetV = horizontalInput * maxV;
+
+                if (horizontalInput != 0f)
+                {
+                    bool isTurning = (horizontalInput > 0 && currentV < 0) || (horizontalInput < 0 && currentV > 0);
+                    float speed = isTurning ? Mathf.Max(acceleration, deceleration) : acceleration;
+                    ctx.rb.linearVelocityX = Mathf.MoveTowards(currentV, targetV, speed * dt);
+                }
+                else
+                {
+                    ApplyDecel(dt, deceleration);
+                }
             }
         }
 
         protected void ApplyDecel(float dt, float deceleration)
         {
+            if (IsGroundedState)
+            {
+                // Decelerate entire velocity vector along the slope to prevent any sliding
+                ctx.rb.linearVelocity = Vector2.MoveTowards(ctx.rb.linearVelocity, Vector2.zero, deceleration * dt);
+                return;
+            }
+
             float currentV = ctx.rb.linearVelocityX;
             if (currentV == 0f) return;
             
@@ -131,6 +164,12 @@ namespace Player.StateMachine
 
         protected void ApplyGravity(float dt, float gravity)
         {
+            if (IsGroundedState)
+            {
+                // Return early without applying gravity forces when grounded to prevent sliding
+                return;
+            }
+
             if (ctx.rb.linearVelocityY <= settings.TerminalVerticalVelocity) return;
             
             float newV = ctx.rb.linearVelocityY - (gravity * dt);

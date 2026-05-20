@@ -7,10 +7,12 @@ namespace Player
         //animator properties
         private static readonly int Jump = Animator.StringToHash("Jump");
         private static readonly int IsClimbing = Animator.StringToHash("IsClimbing");
+        private static readonly int IsPreparingWallJump = Animator.StringToHash("IsPreparingWallJump");
         private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
         private static readonly int HorizontalVelocity = Animator.StringToHash("HorizontalVelocity");
         private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         private static readonly int StartClimb = Animator.StringToHash("StartClimb");
+        private static readonly int GrabVine = Animator.StringToHash("GrabVine");
 
 
         [SerializeField] private Animator _animator;
@@ -24,6 +26,7 @@ namespace Player
         {
             if (!_isInitialized) return;
             _animator.SetBool(IsClimbing,  _playerState.IsClimbing);
+            _animator.SetBool(IsPreparingWallJump, _playerState.IsPreparingWallJump);
             _animator.SetFloat(VerticalVelocity, _playerState.VerticalVelocity);
             _animator.SetFloat(HorizontalVelocity, Mathf.Abs(_playerState.HorizontalVelocity));
             _animator.SetBool(IsGrounded, _playerState.IsGrounded);
@@ -36,6 +39,7 @@ namespace Player
             _isInitialized = true;
             _playerState.OnJump+=OnJump;
             _playerState.OnStartClimb+=OnStartClimb;
+            _playerState.OnGrabVine+=OnGrabVine;
         }
 
         private void OnEnable()
@@ -43,12 +47,14 @@ namespace Player
             if (!_isInitialized) return;
             _playerState.OnJump += OnJump;
             _playerState.OnStartClimb += OnStartClimb;
+            _playerState.OnGrabVine += OnGrabVine;
         }
         private void OnDisable()
         {
             if (!_isInitialized) return;
             _playerState.OnJump -= OnJump;
             _playerState.OnStartClimb -= OnStartClimb;
+            _playerState.OnGrabVine -= OnGrabVine;
         }
         
         private void OnJump()
@@ -59,6 +65,11 @@ namespace Player
         private void OnStartClimb()
         {
             _animator.SetTrigger(StartClimb);
+        }
+
+        private void OnGrabVine()
+        {
+            _animator.SetTrigger(GrabVine);
         }
 
     }
