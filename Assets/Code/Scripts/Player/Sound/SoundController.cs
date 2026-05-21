@@ -26,6 +26,44 @@ namespace Player.Sound
         private AudioClip _lastOneShotClip;
         private float _lastOneShotTime;
 
+        [Header("Debug")]
+        [SerializeField] private bool debugMode = false;
+
+        private void Awake()
+        {
+            // Auto-setup loopSource if not assigned
+            if (loopSource == null)
+            {
+                AudioSource[] sources = GetComponents<AudioSource>();
+                if (sources.Length > 0)
+                {
+                    loopSource = sources[0];
+                }
+                else
+                {
+                    loopSource = gameObject.AddComponent<AudioSource>();
+                }
+            }
+
+            // Auto-setup oneShotSource if not assigned
+            if (oneShotSource == null)
+            {
+                AudioSource[] sources = GetComponents<AudioSource>();
+                if (sources.Length > 1)
+                {
+                    oneShotSource = sources[1];
+                }
+                else
+                {
+                    oneShotSource = gameObject.AddComponent<AudioSource>();
+                }
+            }
+
+            // Ensure AudioSources don't play on awake automatically
+            if (loopSource != null) loopSource.playOnAwake = false;
+            if (oneShotSource != null) oneShotSource.playOnAwake = false;
+        }
+
         private void Update()
         {
             HandleLoopFade();
@@ -39,7 +77,16 @@ namespace Player.Sound
         /// </summary>
         public void PlayLoop(AudioClip clip, float volume = 1f)
         {
-            if (clip == null || loopSource == null) return;
+            if (clip == null)
+            {
+                if (debugMode) Debug.LogWarning($"[{gameObject.name}] PlayLoop called with null clip.", this);
+                return;
+            }
+            if (loopSource == null)
+            {
+                Debug.LogError($"[{gameObject.name}] PlayLoop failed: loopSource is missing.", this);
+                return;
+            }
 
             // Already playing this clip at target volume
             if (loopSource.clip == clip && loopSource.isPlaying && !_isFadingOut)
@@ -48,6 +95,7 @@ namespace Player.Sound
                 return;
             }
 
+            if (debugMode) Debug.Log($"[{gameObject.name}] PlayLoop starting: {clip.name} at volume {volume}.", this);
             _pendingLoopClip = clip;
             _targetLoopVolume = volume;
 
@@ -67,6 +115,7 @@ namespace Player.Sound
         /// </summary>
         public void StopLoop()
         {
+            if (debugMode && loopSource != null && loopSource.isPlaying) Debug.Log($"[{gameObject.name}] StopLoop requested.", this);
             _pendingLoopClip = null;
             _isFadingOut = true;
         }
@@ -120,13 +169,23 @@ namespace Player.Sound
         /// </summary>
         public void PlayOneShot(AudioClip clip, float volume = 1f, float pitchVariance = 0f)
         {
-            if (clip == null || oneShotSource == null) return;
+            if (clip == null)
+            {
+                if (debugMode) Debug.LogWarning($"[{gameObject.name}] PlayOneShot called with null clip.", this);
+                return;
+            }
+            if (oneShotSource == null)
+            {
+                Debug.LogError($"[{gameObject.name}] PlayOneShot failed: oneShotSource is missing.", this);
+                return;
+            }
 
             if (pitchVariance > 0f)
                 oneShotSource.pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
             else
                 oneShotSource.pitch = 1f;
 
+            if (debugMode) Debug.Log($"[{gameObject.name}] PlayOneShot: {clip.name} (volume: {volume}, pitch: {oneShotSource.pitch:F2})", this);
             oneShotSource.PlayOneShot(clip, volume);
         }
 
