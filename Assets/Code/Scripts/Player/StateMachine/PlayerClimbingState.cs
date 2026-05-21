@@ -8,7 +8,7 @@ namespace Player.StateMachine
         private bool _jumpTriggered;
         private bool _isDetached;
         private float _attachTimer;
-        public PlayerClimbingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerClimbingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
             
         }

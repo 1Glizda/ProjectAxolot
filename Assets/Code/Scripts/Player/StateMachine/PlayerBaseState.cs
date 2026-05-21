@@ -6,7 +6,7 @@ namespace Player.StateMachine
     internal abstract class PlayerBaseState
     {
     
-        protected readonly PlayerContext ctx;
+        protected readonly PlayerControllerContext ctx;
         protected readonly MovementStateMachine stateMachine;
         protected readonly InputAction moveAction;
         protected readonly InputAction jumpAction;
@@ -21,14 +21,14 @@ namespace Player.StateMachine
         protected virtual bool IsGroundedState => isGrounded;
 
         
-        protected PlayerBaseState(PlayerContext ctx, MovementStateMachine stateMachine)
+        protected PlayerBaseState(PlayerControllerContext ctx, MovementStateMachine stateMachine)
         {
            this.ctx = ctx;
            this.stateMachine = stateMachine;
            
            settings = ctx.settings;
-           moveAction = ctx.manager.MoveAction;
-           jumpAction = ctx.manager.JumpAction;
+           moveAction = ctx.handler.MoveAction;
+           jumpAction = ctx.handler.JumpAction;
         }
 
         public virtual void EnterState(){}

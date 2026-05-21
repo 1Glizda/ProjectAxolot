@@ -5,7 +5,7 @@ namespace Player.StateMachine
     internal sealed class PlayerPrepareJumpState : PlayerBaseState
     {
         private bool _jumpTriggered;
-        public PlayerPrepareJumpState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerPrepareJumpState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
              
         }

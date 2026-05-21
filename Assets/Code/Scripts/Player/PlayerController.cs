@@ -1,3 +1,4 @@
+using System.Collections;
 using Interfaces;
 using Player.Input;
 using Player.StateMachine;
@@ -14,6 +15,7 @@ namespace Player
         public event System.Action OnStartClimb;
         public event System.Action OnLand;
         public event System.Action OnGrabVine;
+        
         public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
         public bool IsPreparingWallJump => _isPreparingWallJump;
         public bool IsJumping => _isJumping;
@@ -31,7 +33,7 @@ namespace Player
         public bool CanVault => _canVault;
         public Vector2 VaultTarget => _vaultTarget;
         
-        public PlayerContext PlayerContext => _context;
+        public PlayerControllerContext PlayerControllerContext => _controllerContext;
 
 
         [Header("Debug")]
@@ -53,7 +55,7 @@ namespace Player
         [SerializeField] private HingeJoint2D _swingHinge;
         
         private MovementStateMachine _stateMachine;
-        private PlayerContext _context;
+        private PlayerControllerContext _controllerContext;
 
         private bool _isGrounded;
         private bool _isInClimbingState;
@@ -92,8 +94,8 @@ namespace Player
         {
             _pushableLayerIndex = LayerMask.NameToLayer("Movable");
 
-            _context = new PlayerContext(
-                inputHandler as IPlayerInputManager,
+            _controllerContext = new PlayerControllerContext(
+                inputHandler as IPlayerInputHandler,
                 this as IPlayerStateProvider,
                 _collisionHandler,
                 _settings,
@@ -105,7 +107,7 @@ namespace Player
             );
 
             
-            _stateMachine = new MovementStateMachine(_settings, _context);
+            _stateMachine = new MovementStateMachine(_settings, _controllerContext);
             _groundHits = new RaycastHit2D[3];   
             
             _stateMachine.onChangeState += type => {
@@ -121,12 +123,14 @@ namespace Player
 
         private void Update()
         {
+            if (Time.timeScale == 0f) return;
+
             float dt = Time.deltaTime;
             CheckGrounded();
             CheckWall();
             _stateMachine.Tick(dt);
 
-            bool isTryingToClimb = Mathf.Abs(VerticalVelocity) > 0.1f || Mathf.Abs(((IPlayerInputManager)inputHandler).MoveAction.ReadValue<Vector2>().y) > 0.1f;
+            bool isTryingToClimb = Mathf.Abs(VerticalVelocity) > 0.1f || Mathf.Abs(((IPlayerInputHandler)inputHandler).MoveAction.ReadValue<Vector2>().y) > 0.1f;
             if (_isInClimbingState && isTryingToClimb)
             {
                 _climbingAnimStopTimer = 0.15f;
@@ -168,7 +172,7 @@ namespace Player
 
         public void ApplyKnockback(Vector2 velocity)
         {
-            _context.PendingKnockbackVelocity = velocity;
+            _controllerContext.PendingKnockbackVelocity = velocity;
             _stateMachine.ChangeState<PlayerKnockbackState>();
         }
 
@@ -378,7 +382,37 @@ namespace Player
             return hits[0].collider || hits[1].collider || hits[2].collider;
         }
 
+        public void Teleport(Vector2 position)
+        {
+            StartCoroutine(TeleportRoutine(position));
+        }
+        
+        private IEnumerator TeleportRoutine(Vector2 targetPosition)
+        {
+            yield return new WaitForEndOfFrame();
+            ((IPlayerInputHandler)inputHandler).SetInputActive(false);
 
+            _rb.linearVelocity = Vector2.zero;
+            _rb.angularVelocity = 0f;
+    
+            var originalInterpolation = _rb.interpolation;
+            _rb.interpolation = RigidbodyInterpolation2D.None;
+    
+            _rb.position = targetPosition;
+            transform.position = targetPosition;
+    
+            Physics2D.SyncTransforms();
+            _rb.interpolation = originalInterpolation;
+
+            _isGrounded = false;
+            _isInCoyoteTime = false;
+            _coyoteTimer = 0f;
+
+            _stateMachine.ChangeState<PlayerIdleState>();
+            yield return new WaitForFixedUpdate();
+    
+            ((IPlayerInputHandler)inputHandler).SetInputActive(true);
+        }
         
     }
 }

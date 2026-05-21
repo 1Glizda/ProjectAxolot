@@ -13,7 +13,7 @@ namespace Player.StateMachine
 
         protected override bool IsGroundedState => false;
         
-        public PlayerFallingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerFallingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
 
@@ -89,6 +89,7 @@ namespace Player.StateMachine
 
         private void BufferCatch(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0f) return;
             _isCatchBuffered = true;
             _catchBuffer = 0.5f;
         }

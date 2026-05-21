@@ -11,7 +11,7 @@ namespace Player.StateMachine
 
         private float _timer;
 
-        internal PlayerVaultState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        internal PlayerVaultState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         { }
 
         public override void EnterState()

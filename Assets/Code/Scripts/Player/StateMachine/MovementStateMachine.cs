@@ -1,6 +1,7 @@
 using Player.Helpers;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player.StateMachine
@@ -24,7 +25,7 @@ namespace Player.StateMachine
         
 
         private readonly PlayerSettingsSo _settings;
-        private readonly PlayerContext _ctx;
+        private readonly PlayerControllerContext _ctx;
         
         private PlayerBaseState _activeState;
 
@@ -34,13 +35,13 @@ namespace Player.StateMachine
         private readonly Dictionary<Type, PlayerBaseState> _states = new Dictionary<Type, PlayerBaseState>();
         
         
-        public MovementStateMachine(PlayerSettingsSo settings, PlayerContext ctx)
+        public MovementStateMachine(PlayerSettingsSo settings, PlayerControllerContext ctx)
         {
             _settings = settings;
             _ctx = ctx;
             _activeState = new PlayerIdleState(ctx, this);
             
-            _ctx.manager.JumpAction.started += TryBufferJump;
+            _ctx.handler.JumpAction.started += TryBufferJump;
             _jumpBuffer = _settings.JumpBufferTime;
             
             #region POPULATE STATES DICTIONARY
@@ -59,7 +60,7 @@ namespace Player.StateMachine
 
         ~MovementStateMachine()
         {
-            _ctx.manager.JumpAction.started -= TryBufferJump;
+            _ctx.handler.JumpAction.started -= TryBufferJump;
         }
         
         public void Tick(float dt)
@@ -98,6 +99,7 @@ namespace Player.StateMachine
 
         private void TryBufferJump(InputAction.CallbackContext context)
         {
+            if (Time.timeScale == 0f) return;
             if (_activeState is PlayerFallingState || _activeState is PlayerIdleState || _activeState is PlayerRunState)
             {
                 _isJumpBuffered = true;

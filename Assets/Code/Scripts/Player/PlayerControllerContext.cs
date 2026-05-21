@@ -3,10 +3,10 @@ using UnityEngine;
 namespace Player
 {
     //player references container
-    internal sealed class PlayerContext
+    internal sealed class PlayerControllerContext
     {
 
-        public readonly IPlayerInputManager manager;
+        public readonly IPlayerInputHandler handler;
         public readonly IPlayerStateProvider stateProvider;
 
         
@@ -20,8 +20,8 @@ namespace Player
 
         public Vector2 PendingKnockbackVelocity;
 
-        public PlayerContext(
-            IPlayerInputManager manager,
+        public PlayerControllerContext(
+            IPlayerInputHandler handler,
             IPlayerStateProvider stateProvider,
             PlayerCollisionHandler collisionHandler,
             PlayerSettingsSo settings,
@@ -32,7 +32,7 @@ namespace Player
             HingeJoint2D swingHinge
         )
         {
-            this.manager = manager;
+            this.handler = handler;
             this.stateProvider = stateProvider;
             this.collisionHandler = collisionHandler;
             this.settings = settings;
