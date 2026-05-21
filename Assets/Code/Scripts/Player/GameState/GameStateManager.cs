@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 namespace Player.GameState
 {
+    [DefaultExecutionOrder(-1)]
     public class GameStateManager : MonoBehaviour
     {
         public static GameStateManager Instance;
@@ -55,6 +56,14 @@ namespace Player.GameState
             _unlocks.UnlockTier(3);
         }
         #endregion
+
+        
+        public void KillPlayer()
+        {
+            Debug.LogError("Player Killed", this);
+            ResetPlayer();
+            onDeath?.Invoke();
+        }
         
         public void DamagePlayer(int damage)
         {
@@ -62,9 +71,7 @@ namespace Player.GameState
             onHpChange?.Invoke(_currentHp);
             if (_currentHp <= 0)
             {
-                _currentHp = 0;
-                ResetPlayer();
-                onDeath?.Invoke();
+                KillPlayer();
             }
             
         }
@@ -82,6 +89,7 @@ namespace Player.GameState
         private void ResetPlayer()
         {
             _currentHp = _maxHp;
+            onHpChange?.Invoke(_currentHp);
         }
         
     }

@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using Object = UnityEngine.Object;
 
 namespace Player.GameState
 {
@@ -19,6 +22,13 @@ namespace Player.GameState
             {
                 _playerController = FindFirstObjectByType<PlayerController>();
             }
+
+            Checkpoint[] checkpoints = FindObjectsByType<Checkpoint>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+
+            foreach (Checkpoint checkpoint in checkpoints)
+            {
+                checkpoint.Initialize(this);
+            }
         }
         
         private void OnEnable()
@@ -31,7 +41,7 @@ namespace Player.GameState
             GameStateManager.Instance.onDeath.RemoveListener(OnDeath);
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Checkpoints"))
             {
@@ -45,9 +55,10 @@ namespace Player.GameState
         
         private void OnDeath()
         {
-            if (_currentCheckpoint && _playerController)
+            if ( _playerController)
             {
-                _playerController.Teleport(_currentCheckpoint.transform.position);
+                Vector2 position = _currentCheckpoint ?  _currentCheckpoint.transform.position : _startingCheckpoint.transform.position;
+                _playerController.Teleport(position);
             }
         }
     }

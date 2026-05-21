@@ -1,3 +1,4 @@
+using System.Collections;
 using Interfaces;
 using Player.Input;
 using Player.StateMachine;
@@ -381,32 +382,35 @@ namespace Player
             return hits[0].collider || hits[1].collider || hits[2].collider;
         }
 
-        public void Teleport(Vector2 targetPosition)
+        public void Teleport(Vector2 position)
         {
-            // 1. Disable player inputs so they cannot add force/velocity during snap
+            StartCoroutine(TeleportRoutine(position));
+        }
+        
+        private IEnumerator TeleportRoutine(Vector2 targetPosition)
+        {
+            yield return new WaitForEndOfFrame();
             ((IPlayerInputHandler)inputHandler).SetInputActive(false);
 
-            // 2. Clear Rigidbody momentum and set position
             _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0f;
-            
+    
             var originalInterpolation = _rb.interpolation;
             _rb.interpolation = RigidbodyInterpolation2D.None;
-            
+    
             _rb.position = targetPosition;
             transform.position = targetPosition;
-            
+    
+            Physics2D.SyncTransforms();
             _rb.interpolation = originalInterpolation;
 
-            // 3. Reset internal physics states
             _isGrounded = false;
             _isInCoyoteTime = false;
             _coyoteTimer = 0f;
 
-            // 4. Reset the state machine state to Idle to ensure state integrity
             _stateMachine.ChangeState<PlayerIdleState>();
-
-            // 5. Re-enable input
+            yield return new WaitForFixedUpdate();
+    
             ((IPlayerInputHandler)inputHandler).SetInputActive(true);
         }
         
