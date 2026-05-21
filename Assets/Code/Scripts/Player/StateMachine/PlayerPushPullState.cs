@@ -6,7 +6,7 @@ namespace Player.StateMachine
     internal class PlayerPushPullState : PlayerBaseState
     {
         private IPushable _pushable;
-        internal PlayerPushPullState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine){}
+        internal PlayerPushPullState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine){}
 
         public override void EnterState()
         {

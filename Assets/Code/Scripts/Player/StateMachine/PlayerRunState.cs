@@ -5,7 +5,7 @@ namespace Player.StateMachine
 {
     internal sealed class PlayerRunState : PlayerBaseState
     {
-        public PlayerRunState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerRunState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
 

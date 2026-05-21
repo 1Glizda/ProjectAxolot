@@ -15,7 +15,7 @@ namespace Player.StateMachine
         private Vector2 _translationStartPos;
         private float _translationStartAngle;
         
-        public PlayerSwingingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerSwingingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {}
 
         public override void EnterState()
