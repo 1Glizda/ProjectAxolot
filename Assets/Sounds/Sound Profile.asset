@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4360f9ae3d5624ebe8e2b865d7568799, type: 3}
   m_Name: Sound Profile
   m_EditorClassIdentifier: Game.Player::Player.Sound.SoundProfileSo
-  footstepLoop: {fileID: 0}
-  footstepVolume: 0.6
+  footstepLoop: {fileID: 8300000, guid: 9007393e73624114ebd0e92eba55488a, type: 3}
+  footstepVolume: 1
   idleChirps: []
   idleChirpVolume: 0.4
   idleChirpInitialDelay: 3
