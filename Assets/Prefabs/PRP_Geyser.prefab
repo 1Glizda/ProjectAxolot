@@ -340,6 +340,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.KnockbackHazard
   _horizontalForce: 20
   _verticalForce: 0
+  _applyDamage: 1
+  _damageAmount: 1
 --- !u!61 &3713161565177913726
 BoxCollider2D:
   m_ObjectHideFlags: 0

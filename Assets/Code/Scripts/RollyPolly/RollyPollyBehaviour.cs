@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Player;
 using Player.GameState;
@@ -60,6 +61,7 @@ namespace RollyPolly
         [SerializeField] private float _enemyRecoilForceX = 8f;
         [SerializeField] private float _enemyRecoilForceY = 4f;
         [SerializeField] private float _enemyRecoilDuration = 0.3f;
+        [SerializeField] private float _movablePushForce = 2000f;
         
         private Rigidbody2D _rb;
         private Rigidbody2D _playerRb;
@@ -74,6 +76,8 @@ namespace RollyPolly
         private float _stutterTimer;
         private float _recoilTimer;
         private float _playerLostTimer;
+        
+        private bool _isDead;
         
         
         
@@ -110,6 +114,12 @@ namespace RollyPolly
         
         private void Update()
         {
+            if (_isDead)
+            {
+                transform.Rotate(0f, 0f, 1080f * Time.deltaTime);
+                return;
+            }
+
             if (_pulseCooldownTimer > 0f) _pulseCooldownTimer -= Time.deltaTime;
             if (_stutterTimer > 0f) _stutterTimer -= Time.deltaTime;
             if (_recoilTimer > 0f) _recoilTimer -= Time.deltaTime;
@@ -142,6 +152,8 @@ namespace RollyPolly
 
         private void FixedUpdate()
         {
+            if (_isDead) return;
+
             switch (_currentState)
             {
                 case ERollyState.Patrol: TickPatrol(); break;
@@ -353,6 +365,15 @@ namespace RollyPolly
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            if (_isDead) return;
+
+            Platforming.GeyserBehaviour geyser = other.GetComponent<Platforming.GeyserBehaviour>() ?? other.GetComponentInParent<Platforming.GeyserBehaviour>();
+            if (geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
+            {
+                YeetAndKill();
+                return;
+            }
+
             if (_currentState != ERollyState.Attack || _pulseCooldownTimer > 0f) return;
 
             if (other.gameObject.layer == LayerMask.NameToLayer("Pulse"))
@@ -369,6 +390,15 @@ namespace RollyPolly
 
         private void OnCollisionEnter2D(Collision2D other)
         {
+            if (_isDead) return;
+
+            Platforming.GeyserBehaviour geyser = other.collider.GetComponent<Platforming.GeyserBehaviour>() ?? other.collider.GetComponentInParent<Platforming.GeyserBehaviour>();
+            if (geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
+            {
+                YeetAndKill();
+                return;
+            }
+
             // 1. Player contact (applies to both Patrol and Attack states)
             if (other.collider.CompareTag("Player"))
             {
@@ -412,8 +442,69 @@ namespace RollyPolly
 
                     // Disable Rolly Polly game object
                     gameObject.SetActive(false);
+                    return;
                 }
             }
+
+            // 3. Movable object contact (only in Attack state)
+            if (_currentState == ERollyState.Attack && other.gameObject.layer == LayerMask.NameToLayer("Movable"))
+            {
+                Rigidbody2D movableRb = other.gameObject.GetComponent<Rigidbody2D>();
+                if (movableRb != null)
+                {
+                    float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
+                    Vector2 pushForce = new Vector2(dirX, 0f).normalized * _movablePushForce;
+                    movableRb.AddForce(pushForce, ForceMode2D.Impulse);
+
+                    // Apply enemy recoil/knockback (same as for player)
+                    _recoilTimer = _enemyRecoilDuration;
+                    if (_rb != null)
+                    {
+                        _rb.linearVelocity = new Vector2(-dirX * _enemyRecoilForceX, _enemyRecoilForceY);
+                    }
+                }
+            }
+        }
+
+        private void YeetAndKill()
+        {
+            if (_isDead) return;
+            _isDead = true;
+
+            // Swap visual sprites to the attack sprite (the roll ball shape) for spinning
+            if (_patrolSprite != null) _patrolSprite.SetActive(false);
+            if (_attackSprite != null) _attackSprite.SetActive(true);
+
+            StartCoroutine(YeetAndKillRoutine());
+        }
+
+        private IEnumerator YeetAndKillRoutine()
+        {
+            // Apply a massive upward yeet force
+            if (_rb != null)
+            {
+                _rb.bodyType = RigidbodyType2D.Dynamic;
+                _rb.constraints = RigidbodyConstraints2D.None; // allow free rotation
+                _rb.linearVelocity = new Vector2(UnityEngine.Random.Range(-4f, 4f), 20f);
+            }
+
+            // Disable all colliders to allow flying up clean
+            Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+            foreach (var col in colliders)
+            {
+                if (col != null) col.enabled = false;
+            }
+
+            // Spin and fly up for 0.7 seconds
+            yield return new WaitForSeconds(0.7f);
+
+            // Explode in a poof effect!
+            if (_poofEffectPrefab != null)
+            {
+                Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
+            }
+
+            gameObject.SetActive(false);
         }
 
         private void ChangeState(ERollyState newState)

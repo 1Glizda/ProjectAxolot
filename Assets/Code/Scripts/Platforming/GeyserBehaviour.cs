@@ -35,7 +35,7 @@ namespace Platforming
 
         private void Awake()
         {
-            _movableLayerMask = LayerMask.GetMask("Movable");
+            _movableLayerMask = LayerMask.GetMask("Movable", "GeyserBlocker");
         }
 
         private void Start()
