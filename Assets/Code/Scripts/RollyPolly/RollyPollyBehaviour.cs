@@ -61,6 +61,7 @@ namespace RollyPolly
         [SerializeField] private float _enemyRecoilForceX = 8f;
         [SerializeField] private float _enemyRecoilForceY = 4f;
         [SerializeField] private float _enemyRecoilDuration = 0.3f;
+        [SerializeField] private float _movablePushForce = 2000f;
         
         private Rigidbody2D _rb;
         private Rigidbody2D _playerRb;
@@ -441,6 +442,26 @@ namespace RollyPolly
 
                     // Disable Rolly Polly game object
                     gameObject.SetActive(false);
+                    return;
+                }
+            }
+
+            // 3. Movable object contact (only in Attack state)
+            if (_currentState == ERollyState.Attack && other.gameObject.layer == LayerMask.NameToLayer("Movable"))
+            {
+                Rigidbody2D movableRb = other.gameObject.GetComponent<Rigidbody2D>();
+                if (movableRb != null)
+                {
+                    float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
+                    Vector2 pushForce = new Vector2(dirX, 0f).normalized * _movablePushForce;
+                    movableRb.AddForce(pushForce, ForceMode2D.Impulse);
+
+                    // Apply enemy recoil/knockback (same as for player)
+                    _recoilTimer = _enemyRecoilDuration;
+                    if (_rb != null)
+                    {
+                        _rb.linearVelocity = new Vector2(-dirX * _enemyRecoilForceX, _enemyRecoilForceY);
+                    }
                 }
             }
         }
