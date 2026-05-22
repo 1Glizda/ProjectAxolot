@@ -22,7 +22,7 @@ namespace Player.Helpers
             _pulseLayer = LayerMask.NameToLayer("Pulse");
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnParticleCollision(GameObject other)
         {
             if (other.gameObject.layer == _pulseLayer)
             {
