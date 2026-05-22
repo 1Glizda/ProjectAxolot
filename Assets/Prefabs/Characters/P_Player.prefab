@@ -178,6 +178,8 @@ GameObject:
   - component: {fileID: 7096839486656481049}
   - component: {fileID: 3637461041992286314}
   - component: {fileID: 9195599408767231484}
+  - component: {fileID: 3371526616942566289}
+  - component: {fileID: 7434986170741724236}
   m_Layer: 13
   m_Name: P_Player
   m_TagString: Player
@@ -464,13 +466,46 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9188213222767286266}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28658d1e99e6729449205b93f78711cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Player::Player.GameState.CheckpointsManager
   _playerController: {fileID: 7491801208797167539}
   _startingCheckpoint: {fileID: 0}
+--- !u!114 &3371526616942566289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188213222767286266}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08cfbb4d195f240fe9624ddf491c3bf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player::Player.Sound.PlayerSoundController
+  playerController: {fileID: 7491801208797167539}
+  pulseController: {fileID: 3853380141020411705}
+  soundController: {fileID: 7434986170741724236}
+  soundProfile: {fileID: 11400000, guid: 83e621e298ab84ac59f36456a98d0674, type: 2}
+  movementThreshold: 0.5
+--- !u!114 &7434986170741724236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9188213222767286266}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc7efa9c7e5894feda0788a4529e358f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player::Player.Sound.SoundController
+  loopSource: {fileID: 0}
+  oneShotSource: {fileID: 0}
+  loopFadeSpeed: 8
+  debugMode: 0
 --- !u!1001 &4924317699409444066
 PrefabInstance:
   m_ObjectHideFlags: 0

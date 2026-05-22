@@ -46,16 +46,16 @@ MonoBehaviour:
   _jumpInitialGravity: 15
   _fallingGravity: 25
   _standstillThreshold: 0.02
-  _initialJumpForce: 6
+  _initialJumpForce: 7
   _useDiagonalJump: 0
   _jumpRunningMaxAngle: 15
-  _jumpHoldAccel: 5
+  _jumpHoldAccel: 7
   _maxJumpTime: 0.3
   _minJumpTime: 0
   _jumpBufferTime: 0.2
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 16780288
+    m_Bits: 16780800
   _groundCheckDistance: 0.2
   _coyoteTime: 0.2
   _applyRotationThreshold: 15

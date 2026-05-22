@@ -71,6 +71,7 @@ namespace Player
         
         private float _climbingAnimStopTimer;
         private bool _isClimbingAnim;
+        private bool _isDroppingThrough;
         
         
         private Vector2 _leftWallCheckOrigin;
@@ -140,6 +141,54 @@ namespace Player
             {
                 if (_climbingAnimStopTimer > 0f) _climbingAnimStopTimer -= dt;
                 else _isClimbingAnim = false;
+            }
+
+            if (((IPlayerInputHandler)inputHandler).MoveAction.ReadValue<Vector2>().y < -0.5f)
+            {
+                TryDropThroughPlatform();
+            }
+        }
+
+        private void TryDropThroughPlatform()
+        {
+            if (!_isGrounded || _isDroppingThrough) return;
+            
+            bool dropped = false;
+            foreach (var hit in _groundHits)
+            {
+                if (hit.collider != null && hit.collider.GetComponent<PlatformEffector2D>() != null)
+                {
+                    StartCoroutine(DropThroughRoutine(hit.collider));
+                    dropped = true;
+                }
+            }
+            
+            if (dropped)
+            {
+                StartCoroutine(DropThroughCooldown());
+            }
+        }
+
+        private IEnumerator DropThroughCooldown()
+        {
+            _isDroppingThrough = true;
+            yield return new WaitForSeconds(0.4f);
+            _isDroppingThrough = false;
+        }
+
+        private IEnumerator DropThroughRoutine(Collider2D platformCollider)
+        {
+            if (platformCollider == null) yield break;
+            
+            if (_bodyCollider != null) Physics2D.IgnoreCollision(_bodyCollider, platformCollider, true);
+            if (_feetCollider != null) Physics2D.IgnoreCollision(_feetCollider, platformCollider, true);
+            
+            yield return new WaitForSeconds(0.4f);
+            
+            if (platformCollider != null)
+            {
+                if (_bodyCollider != null) Physics2D.IgnoreCollision(_bodyCollider, platformCollider, false);
+                if (_feetCollider != null) Physics2D.IgnoreCollision(_feetCollider, platformCollider, false);
             }
         }
 
@@ -276,6 +325,13 @@ namespace Player
         
         private void CheckGrounded()
         {
+            if (_isDroppingThrough)
+            {
+                _isGrounded = false;
+                _isInCoyoteTime = false;
+                return;
+            }
+
             Bounds bounds = _feetCollider.bounds;
             float yOffset = 0.05f;
             _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y + yOffset);

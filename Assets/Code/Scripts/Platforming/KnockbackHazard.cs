@@ -20,11 +20,13 @@ namespace Platforming
             if (!other.collider.CompareTag("Player")) return;
             if (!other.collider.TryGetComponent<IKnockbackable>(out var knockbackable)) return;
 
-            float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
-            Vector2 knockbackVelocity = new Vector2(dirX * _horizontalForce, _verticalForce);
-
-            knockbackable.ApplyKnockback(knockbackVelocity);
-            GameStateManager.Instance.DamagePlayer(_damageAmount);
+            // Only apply knockback if the player was successfully damaged (not currently in their invulnerability state)
+            if (GameStateManager.Instance.DamagePlayer(_damageAmount, other.otherCollider))
+            {
+                float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
+                Vector2 knockbackVelocity = new Vector2(dirX * _horizontalForce, _verticalForce);
+                knockbackable.ApplyKnockback(knockbackVelocity);
+            }
         }
 
         private void OnDrawGizmosSelected()
