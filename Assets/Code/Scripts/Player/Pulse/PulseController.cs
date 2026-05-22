@@ -43,7 +43,7 @@ namespace Player.Pulse
         
         private void Start()
         {
-            _ctx = playerController.PlayerControllerContext;
+            _ctx = PlayerController.PlayerControllerContext;
             _pulseAction = _ctx.handler.PulseAction;
             _altPulseAction = _ctx.handler.AltPulseAction;
             _unlocks = GameStateManager.Instance.Unlocks;

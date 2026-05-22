@@ -11,6 +11,7 @@ namespace Player
     //controls the StateMachine and talks to the engine
     internal class PlayerController : MonoBehaviour, IPlayerStateProvider, IKnockbackable
     {
+        
         public event System.Action OnJump;
         public event System.Action OnStartClimb;
         public event System.Action OnLand;
@@ -33,7 +34,7 @@ namespace Player
         public bool CanVault => _canVault;
         public Vector2 VaultTarget => _vaultTarget;
         
-        public PlayerControllerContext PlayerControllerContext => _controllerContext;
+        public static PlayerControllerContext PlayerControllerContext => _controllerContext;
 
 
         [Header("Debug")]
@@ -55,7 +56,7 @@ namespace Player
         [SerializeField] private HingeJoint2D _swingHinge;
         
         private MovementStateMachine _stateMachine;
-        private PlayerControllerContext _controllerContext;
+        private static PlayerControllerContext _controllerContext;
 
         private bool _isGrounded;
         private bool _isInClimbingState;
@@ -94,7 +95,7 @@ namespace Player
         private void Awake()
         {
             _pushableLayerIndex = LayerMask.NameToLayer("Movable");
-
+            
             _controllerContext = new PlayerControllerContext(
                 inputHandler as IPlayerInputHandler,
                 this as IPlayerStateProvider,

@@ -11,8 +11,10 @@ namespace Player.Helpers
         private int _pulseLayer;
 
 
-        private void PulseInteract(){
-            Rb.AddForce(Vector2.up * 5f, ForceMode2D.Impulse);
+        private void PulseInteract()
+        {
+            Vector2 dir =  Rb.position -  PlayerController.PlayerControllerContext.rb.position;
+            Rb.AddForce(dir * 0.2f, ForceMode2D.Impulse);
         }
 
         private void Awake()
