@@ -5,6 +5,7 @@ namespace Player.Helpers
 {
     internal class VineHelper : MonoBehaviour
     {
+
         [SerializeField] private List<SwingBone> _bones;
         public int BoneCount => _bones.Count;
         
