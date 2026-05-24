@@ -80,16 +80,16 @@ namespace Player.GameState
 
         private System.Collections.IEnumerator IgnoreCollisionRoutine(Collider2D hazardCollider, float duration)
         {
-            if (hazardCollider == null) yield break;
+            if (!hazardCollider) yield break;
 
             GameObject playerObj = GameObject.FindWithTag("Player");
-            if (playerObj == null) yield break;
+            if (!playerObj) yield break;
 
             Collider2D[] playerColliders = playerObj.GetComponentsInChildren<Collider2D>();
             
             foreach (var pc in playerColliders)
             {
-                if (pc != null && hazardCollider != null)
+                if (pc && hazardCollider)
                 {
                     Physics2D.IgnoreCollision(pc, hazardCollider, true);
                 }
@@ -97,11 +97,11 @@ namespace Player.GameState
 
             yield return new WaitForSeconds(duration);
 
-            if (hazardCollider != null && playerObj != null)
+            if (hazardCollider && playerObj)
             {
                 foreach (var pc in playerColliders)
                 {
-                    if (pc != null && hazardCollider != null)
+                    if (pc && hazardCollider)
                     {
                         Physics2D.IgnoreCollision(pc, hazardCollider, false);
                     }

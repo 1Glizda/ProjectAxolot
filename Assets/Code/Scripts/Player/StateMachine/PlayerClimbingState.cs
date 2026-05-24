@@ -16,10 +16,7 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             stateMachine.LastVine = null;
-            if (stateMachine.PreviousStateType != typeof(PlayerPrepareJumpState))
-            {
-                ctx.stateProvider.NotifyStartClimb();
-            }
+            ctx.stateProvider.NotifyStartClimb();
             ctx.rb.linearVelocity = Vector2.zero;
             _jumpTriggered = false;
             _isDetached = false;
@@ -55,6 +52,7 @@ namespace Player.StateMachine
 
             float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.stateProvider.WallHitNormal);
             
+            // Hold A/D away from wall → detach
             if (dot > 0f && _attachTimer <= 0f)
             {
                 if (isGrounded)
@@ -64,7 +62,12 @@ namespace Player.StateMachine
                 }
                 else
                 {
-                    stateMachine.ChangeState<PlayerPrepareJumpState>();
+                    // Detach from wall with a push
+                    Vector2 dir = ctx.stateProvider.WallHitNormal;
+                    ctx.rb.AddForce(settings.WallDetachForce * ctx.rb.mass * dir, ForceMode2D.Impulse);
+                    stateMachine.WasDetached = true;
+                    _isDetached = true;
+                    return;
                 }
             }
             
@@ -84,10 +87,13 @@ namespace Player.StateMachine
                 Stop(dt);
             }
             
+            // Wall jump: press Jump while on wall
             if (_jumpTriggered)
             {
-                Vector2 dir = ctx.stateProvider.WallHitNormal;
-                ctx.rb.AddForce(settings.WallDetachForce * ctx.rb.mass * dir, ForceMode2D.Impulse);
+                TryFlipSprite();
+                ctx.stateProvider.NotifyJump();
+                ctx.rb.linearVelocity = Vector2.zero;
+                ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
                 stateMachine.WasDetached = true;
                 _isDetached = true;
                 return;
@@ -113,6 +119,17 @@ namespace Player.StateMachine
             float currentV = ctx.rb.linearVelocityY;
             ctx.rb.linearVelocityY = Mathf.MoveTowards(currentV, -settings.WallSlideSpeed, settings.WallDeceleration * dt);
         }
+
+        private Vector2 GetAngledVector()
+        {
+            Vector2 wallNormal = ctx.stateProvider.WallHitNormal;
+            float rotationAngle = wallNormal.x > 0 ? settings.WallJumpAngle : -settings.WallJumpAngle;
+            
+            Quaternion rotation = Quaternion.Euler(0f, 0f, rotationAngle);
+
+            return rotation * wallNormal;
+        }
         
     }
 }
+

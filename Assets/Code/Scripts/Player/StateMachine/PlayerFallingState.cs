@@ -66,16 +66,24 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.IsNearValidWall)
             {
-                float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
-                bool canGrab = dot <= 0.01f;
-
-                if (canGrab)
+                if (!stateMachine.WasDetached)
                 {
-                    stateMachine.ConsumeJumpBuffer();
-                    _isCatchBuffered = false;
-                    stateMachine.ChangeState<PlayerClimbingState>();
-                    return;
+                    float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
+                    bool canGrab = dot <= 0.01f;
+
+                    if (canGrab)
+                    {
+                        stateMachine.ConsumeJumpBuffer();
+                        _isCatchBuffered = false;
+                        stateMachine.ChangeState<PlayerClimbingState>();
+                        return;
+                    }
                 }
+            }
+            else
+            {
+                // Player cleared the wall — allow grabbing a new wall
+                stateMachine.WasDetached = false;
             }
 
         }

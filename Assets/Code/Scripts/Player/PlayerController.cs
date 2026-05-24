@@ -18,7 +18,6 @@ namespace Player
         public event System.Action OnGrabVine;
         
         public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
-        public bool IsPreparingWallJump => _isPreparingWallJump;
         public bool IsJumping => _isJumping;
         public float VerticalVelocity => _rb.linearVelocityY;
         public float HorizontalVelocity => _rb.linearVelocityX;
@@ -60,7 +59,6 @@ namespace Player
 
         private bool _isGrounded;
         private bool _isInClimbingState;
-        private bool _isPreparingWallJump;
         private bool _isJumping;
         private bool _isInCoyoteTime;
         
@@ -115,8 +113,7 @@ namespace Player
             _stateMachine.onChangeState += type => {
                 if (_debugMode) Debug.Log(type, this);
                 if (_stateText != null) _stateText.text = type.Name;
-                _isInClimbingState = type == typeof(PlayerClimbingState) || type == typeof(PlayerPrepareJumpState);
-                _isPreparingWallJump = type == typeof(PlayerPrepareJumpState);
+                _isInClimbingState = type == typeof(PlayerClimbingState);
                 _isJumping = type == typeof(PlayerJumpState);
             };
             

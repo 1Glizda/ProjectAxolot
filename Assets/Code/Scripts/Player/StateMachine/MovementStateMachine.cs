@@ -50,7 +50,6 @@ namespace Player.StateMachine
             _states.Add(typeof(PlayerJumpState), new PlayerJumpState(ctx, this));
             _states.Add(typeof(PlayerClimbingState), new PlayerClimbingState(ctx, this));
             _states.Add(typeof(PlayerFallingState), new PlayerFallingState(ctx, this));
-            _states.Add(typeof(PlayerPrepareJumpState), new PlayerPrepareJumpState(ctx, this));
             _states.Add(typeof(PlayerSwingingState), new PlayerSwingingState(ctx, this));
             _states.Add(typeof(PlayerVaultState), new PlayerVaultState(ctx, this));
             _states.Add(typeof(PlayerPushPullState), new PlayerPushPullState(ctx, this));
