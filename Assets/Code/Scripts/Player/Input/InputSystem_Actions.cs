@@ -183,15 +183,6 @@ namespace Player.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""PulseAlternate"",
-                    ""type"": ""Button"",
-                    ""id"": ""980f7631-540e-4bc5-891d-c8901c8a83b5"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -577,17 +568,6 @@ namespace Player.Input
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Point"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""29d91cb6-2e36-40cf-8078-97613ab4f02e"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""PulseAlternate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1119,7 +1099,6 @@ namespace Player.Input
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
             m_Player_Pulse = m_Player.FindAction("Pulse", throwIfNotFound: true);
-            m_Player_PulseAlternate = m_Player.FindAction("PulseAlternate", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1223,7 +1202,6 @@ namespace Player.Input
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Point;
         private readonly InputAction m_Player_Pulse;
-        private readonly InputAction m_Player_PulseAlternate;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1275,10 +1253,6 @@ namespace Player.Input
             /// Provides access to the underlying input action "Player/Pulse".
             /// </summary>
             public InputAction @Pulse => m_Wrapper.m_Player_Pulse;
-            /// <summary>
-            /// Provides access to the underlying input action "Player/PulseAlternate".
-            /// </summary>
-            public InputAction @PulseAlternate => m_Wrapper.m_Player_PulseAlternate;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1335,9 +1309,6 @@ namespace Player.Input
                 @Pulse.started += instance.OnPulse;
                 @Pulse.performed += instance.OnPulse;
                 @Pulse.canceled += instance.OnPulse;
-                @PulseAlternate.started += instance.OnPulseAlternate;
-                @PulseAlternate.performed += instance.OnPulseAlternate;
-                @PulseAlternate.canceled += instance.OnPulseAlternate;
             }
 
             /// <summary>
@@ -1379,9 +1350,6 @@ namespace Player.Input
                 @Pulse.started -= instance.OnPulse;
                 @Pulse.performed -= instance.OnPulse;
                 @Pulse.canceled -= instance.OnPulse;
-                @PulseAlternate.started -= instance.OnPulseAlternate;
-                @PulseAlternate.performed -= instance.OnPulseAlternate;
-                @PulseAlternate.canceled -= instance.OnPulseAlternate;
             }
 
             /// <summary>
@@ -1739,13 +1707,6 @@ namespace Player.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnPulse(InputAction.CallbackContext context);
-            /// <summary>
-            /// Method invoked when associated input action "PulseAlternate" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnPulseAlternate(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

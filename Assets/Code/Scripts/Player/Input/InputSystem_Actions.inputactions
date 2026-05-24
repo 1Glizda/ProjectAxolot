@@ -95,15 +95,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "PulseAlternate",
-                    "type": "Button",
-                    "id": "980f7631-540e-4bc5-891d-c8901c8a83b5",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -489,17 +480,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Point",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "29d91cb6-2e36-40cf-8078-97613ab4f02e",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "PulseAlternate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

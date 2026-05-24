@@ -9,11 +9,8 @@ namespace Player.GameState
         public static GameStateManager Instance;
         
         //events
-        public UnityEvent<int> onHpChange;
+        public UnityEvent<int, int> onHpChange;
         public UnityEvent onDeath;
-        
-        //exposed
-        public PlayerUnlocks Unlocks => _unlocks;
         
         
         //fields
@@ -22,12 +19,7 @@ namespace Player.GameState
         [SerializeField] private float _damageCooldown = 1f;
         private int _currentHp;
         private float _damageCooldownTimer;
-        
-        [Header("Unlocks")]
-        [SerializeField] private PlayerUnlocks _unlocks;
 
-
-      
         
         private void Awake()
         {
@@ -52,22 +44,6 @@ namespace Player.GameState
         }
 
         
-        #region Pulse Upgrades
-        public void UnlockDirectionalPulse()
-        {
-            _unlocks.UnlockTier(1);
-        }
-        public void UnlockForcePulse()
-        {
-            _unlocks.UnlockTier(2);
-        }
-        public void UnlockHoldingPulse()
-        {
-            _unlocks.UnlockTier(3);
-        }
-        #endregion
-
-        
         public void KillPlayer()
         {
             Debug.LogError("Player Killed", this);
@@ -77,15 +53,21 @@ namespace Player.GameState
         
         public bool DamagePlayer(int damage, Collider2D hazardCollider = null)
         {
+            
             if (_damageCooldownTimer > 0f) return false;
-
+            int initialHp = _currentHp;
+            
             _currentHp -= damage;
+            if (_currentHp < 0) _currentHp = 0;
             _damageCooldownTimer = _damageCooldown;
 
-            onHpChange?.Invoke(_currentHp);
             if (_currentHp <= 0)
             {
                 KillPlayer();
+            }
+            else
+            {
+                onHpChange?.Invoke(initialHp, _currentHp);
             }
 
             if (hazardCollider != null)
@@ -129,19 +111,21 @@ namespace Player.GameState
 
         public void HealPlayer(int heal)
         {
+            int initialHp = _currentHp;
             _currentHp += heal;
-            onHpChange?.Invoke(_currentHp);
             if (_currentHp > _maxHp)
             {
                 _currentHp = _maxHp;
             }
+            onHpChange?.Invoke(initialHp, _currentHp);
         }
 
         private void ResetPlayer()
         {
+            int previousHp = _currentHp;
             _currentHp = _maxHp;
             _damageCooldownTimer = 0f;
-            onHpChange?.Invoke(_currentHp);
+            onHpChange?.Invoke(previousHp, _currentHp);
         }
         
     }
