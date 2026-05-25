@@ -23,6 +23,7 @@ namespace Player
         public float JumpHoldAccel => _jumpHoldAccel;
         public float MaxJumpTime => _maxJumpTime;
         public float MinJumpTime => _minJumpTime;
+        public float JumpCutMultiplier => _jumpCutMultiplier;
         public float JumpBufferTime => _jumpBufferTime;
         public float JumpApexThreshold => _jumpApexThreshold;
         public float JumpApexGravityMultiplier => _jumpApexGravityMultiplier;
@@ -111,6 +112,8 @@ namespace Player
         [SerializeField] private float _maxJumpTime = 0.3f;
         
         [SerializeField] private float _minJumpTime = 0.1f;
+
+        [SerializeField] private float _jumpCutMultiplier = 0.5f;
 
         [SerializeField] private float _jumpBufferTime = 0.15f;
         

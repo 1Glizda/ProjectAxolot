@@ -46,8 +46,14 @@ namespace Player.StateMachine
             base.Tick(dt);
             TryFlipSprite();
 
-            if(!jumpAction.IsPressed()) _spaceReleased = true;
-            _timer += dt;
+            if (!jumpAction.IsPressed() && !_spaceReleased)
+            {
+                _spaceReleased = true;
+                if (ctx.rb.linearVelocityY > 0f)
+                {
+                    ctx.rb.linearVelocityY *= settings.JumpCutMultiplier;
+                }
+            }
 
             bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
             bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || jumpAction.triggered;
@@ -77,14 +83,9 @@ namespace Player.StateMachine
 
         public override void FixedTick(float dt)
         {
-            ApplyAccel(dt, settings.JumpAcceleration, settings.JumpDeceleration, settings.MaxHorizontalVelocity);
+            _timer += dt;
 
-            if (_timer <= settings.MinJumpTime || 
-                (_timer <= settings.MaxJumpTime && jumpAction.IsPressed() && !_spaceReleased))
-            {
-                float force = settings.JumpHoldAccel * ctx.rb.mass;
-                ctx.rb.AddForce(Vector2.up * force, ForceMode2D.Force);
-            }
+            ApplyAccel(dt, settings.JumpAcceleration, settings.JumpDeceleration, settings.MaxHorizontalVelocity);
             
             
             float t = Mathf.InverseLerp(settings.MinJumpTime, settings.MaxJumpTime, _timer);

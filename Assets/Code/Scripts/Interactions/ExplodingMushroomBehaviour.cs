@@ -1,5 +1,6 @@
 using Interfaces;
 using Platforming;
+using Player.GameState;
 using System.Collections;
 using UnityEngine;
 
@@ -18,6 +19,10 @@ namespace Interactions
         [SerializeField] private float _innerRadius = 2f;
         [SerializeField] private float _explosionForce = 15f;
         [SerializeField] private LayerMask _affectedLayers;
+
+        [Header("Damage Settings")]
+        [SerializeField] private int _innerZoneDamage = 2;
+        [SerializeField] private int _outerZoneDamage = 1;
 
         [Header("Timing")]
         [SerializeField] private float _recoveryTime = 3f;
@@ -86,6 +91,13 @@ namespace Interactions
                 }
 
                 rb.linearVelocity = dir * (_explosionForce * falloff);
+
+                // Apply damage if the hit target is the player
+                if (hit.CompareTag("Player") || rb.CompareTag("Player"))
+                {
+                    int damage = distance <= _innerRadius ? _innerZoneDamage : _outerZoneDamage;
+                    GameStateManager.Instance.DamagePlayer(damage, _collider);
+                }
 
                 if (rb.TryGetComponent<Platforming.BreakableWall>(out var wall))
                 {
