@@ -5,8 +5,16 @@ namespace Player.StateMachine
 {
     internal sealed class PlayerRunState : PlayerBaseState
     {
-        public PlayerRunState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        private float _pushIntentTimer;
+
+        public PlayerRunState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
+        }
+
+        public override void EnterState()
+        {
+            base.EnterState();
+            _pushIntentTimer = 0f;
         }
 
         public override void Tick(float dt)
@@ -42,7 +50,34 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.IsFootNearPushable)
             {
-                stateMachine.ChangeState<PlayerPushPullState>();
+                if (settings.UseManualGrabForPushables)
+                {
+                    if (grabAction.IsPressed())
+                    {
+                        stateMachine.ChangeState<PlayerPushPullState>();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (horizontalInput != 0f)
+                    {
+                        _pushIntentTimer += dt;
+                        if (_pushIntentTimer >= settings.PushIntentDelay)
+                        {
+                            stateMachine.ChangeState<PlayerPushPullState>();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        _pushIntentTimer = 0f;
+                    }
+                }
+            }
+            else
+            {
+                _pushIntentTimer = 0f;
             }
 
 

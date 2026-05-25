@@ -28,6 +28,11 @@ namespace Platforming
                 rb.bodyType = RigidbodyType2D.Dynamic;
                 rb.AddForce(direction.normalized * 20f, ForceMode2D.Impulse);
             }
+
+            foreach (var obj in GetComponentsInChildren<Transform>())
+            {
+                obj.gameObject.layer = LayerMask.NameToLayer("Clutter");
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)

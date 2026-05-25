@@ -34,6 +34,29 @@ namespace Player.Sound
 
         private void Start()
         {
+            // Auto-detect references if null
+            if (playerController == null) playerController = GetComponentInParent<PlayerController>();
+            if (soundController == null) soundController = GetComponent<SoundController>();
+            if (pulseController == null) pulseController = GetComponentInParent<Pulse.PulseController>();
+
+            if (playerController == null)
+            {
+                Debug.LogError($"[{gameObject.name}] PlayerSoundController: PlayerController reference is missing! Please assign it in the Inspector.", this);
+                return;
+            }
+
+            if (soundController == null)
+            {
+                Debug.LogError($"[{gameObject.name}] PlayerSoundController: SoundController component is missing! Please attach it to this GameObject or assign it in the Inspector.", this);
+                return;
+            }
+
+            if (soundProfile == null)
+            {
+                Debug.LogError($"[{gameObject.name}] PlayerSoundController: SoundProfileSo ScriptableObject is missing! Please create a Sound Profile and assign it in the Inspector.", this);
+                return;
+            }
+
             _state = playerController;
 
             // Subscribe to existing events
@@ -42,7 +65,21 @@ namespace Player.Sound
 
             // Subscribe to pulse event
             if (pulseController != null)
-                pulseController.OnPulse += HandlePulse;
+                pulseController.OnPulse.AddListener(HandlePulse);
+            else
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: PulseController not found. Pulse SFX will not play.", this);
+
+            // Log warnings for unassigned clips to guide the developer
+            if (soundProfile.footstepLoop == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Footstep loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.jumpClip == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Jump clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.landClip == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Land clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.pulseClip == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Pulse clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.idleChirps == null || soundProfile.idleChirps.Length == 0)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Idle chirps are not assigned in the SoundProfile '{soundProfile.name}'.", this);
 
             ResetIdleChirpTimer(soundProfile.idleChirpInitialDelay);
         }
@@ -56,7 +93,7 @@ namespace Player.Sound
             }
 
             if (pulseController != null)
-                pulseController.OnPulse -= HandlePulse;
+                pulseController.OnPulse.RemoveListener(HandlePulse);
         }
 
         private void Update()
@@ -120,7 +157,7 @@ namespace Player.Sound
                 soundController.PlayOneShotDebounced(soundProfile.landClip, soundProfile.landVolume, 0.15f, soundProfile.pitchVariance);
         }
 
-        private void HandlePulse()
+        private void HandlePulse(float _)
         {
             if (soundProfile.pulseClip != null)
                 soundController.PlayOneShot(soundProfile.pulseClip, soundProfile.pulseVolume);

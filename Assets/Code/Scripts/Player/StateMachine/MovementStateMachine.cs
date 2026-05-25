@@ -15,6 +15,7 @@ namespace Player.StateMachine
         public bool WasDetached;
         public Type PreviousStateType { get; private set; }
         public VineHelper LastVine;
+        public Vector2 LastWallNormal;
 
         public void ConsumeJumpBuffer()
         {
@@ -25,7 +26,7 @@ namespace Player.StateMachine
         
 
         private readonly PlayerSettingsSo _settings;
-        private readonly PlayerContext _ctx;
+        private readonly PlayerControllerContext _ctx;
         
         private PlayerBaseState _activeState;
 
@@ -35,13 +36,13 @@ namespace Player.StateMachine
         private readonly Dictionary<Type, PlayerBaseState> _states = new Dictionary<Type, PlayerBaseState>();
         
         
-        public MovementStateMachine(PlayerSettingsSo settings, PlayerContext ctx)
+        public MovementStateMachine(PlayerSettingsSo settings, PlayerControllerContext ctx)
         {
             _settings = settings;
             _ctx = ctx;
             _activeState = new PlayerIdleState(ctx, this);
             
-            _ctx.manager.JumpAction.started += TryBufferJump;
+            _ctx.handler.JumpAction.started += TryBufferJump;
             _jumpBuffer = _settings.JumpBufferTime;
             
             #region POPULATE STATES DICTIONARY
@@ -50,7 +51,6 @@ namespace Player.StateMachine
             _states.Add(typeof(PlayerJumpState), new PlayerJumpState(ctx, this));
             _states.Add(typeof(PlayerClimbingState), new PlayerClimbingState(ctx, this));
             _states.Add(typeof(PlayerFallingState), new PlayerFallingState(ctx, this));
-            _states.Add(typeof(PlayerPrepareJumpState), new PlayerPrepareJumpState(ctx, this));
             _states.Add(typeof(PlayerSwingingState), new PlayerSwingingState(ctx, this));
             _states.Add(typeof(PlayerVaultState), new PlayerVaultState(ctx, this));
             _states.Add(typeof(PlayerPushPullState), new PlayerPushPullState(ctx, this));
@@ -60,7 +60,7 @@ namespace Player.StateMachine
 
         ~MovementStateMachine()
         {
-            _ctx.manager.JumpAction.started -= TryBufferJump;
+            _ctx.handler.JumpAction.started -= TryBufferJump;
         }
         
         public void Tick(float dt)

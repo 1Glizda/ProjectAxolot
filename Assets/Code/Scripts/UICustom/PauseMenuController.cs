@@ -14,7 +14,7 @@ namespace UICustom
         [Tooltip("The back/resume button that will unpause the game when clicked.")]
         [SerializeField] private Button _backButton;
 
-        private IPlayerInputManager _inputManager;
+        private IPlayerInputHandler _inputHandler;
         private bool _isPaused = false;
 
         private void Start()
@@ -23,27 +23,27 @@ namespace UICustom
             GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null)
             {
-                _inputManager = playerObj.GetComponent<IPlayerInputManager>() 
-                    ?? playerObj.GetComponentInParent<IPlayerInputManager>() 
-                    ?? playerObj.GetComponentInChildren<IPlayerInputManager>();
+                _inputHandler = playerObj.GetComponent<IPlayerInputHandler>() 
+                    ?? playerObj.GetComponentInParent<IPlayerInputHandler>() 
+                    ?? playerObj.GetComponentInChildren<IPlayerInputHandler>();
             }
 
-            if (_inputManager == null)
+            if (_inputHandler == null)
             {
                 foreach (MonoBehaviour mb in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
                 {
-                    if (mb is IPlayerInputManager manager)
+                    if (mb is IPlayerInputHandler manager)
                     {
-                        _inputManager = manager;
+                        _inputHandler = manager;
                         break;
                     }
                 }
             }
 
-            if (_inputManager != null && _inputManager.PauseAction != null)
+            if (_inputHandler != null && _inputHandler.PauseAction != null)
             {
                 // Subscribe to the escape/cancel press event
-                _inputManager.PauseAction.performed += OnPauseToggle;
+                _inputHandler.PauseAction.performed += OnPauseToggle;
             }
             else
             {
@@ -65,10 +65,10 @@ namespace UICustom
 
         private void OnDestroy()
         {
-            if (_inputManager != null && _inputManager.PauseAction != null)
+            if (_inputHandler != null && _inputHandler.PauseAction != null)
             {
                 // Unsubscribe from the event when this component is destroyed
-                _inputManager.PauseAction.performed -= OnPauseToggle;
+                _inputHandler.PauseAction.performed -= OnPauseToggle;
             }
 
             if (_backButton != null)

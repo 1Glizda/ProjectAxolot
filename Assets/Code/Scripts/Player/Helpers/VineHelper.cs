@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using Interfaces;
 using UnityEngine;
 
 namespace Player.Helpers
 {
     internal class VineHelper : MonoBehaviour
     {
+
         [SerializeField] private List<SwingBone> _bones;
         public int BoneCount => _bones.Count;
         

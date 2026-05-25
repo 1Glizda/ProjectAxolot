@@ -9,7 +9,7 @@ namespace Player.StateMachine
 
         protected override bool IsGroundedState => false;
         
-        public PlayerJumpState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerJumpState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
         
@@ -93,6 +93,7 @@ namespace Player.StateMachine
             float g = Mathf.Lerp(settings.JumpInitialGravity, settings.FallingGravity, t);
             
             ApplyGravity(dt, g);
+            ApplyCornerCorrection(dt);
         }
         
         

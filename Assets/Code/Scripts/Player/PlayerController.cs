@@ -1,3 +1,4 @@
+using System.Collections;
 using Interfaces;
 using Player.Input;
 using Player.StateMachine;
@@ -10,20 +11,21 @@ namespace Player
     //controls the StateMachine and talks to the engine
     internal class PlayerController : MonoBehaviour, IPlayerStateProvider, IKnockbackable
     {
+        
         public event System.Action OnJump;
         public event System.Action OnStartClimb;
         public event System.Action OnLand;
         public event System.Action OnGrabVine;
+        
         public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
-        public bool IsPreparingWallJump => _isPreparingWallJump;
         public bool IsJumping => _isJumping;
         public float VerticalVelocity => _rb.linearVelocityY;
         public float HorizontalVelocity => _rb.linearVelocityX;
 
         public bool IsGrounded => _isGrounded;
         public bool IsInCoyoteTime => _isInCoyoteTime;
-        public bool IsNearValidWall => _isNearValidWall;
-        public bool IsFootNearValidWall => _isFootNearValidWall;
+        public bool IsNearValidWall => (!_isWallHitMovable || !((IPlayerInputHandler)inputHandler).GrabWallAction.IsPressed()) && _isNearValidWall;
+        public bool IsFootNearValidWall => (!_isWallHitMovable || !((IPlayerInputHandler)inputHandler).GrabWallAction.IsPressed()) && _isFootNearValidWall;
         public bool IsHeadBlocked => _isHeadBlocked;
         public Vector2 WallHitNormal => _wallHitNormal;
         public bool IsFootNearPushable => _isFootNearPushable;
@@ -31,7 +33,7 @@ namespace Player
         public bool CanVault => _canVault;
         public Vector2 VaultTarget => _vaultTarget;
         
-        public PlayerContext PlayerContext => _context;
+        public static PlayerControllerContext PlayerControllerContext => _controllerContext;
 
 
         [Header("Debug")]
@@ -53,22 +55,23 @@ namespace Player
         [SerializeField] private HingeJoint2D _swingHinge;
         
         private MovementStateMachine _stateMachine;
-        private PlayerContext _context;
+        private static PlayerControllerContext _controllerContext;
 
         private bool _isGrounded;
         private bool _isInClimbingState;
-        private bool _isPreparingWallJump;
         private bool _isJumping;
         private bool _isInCoyoteTime;
         
         private bool _isNearValidWall;
         private bool _isFootNearValidWall;
+        private bool _isWallHitMovable;
         private bool _isHeadBlocked;
         private Vector2 _wallHitNormal;
         private bool _isFootNearPushable;
         
         private float _climbingAnimStopTimer;
         private bool _isClimbingAnim;
+        private bool _isDroppingThrough;
         
         
         private Vector2 _leftWallCheckOrigin;
@@ -91,9 +94,9 @@ namespace Player
         private void Awake()
         {
             _pushableLayerIndex = LayerMask.NameToLayer("Movable");
-
-            _context = new PlayerContext(
-                inputHandler as IPlayerInputManager,
+            
+            _controllerContext = new PlayerControllerContext(
+                inputHandler as IPlayerInputHandler,
                 this as IPlayerStateProvider,
                 _collisionHandler,
                 _settings,
@@ -105,14 +108,13 @@ namespace Player
             );
 
             
-            _stateMachine = new MovementStateMachine(_settings, _context);
+            _stateMachine = new MovementStateMachine(_settings, _controllerContext);
             _groundHits = new RaycastHit2D[3];   
             
             _stateMachine.onChangeState += type => {
                 if (_debugMode) Debug.Log(type, this);
                 if (_stateText != null) _stateText.text = type.Name;
-                _isInClimbingState = type == typeof(PlayerClimbingState) || type == typeof(PlayerPrepareJumpState);
-                _isPreparingWallJump = type == typeof(PlayerPrepareJumpState);
+                _isInClimbingState = type == typeof(PlayerClimbingState);
                 _isJumping = type == typeof(PlayerJumpState);
             };
             
@@ -128,7 +130,7 @@ namespace Player
             CheckWall();
             _stateMachine.Tick(dt);
 
-            bool isTryingToClimb = Mathf.Abs(VerticalVelocity) > 0.1f || Mathf.Abs(((IPlayerInputManager)inputHandler).MoveAction.ReadValue<Vector2>().y) > 0.1f;
+            bool isTryingToClimb = Mathf.Abs(VerticalVelocity) > 0.1f || Mathf.Abs(((IPlayerInputHandler)inputHandler).MoveAction.ReadValue<Vector2>().y) > 0.1f;
             if (_isInClimbingState && isTryingToClimb)
             {
                 _climbingAnimStopTimer = 0.15f;
@@ -138,6 +140,54 @@ namespace Player
             {
                 if (_climbingAnimStopTimer > 0f) _climbingAnimStopTimer -= dt;
                 else _isClimbingAnim = false;
+            }
+
+            if (((IPlayerInputHandler)inputHandler).MoveAction.ReadValue<Vector2>().y < -0.5f)
+            {
+                TryDropThroughPlatform();
+            }
+        }
+
+        private void TryDropThroughPlatform()
+        {
+            if (!_isGrounded || _isDroppingThrough) return;
+            
+            bool dropped = false;
+            foreach (var hit in _groundHits)
+            {
+                if (hit.collider != null && hit.collider.GetComponent<PlatformEffector2D>() != null)
+                {
+                    StartCoroutine(DropThroughRoutine(hit.collider));
+                    dropped = true;
+                }
+            }
+            
+            if (dropped)
+            {
+                StartCoroutine(DropThroughCooldown());
+            }
+        }
+
+        private IEnumerator DropThroughCooldown()
+        {
+            _isDroppingThrough = true;
+            yield return new WaitForSeconds(0.4f);
+            _isDroppingThrough = false;
+        }
+
+        private IEnumerator DropThroughRoutine(Collider2D platformCollider)
+        {
+            if (platformCollider == null) yield break;
+            
+            if (_bodyCollider != null) Physics2D.IgnoreCollision(_bodyCollider, platformCollider, true);
+            if (_feetCollider != null) Physics2D.IgnoreCollision(_feetCollider, platformCollider, true);
+            
+            yield return new WaitForSeconds(0.4f);
+            
+            if (platformCollider != null)
+            {
+                if (_bodyCollider != null) Physics2D.IgnoreCollision(_bodyCollider, platformCollider, false);
+                if (_feetCollider != null) Physics2D.IgnoreCollision(_feetCollider, platformCollider, false);
             }
         }
 
@@ -170,7 +220,7 @@ namespace Player
 
         public void ApplyKnockback(Vector2 velocity)
         {
-            _context.PendingKnockbackVelocity = velocity;
+            _controllerContext.PendingKnockbackVelocity = velocity;
             _stateMachine.ChangeState<PlayerKnockbackState>();
         }
 
@@ -197,8 +247,11 @@ namespace Player
             RaycastHit2D footHit = Physics2D.Raycast(_baseWallCheckOrigin, dir, distance, mask);
             _isFootNearValidWall = footHit.collider;
             
-        
             RaycastHit2D headHit = Physics2D.Raycast(headOrigin, dir, distance, mask);
+            
+            _isWallHitMovable = (_wallHit.collider != null && (_wallHit.collider.gameObject.layer == _pushableLayerIndex || _wallHit.collider.GetComponentInParent<IPushable>() != null)) ||
+                                 (footHit.collider != null && (footHit.collider.gameObject.layer == _pushableLayerIndex || footHit.collider.GetComponentInParent<IPushable>() != null)) ||
+                                 (headHit.collider != null && (headHit.collider.gameObject.layer == _pushableLayerIndex || headHit.collider.GetComponentInParent<IPushable>() != null));
             
             _isHeadBlocked = false;
             if (!headHit.collider)
@@ -274,6 +327,13 @@ namespace Player
         
         private void CheckGrounded()
         {
+            if (_isDroppingThrough)
+            {
+                _isGrounded = false;
+                _isInCoyoteTime = false;
+                return;
+            }
+
             Bounds bounds = _feetCollider.bounds;
             float yOffset = 0.05f;
             _checkOrigins[0] = new Vector2(bounds.min.x, bounds.min.y + yOffset);
@@ -380,7 +440,37 @@ namespace Player
             return hits[0].collider || hits[1].collider || hits[2].collider;
         }
 
+        public void Teleport(Vector2 position)
+        {
+            StartCoroutine(TeleportRoutine(position));
+        }
+        
+        private IEnumerator TeleportRoutine(Vector2 targetPosition)
+        {
+            yield return new WaitForEndOfFrame();
+            ((IPlayerInputHandler)inputHandler).SetInputActive(false);
 
+            _rb.linearVelocity = Vector2.zero;
+            _rb.angularVelocity = 0f;
+    
+            var originalInterpolation = _rb.interpolation;
+            _rb.interpolation = RigidbodyInterpolation2D.None;
+    
+            _rb.position = targetPosition;
+            transform.position = targetPosition;
+    
+            Physics2D.SyncTransforms();
+            _rb.interpolation = originalInterpolation;
+
+            _isGrounded = false;
+            _isInCoyoteTime = false;
+            _coyoteTimer = 0f;
+
+            _stateMachine.ChangeState<PlayerIdleState>();
+            yield return new WaitForFixedUpdate();
+    
+            ((IPlayerInputHandler)inputHandler).SetInputActive(true);
+        }
         
     }
 }

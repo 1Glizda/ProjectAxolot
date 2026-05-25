@@ -44,6 +44,37 @@ namespace Player.AI
 
         private void Start()
         {
+            // Auto-detect references if null
+            if (simpleAi == null) simpleAi = GetComponentInParent<SimpleAi>();
+            if (soundController == null) soundController = GetComponent<SoundController>();
+            if (visibilityRenderer == null) visibilityRenderer = GetComponentInChildren<Renderer>();
+
+            if (simpleAi == null)
+            {
+                Debug.LogError($"[{gameObject.name}] AiSoundController: SimpleAi reference is missing! Please assign it in the Inspector.", this);
+                return;
+            }
+
+            if (soundController == null)
+            {
+                Debug.LogError($"[{gameObject.name}] AiSoundController: SoundController component is missing! Please attach it to this GameObject or assign it in the Inspector.", this);
+                return;
+            }
+
+            if (soundProfile == null)
+            {
+                Debug.LogError($"[{gameObject.name}] AiSoundController: SoundProfileSo ScriptableObject is missing! Please create a Sound Profile and assign it in the Inspector.", this);
+                return;
+            }
+
+            // Log warnings for unassigned clips to guide the developer
+            if (soundProfile.footstepLoop == null)
+                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Footstep loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.idleChirps == null || soundProfile.idleChirps.Length == 0)
+                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Idle chirps are not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.singingClips == null || soundProfile.singingClips.Length == 0)
+                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Singing clips are not assigned in the SoundProfile '{soundProfile.name}'.", this);
+
             ResetIdleChirpTimer(soundProfile.idleChirpInitialDelay);
             ResetSingingTimer();
         }

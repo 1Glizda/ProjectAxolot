@@ -10,10 +10,12 @@ namespace Player.StateMachine
         private bool _isCatchBuffered;
         
         private float _graceTimer;
+        private float _wallJumpLockoutTimer;
+        private float _wallCoyoteTimer;
 
         protected override bool IsGroundedState => false;
         
-        public PlayerFallingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerFallingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
 
@@ -22,6 +24,16 @@ namespace Player.StateMachine
             jumpAction.performed += BufferCatch;
             _isCatchBuffered = false;
             _graceTimer = 0.35f; // Prevent immediate regrab and allow clearing the trigger for auto-grab
+            _wallJumpLockoutTimer = stateMachine.WasDetached ? 0.15f : 0f;
+
+            if (stateMachine.PreviousStateType == typeof(PlayerClimbingState))
+            {
+                _wallCoyoteTimer = settings.WallCoyoteTime;
+            }
+            else
+            {
+                _wallCoyoteTimer = 0f;
+            }
         }
         
         public override void Tick(float dt)
@@ -32,6 +44,46 @@ namespace Player.StateMachine
             if (_graceTimer > 0)
             {
                 _graceTimer -= dt;
+            }
+
+            if (_wallJumpLockoutTimer > 0f)
+            {
+                _wallJumpLockoutTimer -= dt;
+            }
+
+            if (_wallCoyoteTimer > 0f)
+            {
+                _wallCoyoteTimer -= dt;
+                
+                if (jumpAction.triggered)
+                {
+                    Vector2 wallNormal = stateMachine.LastWallNormal;
+                    if (wallNormal.x > 0f)
+                    {
+                        Vector3 euler = ctx.spriteObject.transform.localEulerAngles;
+                        euler.y = 0f;
+                        ctx.spriteObject.transform.localEulerAngles = euler;
+                    }
+                    else if (wallNormal.x < 0f)
+                    {
+                        Vector3 euler = ctx.spriteObject.transform.localEulerAngles;
+                        euler.y = 180f;
+                        ctx.spriteObject.transform.localEulerAngles = euler;
+                    }
+
+                    ctx.stateProvider.NotifyJump();
+                    ctx.rb.linearVelocity = Vector2.zero;
+
+                    float rotationAngle = wallNormal.x > 0 ? settings.WallJumpAngle : -settings.WallJumpAngle;
+                    Quaternion rotation = Quaternion.Euler(0f, 0f, rotationAngle);
+                    Vector2 forceVec = (rotation * wallNormal) * settings.WallJumpForce;
+
+                    ctx.rb.AddForce(forceVec, ForceMode2D.Impulse);
+                    stateMachine.WasDetached = true;
+                    _wallJumpLockoutTimer = 0.15f;
+                    _wallCoyoteTimer = 0f;
+                    return;
+                }
             }
 
             if (_isCatchBuffered)
@@ -66,25 +118,67 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.IsNearValidWall)
             {
-                float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
-                bool canGrab = dot <= 0.01f;
-
-                if (canGrab)
+                if (!stateMachine.WasDetached)
                 {
-                    stateMachine.ConsumeJumpBuffer();
-                    _isCatchBuffered = false;
-                    stateMachine.ChangeState<PlayerClimbingState>();
-                    return;
+                    float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
+                    bool canGrab = dot <= 0.01f;
+
+                    if (canGrab)
+                    {
+                        if (stateMachine.IsInJumpBuffer)
+                        {
+                            stateMachine.ConsumeJumpBuffer();
+                            
+                            Vector2 wallNormal = ctx.stateProvider.WallHitNormal;
+                            if (wallNormal.x > 0f)
+                            {
+                                Vector3 euler = ctx.spriteObject.transform.localEulerAngles;
+                                euler.y = 0f;
+                                ctx.spriteObject.transform.localEulerAngles = euler;
+                            }
+                            else if (wallNormal.x < 0f)
+                            {
+                                Vector3 euler = ctx.spriteObject.transform.localEulerAngles;
+                                euler.y = 180f;
+                                ctx.spriteObject.transform.localEulerAngles = euler;
+                            }
+
+                            ctx.stateProvider.NotifyJump();
+                            ctx.rb.linearVelocity = Vector2.zero;
+
+                            float rotationAngle = wallNormal.x > 0 ? settings.WallJumpAngle : -settings.WallJumpAngle;
+                            Quaternion rotation = Quaternion.Euler(0f, 0f, rotationAngle);
+                            Vector2 forceVec = (rotation * wallNormal) * settings.WallJumpForce;
+
+                            ctx.rb.AddForce(forceVec, ForceMode2D.Impulse);
+                            stateMachine.WasDetached = true;
+                            _wallJumpLockoutTimer = 0.15f;
+                            return;
+                        }
+
+                        stateMachine.ConsumeJumpBuffer();
+                        _isCatchBuffered = false;
+                        stateMachine.ChangeState<PlayerClimbingState>();
+                        return;
+                    }
                 }
+            }
+            else
+            {
+                // Player cleared the wall — allow grabbing a new wall
+                stateMachine.WasDetached = false;
             }
 
         }
 
         public override void FixedTick(float dt)
         {
-            ApplyAccel(dt, settings.JumpAcceleration, settings.JumpDeceleration, settings.MaxHorizontalVelocity);
+            if (_wallJumpLockoutTimer <= 0f)
+            {
+                ApplyAccel(dt, settings.JumpAcceleration, settings.JumpDeceleration, settings.MaxHorizontalVelocity);
+            }
             ApplyGravity(dt, settings.FallingGravity);
-
+            ApplyCornerCorrection(dt);
         }
 
         private void BufferCatch(InputAction.CallbackContext context)

@@ -24,6 +24,11 @@ namespace Player
         public float MaxJumpTime => _maxJumpTime;
         public float MinJumpTime => _minJumpTime;
         public float JumpBufferTime => _jumpBufferTime;
+        public float JumpApexThreshold => _jumpApexThreshold;
+        public float JumpApexGravityMultiplier => _jumpApexGravityMultiplier;
+        public float JumpApexHorizontalAccelMultiplier => _jumpApexHorizontalAccelMultiplier;
+        public float CornerCorrectionAmount => _cornerCorrectionAmount;
+        public float CornerCorrectionDistance => _cornerCorrectionDistance;
         public LayerMask GroundLayers => _groundLayers;
         public float GroundCheckDistance => _groundCheckDistance;
         public float CoyoteTime => _coyoteTime;
@@ -38,14 +43,17 @@ namespace Player
         public float WallSlideSpeed => _wallSlideSpeed;
         public float WallDetachForce => _wallDetachForce;
         public float WallAttachGraceTime => _wallAttachGraceTime;
+        public float WallCoyoteTime => _wallCoyoteTime;
         
         public float WallJumpForce => _wallJumpForce;
         public float WallJumpAngle => _wallJumpAngle;
         public float VaultDuration => _vaultDuration; 
+        public float WallSlideDelay => _wallSlideDelay;
         
         public float SwingAcceleration  => _swingAcceleration;
         public float SwingAngularDrag => _swingAngularDrag;
         public float SwingEntryMomentumTransfer => _swingEntryMomentumTransfer;
+        public float SwingMomentumMultiplier => _swingMomentumMultiplier;
         
 
         public float VineJumpForce => _vineJumpForce;
@@ -56,6 +64,10 @@ namespace Player
         public float PushPullForce => _pushPullForce;
         public float PushableCheckYOffset => _pushableCheckYOffset;
         public float PushableCheckDistance => _pushableCheckDistance;
+        public bool UseManualGrabForPushables => _useManualGrabForPushables;
+        public float PushIntentDelay => _pushIntentDelay;
+        public float PushForceRampTime => _pushForceRampTime;
+        public float PushSnapSpeed => _pushSnapSpeed;
         
         public float KnockbackAirAcceleration => _knockbackAirAcceleration;
         
@@ -102,6 +114,16 @@ namespace Player
 
         [SerializeField] private float _jumpBufferTime = 0.15f;
         
+        [SerializeField] private float _jumpApexThreshold = 2f;
+        
+        [SerializeField] private float _jumpApexGravityMultiplier = 0.5f;
+        
+        [SerializeField] private float _jumpApexHorizontalAccelMultiplier = 1.5f;
+        
+        [SerializeField] private float _cornerCorrectionAmount = 5f;
+        
+        [SerializeField] private float _cornerCorrectionDistance = 0.3f;
+        
         
         
         [Header("Ground Checks")]
@@ -133,9 +155,13 @@ namespace Player
         
         [SerializeField] private float _wallAttachGraceTime = 0.15f;
         
+        [SerializeField] private float _wallCoyoteTime = 0.15f;
+        
         [SerializeField] private float _wallJumpForce;
         
         [SerializeField] private float _wallJumpAngle;
+        
+        [SerializeField] private float _wallSlideDelay = 2f;
         
 
         [Header("Vaulting")]
@@ -147,6 +173,8 @@ namespace Player
         [SerializeField] private float _swingAngularDrag;
 
         [SerializeField] private float _swingEntryMomentumTransfer = 0.2f;
+        
+        [SerializeField] private float _swingMomentumMultiplier = 1.3f;
 
 
         [SerializeField] private float _vineJumpForce = 12f;
@@ -161,6 +189,11 @@ namespace Player
         
         [SerializeField] private float _pushableCheckYOffset = 0.1f;
         [SerializeField] private float _pushableCheckDistance = 0.5f;
+        
+        [SerializeField] private bool _useManualGrabForPushables = true;
+        [SerializeField] private float _pushIntentDelay = 0.15f;
+        [SerializeField] private float _pushForceRampTime = 0.35f;
+        [SerializeField] private float _pushSnapSpeed = 20f;
         
         [Header("Knockback")]
         [SerializeField] private float _knockbackAirAcceleration = 3f;

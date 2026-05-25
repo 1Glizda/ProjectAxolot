@@ -4,7 +4,7 @@ namespace Player.StateMachine
 {
     internal sealed class PlayerKnockbackState : PlayerBaseState
     {
-        public PlayerKnockbackState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerKnockbackState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
 

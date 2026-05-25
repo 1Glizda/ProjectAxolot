@@ -15,7 +15,7 @@ namespace Player.StateMachine
         private Vector2 _translationStartPos;
         private float _translationStartAngle;
         
-        public PlayerSwingingState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerSwingingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {}
 
         public override void EnterState()
@@ -61,6 +61,11 @@ namespace Player.StateMachine
 
                 ctx.stateProvider.NotifyJump();
 
+                // Preserve and amplify the swing momentum from the rope bone
+                Vector2 swingVelocity = _currentBoneRb.linearVelocity;
+                ctx.rb.linearVelocity = swingVelocity * settings.SwingMomentumMultiplier;
+
+                // Apply the diagonal vine jump boost force on top!
                 Vector2 jumpDir = Vector2.up + (Vector2.right * horizontalInput);
                 jumpDir.Normalize();
                 ctx.rb.AddForce(jumpDir * (settings.VineJumpForce * ctx.rb.mass), ForceMode2D.Impulse);

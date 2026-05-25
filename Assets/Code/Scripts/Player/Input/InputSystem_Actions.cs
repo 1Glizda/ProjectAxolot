@@ -113,15 +113,6 @@ namespace Player.Input
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Pulse"",
-                    ""type"": ""Button"",
-                    ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
@@ -183,6 +174,24 @@ namespace Player.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pulse"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GrabWall"",
+                    ""type"": ""Button"",
+                    ""id"": ""9db6524f-7162-4013-9641-d8933f98a239"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -568,6 +577,17 @@ namespace Player.Input
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3febd8f-8141-4633-912d-2da211670263"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""GrabWall"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1091,7 +1111,6 @@ namespace Player.Input
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_Pulse = m_Player.FindAction("Pulse", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
             m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
@@ -1099,6 +1118,8 @@ namespace Player.Input
             m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
+            m_Player_Pulse = m_Player.FindAction("Pulse", throwIfNotFound: true);
+            m_Player_GrabWall = m_Player.FindAction("GrabWall", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1194,7 +1215,6 @@ namespace Player.Input
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_Pulse;
         private readonly InputAction m_Player_Interact;
         private readonly InputAction m_Player_Crouch;
         private readonly InputAction m_Player_Jump;
@@ -1202,6 +1222,8 @@ namespace Player.Input
         private readonly InputAction m_Player_Next;
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Point;
+        private readonly InputAction m_Player_Pulse;
+        private readonly InputAction m_Player_GrabWall;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1221,10 +1243,6 @@ namespace Player.Input
             /// Provides access to the underlying input action "Player/Look".
             /// </summary>
             public InputAction @Look => m_Wrapper.m_Player_Look;
-            /// <summary>
-            /// Provides access to the underlying input action "Player/Pulse".
-            /// </summary>
-            public InputAction @Pulse => m_Wrapper.m_Player_Pulse;
             /// <summary>
             /// Provides access to the underlying input action "Player/Interact".
             /// </summary>
@@ -1253,6 +1271,14 @@ namespace Player.Input
             /// Provides access to the underlying input action "Player/Point".
             /// </summary>
             public InputAction @Point => m_Wrapper.m_Player_Point;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Pulse".
+            /// </summary>
+            public InputAction @Pulse => m_Wrapper.m_Player_Pulse;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/GrabWall".
+            /// </summary>
+            public InputAction @GrabWall => m_Wrapper.m_Player_GrabWall;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1285,9 +1311,6 @@ namespace Player.Input
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Pulse.started += instance.OnPulse;
-                @Pulse.performed += instance.OnPulse;
-                @Pulse.canceled += instance.OnPulse;
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
@@ -1309,6 +1332,12 @@ namespace Player.Input
                 @Point.started += instance.OnPoint;
                 @Point.performed += instance.OnPoint;
                 @Point.canceled += instance.OnPoint;
+                @Pulse.started += instance.OnPulse;
+                @Pulse.performed += instance.OnPulse;
+                @Pulse.canceled += instance.OnPulse;
+                @GrabWall.started += instance.OnGrabWall;
+                @GrabWall.performed += instance.OnGrabWall;
+                @GrabWall.canceled += instance.OnGrabWall;
             }
 
             /// <summary>
@@ -1326,9 +1355,6 @@ namespace Player.Input
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
-                @Pulse.started -= instance.OnPulse;
-                @Pulse.performed -= instance.OnPulse;
-                @Pulse.canceled -= instance.OnPulse;
                 @Interact.started -= instance.OnInteract;
                 @Interact.performed -= instance.OnInteract;
                 @Interact.canceled -= instance.OnInteract;
@@ -1350,6 +1376,12 @@ namespace Player.Input
                 @Point.started -= instance.OnPoint;
                 @Point.performed -= instance.OnPoint;
                 @Point.canceled -= instance.OnPoint;
+                @Pulse.started -= instance.OnPulse;
+                @Pulse.performed -= instance.OnPulse;
+                @Pulse.canceled -= instance.OnPulse;
+                @GrabWall.started -= instance.OnGrabWall;
+                @GrabWall.performed -= instance.OnGrabWall;
+                @GrabWall.canceled -= instance.OnGrabWall;
             }
 
             /// <summary>
@@ -1652,13 +1684,6 @@ namespace Player.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnLook(InputAction.CallbackContext context);
             /// <summary>
-            /// Method invoked when associated input action "Pulse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-            /// </summary>
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-            void OnPulse(InputAction.CallbackContext context);
-            /// <summary>
             /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1707,6 +1732,20 @@ namespace Player.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnPoint(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Pulse" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPulse(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "GrabWall" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnGrabWall(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

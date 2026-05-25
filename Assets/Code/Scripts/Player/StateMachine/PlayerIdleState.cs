@@ -2,7 +2,7 @@ namespace Player.StateMachine
 {
     internal sealed class PlayerIdleState : PlayerBaseState
     {
-        public PlayerIdleState(PlayerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
+        public PlayerIdleState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
         }
 
@@ -40,6 +40,12 @@ namespace Player.StateMachine
             if (ctx.stateProvider.IsNearValidWall && verticalInput > 0f)
             {
                 stateMachine.ChangeState<PlayerClimbingState>();
+                return;
+            }
+
+            if (ctx.stateProvider.IsFootNearPushable && settings.UseManualGrabForPushables && grabAction.IsPressed())
+            {
+                stateMachine.ChangeState<PlayerPushPullState>();
                 return;
             }
 
