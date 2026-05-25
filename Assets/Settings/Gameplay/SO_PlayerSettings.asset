@@ -64,8 +64,11 @@ MonoBehaviour:
     m_Bits: 16780800
   _groundCheckDistance: 0.2
   _coyoteTime: 0.2
-  _applyRotationThreshold: 15
-  _maxRotation: 15
+  _applyRotationThreshold: 5
+  _maxRotation: 30
+  _maxSlopeAngle: 40
+  _slopeSlideSpeed: 12
+  _slopeSlideAccel: 40
   _wallDetectionRange: 0.1
   _wallLayers:
     serializedVersion: 2

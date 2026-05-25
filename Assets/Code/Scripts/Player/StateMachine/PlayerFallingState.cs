@@ -177,7 +177,10 @@ namespace Player.StateMachine
             {
                 ApplyAccel(dt, settings.JumpAcceleration, settings.JumpDeceleration, settings.MaxHorizontalVelocity);
             }
-            ApplyGravity(dt, settings.FallingGravity);
+            if (!ctx.stateProvider.IsOnSteepSlope)
+            {
+                ApplyGravity(dt, settings.FallingGravity);
+            }
             ApplyCornerCorrection(dt);
         }
 
