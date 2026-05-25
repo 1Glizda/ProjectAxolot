@@ -43,6 +43,12 @@ namespace Player.StateMachine
                 return;
             }
 
+            if (ctx.stateProvider.IsFootNearPushable && settings.UseManualGrabForPushables && grabAction.IsPressed())
+            {
+                stateMachine.ChangeState<PlayerPushPullState>();
+                return;
+            }
+
             if (horizontalInput != 0f)
             { 
                 stateMachine.ChangeState<PlayerRunState>();

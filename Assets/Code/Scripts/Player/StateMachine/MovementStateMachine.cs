@@ -15,6 +15,7 @@ namespace Player.StateMachine
         public bool WasDetached;
         public Type PreviousStateType { get; private set; }
         public VineHelper LastVine;
+        public Vector2 LastWallNormal;
 
         public void ConsumeJumpBuffer()
         {

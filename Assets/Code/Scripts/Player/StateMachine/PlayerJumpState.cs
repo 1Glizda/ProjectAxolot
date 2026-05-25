@@ -93,6 +93,7 @@ namespace Player.StateMachine
             float g = Mathf.Lerp(settings.JumpInitialGravity, settings.FallingGravity, t);
             
             ApplyGravity(dt, g);
+            ApplyCornerCorrection(dt);
         }
         
         
