@@ -8,6 +8,7 @@ namespace Player.StateMachine
         private bool _jumpTriggered;
         private bool _isDetached;
         private float _attachTimer;
+        private float _slideDelayTimer;
         public PlayerClimbingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
             
@@ -16,14 +17,12 @@ namespace Player.StateMachine
         public override void EnterState()
         {
             stateMachine.LastVine = null;
-            if (stateMachine.PreviousStateType != typeof(PlayerPrepareJumpState))
-            {
-                ctx.stateProvider.NotifyStartClimb();
-            }
+            ctx.stateProvider.NotifyStartClimb();
             ctx.rb.linearVelocity = Vector2.zero;
             _jumpTriggered = false;
             _isDetached = false;
             _attachTimer = settings.WallAttachGraceTime;
+            _slideDelayTimer = settings.WallSlideDelay;
         }
         
         public override void Tick(float dt)
@@ -48,24 +47,29 @@ namespace Player.StateMachine
                 return;
             }
 
+            if (ctx.stateProvider.WallHitNormal != Vector2.zero)
+            {
+                stateMachine.LastWallNormal = ctx.stateProvider.WallHitNormal;
+            }
+
+            if (isGrounded)
+            {
+                stateMachine.ChangeState<PlayerIdleState>();
+                return;
+            }
+
             if (_attachTimer > 0f)
             {
                 _attachTimer -= dt;
             }
 
-            float dot = Vector2.Dot(new Vector2(horizontalInput, 0f), ctx.stateProvider.WallHitNormal);
-            
-            if (dot > 0f && _attachTimer <= 0f)
+            if (verticalInput != 0f)
             {
-                if (isGrounded)
-                {
-                    stateMachine.ChangeState<PlayerRunState>();
-                    return;
-                }
-                else
-                {
-                    stateMachine.ChangeState<PlayerPrepareJumpState>();
-                }
+                _slideDelayTimer = settings.WallSlideDelay;
+            }
+            else if (_slideDelayTimer > 0f)
+            {
+                _slideDelayTimer -= dt;
             }
             
             if(!_jumpTriggered) _jumpTriggered = jumpAction.triggered;
@@ -84,12 +88,15 @@ namespace Player.StateMachine
                 Stop(dt);
             }
             
+            // Wall jump: press Jump while on wall
             if (_jumpTriggered)
             {
-                Vector2 dir = ctx.stateProvider.WallHitNormal;
-                ctx.rb.AddForce(settings.WallDetachForce * ctx.rb.mass * dir, ForceMode2D.Impulse);
+                TryFlipSprite();
+                ctx.stateProvider.NotifyJump();
+                ctx.rb.linearVelocity = Vector2.zero;
+                ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
                 stateMachine.WasDetached = true;
-                _isDetached = true;
+                stateMachine.ChangeState<PlayerFallingState>();
                 return;
             }
             
@@ -111,8 +118,20 @@ namespace Player.StateMachine
         private void Stop(float dt)
         {
             float currentV = ctx.rb.linearVelocityY;
-            ctx.rb.linearVelocityY = Mathf.MoveTowards(currentV, -settings.WallSlideSpeed, settings.WallDeceleration * dt);
+            float targetV = (_slideDelayTimer > 0f) ? 0f : -settings.WallSlideSpeed;
+            ctx.rb.linearVelocityY = Mathf.MoveTowards(currentV, targetV, settings.WallDeceleration * dt);
+        }
+
+        private Vector2 GetAngledVector()
+        {
+            Vector2 wallNormal = ctx.stateProvider.WallHitNormal;
+            float rotationAngle = wallNormal.x > 0 ? settings.WallJumpAngle : -settings.WallJumpAngle;
+            
+            Quaternion rotation = Quaternion.Euler(0f, 0f, rotationAngle);
+
+            return rotation * wallNormal;
         }
         
     }
 }
+

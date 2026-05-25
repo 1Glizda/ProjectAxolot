@@ -1,0 +1,1055 @@
+fileFormatVersion: 2
+guid: 3c6d3df2f9e65ee4ea4402a5e0e36d39
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 40557720459128394
+    second: TileMapTerrain_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TileMapTerrain_9
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12a8f1ae06e351e47aac595453e2117c
+      internalID: 1007564099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_10
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ef67cf81819ff6479e4a50ede341a44
+      internalID: 389666536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_13
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 100, y: 23}
+        - {x: -100, y: 23}
+        - {x: -100, y: -100}
+        - {x: 100, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 664c80c858025174b8b682a0887fafe8
+      internalID: 648274396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_15
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1383facc5dc5abc468b23bca42632b1f
+      internalID: -745203694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_16
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 100, y: 100}
+        - {x: -90, y: 100}
+        - {x: -90, y: -100}
+        - {x: 100, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae26a82b69db25447bef10a6d343af9a
+      internalID: -285951350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_17
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 86, y: 100}
+        - {x: -100, y: 100}
+        - {x: -100, y: -100}
+        - {x: 86, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2951100cb6cd92d48bf659f23825532c
+      internalID: 447820722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_18
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3434c502231ffd44ab312abb89ddbd21
+      internalID: 2078662647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_19
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56e3be2b08267c446bdf7f52e3f1b3d3
+      internalID: -939337375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_20
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ee5106771d2305418b8060776a0b33e
+      internalID: -1841036023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_21
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fe99a1f391780449ebc65843463a48
+      internalID: 1286490169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_23
+      rect:
+        serializedVersion: 2
+        x: 2200
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40a30772afe4dc94aae1c812865ce259
+      internalID: -1360062140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_24
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 353ade0d598462849814b4a21066c654
+      internalID: -2016646378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_25
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 100, y: 100}
+        - {x: -90, y: 100}
+        - {x: -90, y: -100}
+        - {x: 100, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbebf9e171e641b49b089fec1d74b6d4
+      internalID: 19666047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_26
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 86, y: 100}
+        - {x: -100, y: 100}
+        - {x: -100, y: -100}
+        - {x: 86, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68163b85b8c57964e8d0d402f6b3a64c
+      internalID: -724414292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_27
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4011a0d2400e77428270557d31faff4
+      internalID: 1859705895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_28
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4187141cbac1bea47acdd1e35f1efbc0
+      internalID: -2073245695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_29
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e415d1534a2721346a848825c3fab501
+      internalID: 1010633760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_4
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 2896
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e70a152811e764fa03554d5eecf3c8
+      internalID: 1701929500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_7
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 100, y: 22}
+        - {x: -90, y: 23}
+        - {x: -90, y: -100}
+        - {x: 100, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa3dba1894fa6ce4aa7ddb00eabdcb4e
+      internalID: 1626843878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_8
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 86, y: 22}
+        - {x: -100, y: 22}
+        - {x: -100, y: -100}
+        - {x: 86, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc00fb63d0e71d541ae06ce6adff254e
+      internalID: 1049949060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_11
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 100, y: 23}
+        - {x: -100, y: 23}
+        - {x: -100, y: -100}
+        - {x: 100, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f5c23d10d499eb418a25eae7ae36bbb
+      internalID: 1527075013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_12
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 100, y: 23}
+        - {x: -100, y: 23}
+        - {x: -100, y: -100}
+        - {x: 100, y: -100}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5bf28e6a4eef184dbea482bb9849c17
+      internalID: -667651374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_0
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 3096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b70f78c1f454143a1e66958755bb36
+      internalID: 40557720459128394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_1
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 3096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33cfbe4c388b37240b9d38921f707627
+      internalID: 1493717820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_2
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 3096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85da7ef416de9424a93dd6e7ca9de6a1
+      internalID: -2097283080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_3
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2896
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97b2e2c832744c1408f2e18c4414e94d
+      internalID: 39906924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_5
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2896
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa479feef8db74409f02b9faba71950
+      internalID: 253735791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_6
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4546b01c091ac504e83415f48cb4cae7
+      internalID: 1037550212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_14
+      rect:
+        serializedVersion: 2
+        x: 2200
+        y: 2696
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33520b0aafd967140b3cab1328ead537
+      internalID: 1448110328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_22
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2496
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 787f349baaadb714ca8a289eca324aa0
+      internalID: -1216485060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_30
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd122387c234bc7419ca470178b85e66
+      internalID: -577941597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_31
+      rect:
+        serializedVersion: 2
+        x: 2200
+        y: 2296
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4075c8bcee1cdcd4dbc221f5d13fb902
+      internalID: -2028380116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_32
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 233777c1b99a73144b23e674c4229200
+      internalID: 147196018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_33
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73dd462a56988f54191eec12ddb3ab14
+      internalID: -1905639416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_34
+      rect:
+        serializedVersion: 2
+        x: 1400
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 077b2963514037c4d90b54134c4f95bb
+      internalID: -1497016917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_35
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cafbdb6f95cde834194a9bcfff57cc55
+      internalID: 1416504933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_36
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cac74b4d11c92bd438ccb1c61e975284
+      internalID: -1568669081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_37
+      rect:
+        serializedVersion: 2
+        x: 2000
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a244a9f34d5fe4f9e8a22d47ad9fcc
+      internalID: -1279898668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMapTerrain_38
+      rect:
+        serializedVersion: 2
+        x: 2200
+        y: 2096
+        width: 200
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a729a1a05fcc08c4bb09b3de23081522
+      internalID: -1277048686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ebc22e3529cd3cd4d9f32f649676f083
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":200.0,"y":200.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      TileMapTerrain_0: 40557720459128394
+      TileMapTerrain_1: 1493717820
+      TileMapTerrain_10: 389666536
+      TileMapTerrain_11: 1527075013
+      TileMapTerrain_12: -667651374
+      TileMapTerrain_13: 648274396
+      TileMapTerrain_14: 1448110328
+      TileMapTerrain_15: -745203694
+      TileMapTerrain_16: -285951350
+      TileMapTerrain_17: 447820722
+      TileMapTerrain_18: 2078662647
+      TileMapTerrain_19: -939337375
+      TileMapTerrain_2: -2097283080
+      TileMapTerrain_20: -1841036023
+      TileMapTerrain_21: 1286490169
+      TileMapTerrain_22: -1216485060
+      TileMapTerrain_23: -1360062140
+      TileMapTerrain_24: -2016646378
+      TileMapTerrain_25: 19666047
+      TileMapTerrain_26: -724414292
+      TileMapTerrain_27: 1859705895
+      TileMapTerrain_28: -2073245695
+      TileMapTerrain_29: 1010633760
+      TileMapTerrain_3: 39906924
+      TileMapTerrain_30: -577941597
+      TileMapTerrain_31: -2028380116
+      TileMapTerrain_32: 147196018
+      TileMapTerrain_33: -1905639416
+      TileMapTerrain_34: -1497016917
+      TileMapTerrain_35: 1416504933
+      TileMapTerrain_36: -1568669081
+      TileMapTerrain_37: -1279898668
+      TileMapTerrain_38: -1277048686
+      TileMapTerrain_4: 1701929500
+      TileMapTerrain_5: 253735791
+      TileMapTerrain_6: 1037550212
+      TileMapTerrain_7: 1626843878
+      TileMapTerrain_8: 1049949060
+      TileMapTerrain_9: 1007564099
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

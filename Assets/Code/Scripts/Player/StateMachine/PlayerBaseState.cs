@@ -10,6 +10,7 @@ namespace Player.StateMachine
         protected readonly MovementStateMachine stateMachine;
         protected readonly InputAction moveAction;
         protected readonly InputAction jumpAction;
+        protected readonly InputAction grabAction;
         
         protected bool isGrounded;
         protected bool isInCoyoteTime;
@@ -29,6 +30,7 @@ namespace Player.StateMachine
            settings = ctx.settings;
            moveAction = ctx.handler.MoveAction;
            jumpAction = ctx.handler.JumpAction;
+           grabAction = ctx.handler.GrabWallAction;
         }
 
         public virtual void EnterState(){}
@@ -132,6 +134,13 @@ namespace Player.StateMachine
                 {
                     bool isTurning = (horizontalInput > 0 && currentV < 0) || (horizontalInput < 0 && currentV > 0);
                     float speed = isTurning ? Mathf.Max(acceleration, deceleration) : acceleration;
+                    
+                    // Boost horizontal control at the jump apex
+                    if (Mathf.Abs(ctx.rb.linearVelocityY) < settings.JumpApexThreshold)
+                    {
+                        speed *= settings.JumpApexHorizontalAccelMultiplier;
+                    }
+                    
                     ctx.rb.linearVelocityX = Mathf.MoveTowards(currentV, targetV, speed * dt);
                 }
                 else
@@ -172,7 +181,13 @@ namespace Player.StateMachine
 
             if (ctx.rb.linearVelocityY <= settings.TerminalVerticalVelocity) return;
             
-            float newV = ctx.rb.linearVelocityY - (gravity * dt);
+            float gravityMultiplier = 1f;
+            if (Mathf.Abs(ctx.rb.linearVelocityY) < settings.JumpApexThreshold)
+            {
+                gravityMultiplier = settings.JumpApexGravityMultiplier;
+            }
+            
+            float newV = ctx.rb.linearVelocityY - (gravity * gravityMultiplier * dt);
             ctx.rb.linearVelocityY = Mathf.Max(newV, settings.TerminalVerticalVelocity);
         }
 
@@ -186,11 +201,42 @@ namespace Player.StateMachine
                 euler.y = 0f;
                 objToFlip.transform.localEulerAngles = euler;
             }
-            else if (horizontalInput < 0f)
+             else if (horizontalInput < 0f)
             {
                 Vector3 euler = objToFlip.transform.localEulerAngles;
                 euler.y = 180f;
                 objToFlip.transform.localEulerAngles = euler;
+            }
+        }
+
+        protected void ApplyCornerCorrection(float dt)
+        {
+            // Only apply when rising
+            if (ctx.rb.linearVelocityY <= 0.05f) return;
+
+            Bounds bounds = ctx.bodyCollider.bounds;
+            Vector2 rayOriginY = new Vector2(0f, bounds.max.y - 0.05f);
+            
+            // Left and Right ray origins
+            Vector2 leftOrigin = new Vector2(bounds.min.x + 0.02f, rayOriginY.y);
+            Vector2 rightOrigin = new Vector2(bounds.max.x - 0.02f, rayOriginY.y);
+
+            float rayDist = settings.CornerCorrectionDistance;
+            LayerMask mask = settings.GroundLayers;
+
+            RaycastHit2D leftHit = Physics2D.Raycast(leftOrigin, Vector2.up, rayDist, mask);
+            RaycastHit2D rightHit = Physics2D.Raycast(rightOrigin, Vector2.up, rayDist, mask);
+
+            // If only one side hits, perform the horizontal nudge!
+            if (leftHit.collider != null && rightHit.collider == null)
+            {
+                // Left is blocked, nudge to the right
+                ctx.rb.position += new Vector2(settings.CornerCorrectionAmount * dt, 0f);
+            }
+            else if (rightHit.collider != null && leftHit.collider == null)
+            {
+                // Right is blocked, nudge to the left
+                ctx.rb.position -= new Vector2(settings.CornerCorrectionAmount * dt, 0f);
             }
         }
 

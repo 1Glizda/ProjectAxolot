@@ -8,8 +8,8 @@ namespace Player
         public InputAction JumpAction { get; }
         public InputAction InteractAction { get; }
         public InputAction PulseAction { get; }
-        public InputAction AltPulseAction { get; }
         public InputAction PauseAction { get; }
+        public InputAction GrabWallAction { get; }
         public void SetInputActive(bool active);
     }
 }

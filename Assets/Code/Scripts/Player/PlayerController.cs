@@ -18,15 +18,14 @@ namespace Player
         public event System.Action OnGrabVine;
         
         public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
-        public bool IsPreparingWallJump => _isPreparingWallJump;
         public bool IsJumping => _isJumping;
         public float VerticalVelocity => _rb.linearVelocityY;
         public float HorizontalVelocity => _rb.linearVelocityX;
 
         public bool IsGrounded => _isGrounded;
         public bool IsInCoyoteTime => _isInCoyoteTime;
-        public bool IsNearValidWall => _isNearValidWall;
-        public bool IsFootNearValidWall => _isFootNearValidWall;
+        public bool IsNearValidWall => (!_isWallHitMovable || !((IPlayerInputHandler)inputHandler).GrabWallAction.IsPressed()) && _isNearValidWall;
+        public bool IsFootNearValidWall => (!_isWallHitMovable || !((IPlayerInputHandler)inputHandler).GrabWallAction.IsPressed()) && _isFootNearValidWall;
         public bool IsHeadBlocked => _isHeadBlocked;
         public Vector2 WallHitNormal => _wallHitNormal;
         public bool IsFootNearPushable => _isFootNearPushable;
@@ -60,12 +59,12 @@ namespace Player
 
         private bool _isGrounded;
         private bool _isInClimbingState;
-        private bool _isPreparingWallJump;
         private bool _isJumping;
         private bool _isInCoyoteTime;
         
         private bool _isNearValidWall;
         private bool _isFootNearValidWall;
+        private bool _isWallHitMovable;
         private bool _isHeadBlocked;
         private Vector2 _wallHitNormal;
         private bool _isFootNearPushable;
@@ -115,8 +114,7 @@ namespace Player
             _stateMachine.onChangeState += type => {
                 if (_debugMode) Debug.Log(type, this);
                 if (_stateText != null) _stateText.text = type.Name;
-                _isInClimbingState = type == typeof(PlayerClimbingState) || type == typeof(PlayerPrepareJumpState);
-                _isPreparingWallJump = type == typeof(PlayerPrepareJumpState);
+                _isInClimbingState = type == typeof(PlayerClimbingState);
                 _isJumping = type == typeof(PlayerJumpState);
             };
             
@@ -249,8 +247,11 @@ namespace Player
             RaycastHit2D footHit = Physics2D.Raycast(_baseWallCheckOrigin, dir, distance, mask);
             _isFootNearValidWall = footHit.collider;
             
-        
             RaycastHit2D headHit = Physics2D.Raycast(headOrigin, dir, distance, mask);
+            
+            _isWallHitMovable = (_wallHit.collider != null && (_wallHit.collider.gameObject.layer == _pushableLayerIndex || _wallHit.collider.GetComponentInParent<IPushable>() != null)) ||
+                                 (footHit.collider != null && (footHit.collider.gameObject.layer == _pushableLayerIndex || footHit.collider.GetComponentInParent<IPushable>() != null)) ||
+                                 (headHit.collider != null && (headHit.collider.gameObject.layer == _pushableLayerIndex || headHit.collider.GetComponentInParent<IPushable>() != null));
             
             _isHeadBlocked = false;
             if (!headHit.collider)

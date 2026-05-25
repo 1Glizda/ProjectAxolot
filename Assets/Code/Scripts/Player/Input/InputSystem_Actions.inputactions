@@ -97,9 +97,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PulseAlternate",
+                    "name": "GrabWall",
                     "type": "Button",
-                    "id": "980f7631-540e-4bc5-891d-c8901c8a83b5",
+                    "id": "9db6524f-7162-4013-9641-d8933f98a239",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -494,12 +494,12 @@
                 },
                 {
                     "name": "",
-                    "id": "29d91cb6-2e36-40cf-8078-97613ab4f02e",
-                    "path": "<Mouse>/rightButton",
+                    "id": "f3febd8f-8141-4633-912d-2da211670263",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "PulseAlternate",
+                    "action": "GrabWall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

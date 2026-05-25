@@ -65,7 +65,7 @@ namespace Player.Sound
 
             // Subscribe to pulse event
             if (pulseController != null)
-                pulseController.OnPulse += HandlePulse;
+                pulseController.OnPulse.AddListener(HandlePulse);
             else
                 Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: PulseController not found. Pulse SFX will not play.", this);
 
@@ -93,7 +93,7 @@ namespace Player.Sound
             }
 
             if (pulseController != null)
-                pulseController.OnPulse -= HandlePulse;
+                pulseController.OnPulse.RemoveListener(HandlePulse);
         }
 
         private void Update()
@@ -157,7 +157,7 @@ namespace Player.Sound
                 soundController.PlayOneShotDebounced(soundProfile.landClip, soundProfile.landVolume, 0.15f, soundProfile.pitchVariance);
         }
 
-        private void HandlePulse()
+        private void HandlePulse(float _)
         {
             if (soundProfile.pulseClip != null)
                 soundController.PlayOneShot(soundProfile.pulseClip, soundProfile.pulseVolume);
