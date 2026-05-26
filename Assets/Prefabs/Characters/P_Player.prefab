@@ -191,7 +191,6 @@ GameObject:
   - component: {fileID: 9195599408767231484}
   - component: {fileID: 3371526616942566289}
   - component: {fileID: 7434986170741724236}
-  - component: {fileID: 7927026719218386361}
   - component: {fileID: 5102976495171247001}
   m_Layer: 13
   m_Name: P_Player
@@ -519,19 +518,6 @@ MonoBehaviour:
   oneShotSource: {fileID: 0}
   loopFadeSpeed: 8
   debugMode: 0
---- !u!114 &7927026719218386361
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9188213222767286266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3aa2b3f97bfd4c9d2e163662ab91f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Interactions::Interactions.CollectibleTracker
-  _debugTrackerText: {fileID: 0}
 --- !u!114 &5102976495171247001
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,7 +19,14 @@ namespace UICustom
         [SerializeField] private GameObject _neutralEyes;
         [SerializeField] private GameObject _sadEyes;
 
+        [Header("Damage Shake")]
+        [SerializeField] private RectTransform _shakeTarget;
+        [SerializeField] private float _shakeDuration = 0.35f;
+        [SerializeField] private float _shakeStrength = 12f;
+        [SerializeField] private float _shakeFrequency = 30f;
+
         private Coroutine _updateCoroutine;
+        private Coroutine _shakeCoroutine;
 
         public void UpdatePoints(int previous, int current)
         {
@@ -39,6 +46,7 @@ namespace UICustom
             if (previous > current)
             {
                 _updateCoroutine = StartCoroutine(DecreasePoints(previous, current));
+                TriggerShake();
             }
             else
             {
@@ -46,6 +54,32 @@ namespace UICustom
             }
 
             UpdateEyeExpressions(current);
+        }
+
+        private void TriggerShake()
+        {
+            if (_shakeTarget == null) return;
+            if (_shakeCoroutine != null) StopCoroutine(_shakeCoroutine);
+            _shakeCoroutine = StartCoroutine(Shake());
+        }
+
+        private IEnumerator Shake()
+        {
+            Vector2 originalPos = _shakeTarget.anchoredPosition;
+            float elapsed = 0f;
+
+            while (elapsed < _shakeDuration)
+            {
+                float decay = 1f - (elapsed / _shakeDuration);
+                float offsetX = Mathf.Sin(elapsed * _shakeFrequency) * _shakeStrength * decay;
+                _shakeTarget.anchoredPosition = originalPos + new Vector2(offsetX, 0f);
+
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            _shakeTarget.anchoredPosition = originalPos;
+            _shakeCoroutine = null;
         }
 
         private IEnumerator DecreasePoints(int previous, int current)
