@@ -92,6 +92,7 @@ namespace Player
         private RaycastHit2D[] _groundHits;
         private Vector2[] _checkOrigins = new Vector2[3];
         private int _pushableLayerIndex;
+        private float _resetHoldTimer;
 
         
         
@@ -150,6 +151,26 @@ namespace Player
             {
                 TryDropThroughPlatform();
             }
+
+            if (((IPlayerInputHandler)inputHandler).ResetAction != null)
+            {
+                if (((IPlayerInputHandler)inputHandler).ResetAction.IsPressed())
+                {
+                    _resetHoldTimer += dt;
+                    if (_resetHoldTimer >= 1.0f)
+                    {
+                        _resetHoldTimer = 0f;
+                        if (Player.GameState.GameStateManager.Instance != null)
+                        {
+                            Player.GameState.GameStateManager.Instance.KillPlayer();
+                        }
+                    }
+                }
+                else
+                {
+                    _resetHoldTimer = 0f;
+                }
+            }
         }
 
         private void TryDropThroughPlatform()
@@ -204,6 +225,7 @@ namespace Player
 
         public void NotifyJump()
         {
+            _isInCoyoteTime = false;
             OnJump?.Invoke();
         }
 
@@ -351,6 +373,7 @@ namespace Player
             LayerMask mask = _settings.GroundLayers;
 
             bool wasGrounded = _isGrounded;
+            bool wasOnSteepSlope = _isOnSteepSlope;
             bool didHit = MultiRaycast(_groundHits, _checkOrigins, Vector2.down, distance, mask);
             
             _isOnSteepSlope = false;
@@ -442,7 +465,7 @@ namespace Player
                     RaycastHit2D hit = Physics2D.Raycast(middleOrigin, Vector2.down, Mathf.Infinity, mask);
                     _isGrounded = false;
                     
-                    if (!_isInCoyoteTime)
+                    if (wasGrounded || wasOnSteepSlope)
                     {
                         _isInCoyoteTime = true;
                         _coyoteTimer = 0f;

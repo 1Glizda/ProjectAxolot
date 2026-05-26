@@ -12,6 +12,7 @@ namespace Player.Input
         public InputAction PulseAction => _pulseAction;
         public InputAction PauseAction => _pauseAction;
         public InputAction GrabWallAction => _grabWallAction;
+        public InputAction ResetAction => _resetAction;
         
         private InputAction _moveAction;
         private InputAction _jumpAction;
@@ -19,6 +20,7 @@ namespace Player.Input
         private InputAction _pulseAction;
         private InputAction _pauseAction;
         private InputAction _grabWallAction;
+        private InputAction _resetAction;
         
         private InputSystem_Actions _inputActions;
 
@@ -32,6 +34,7 @@ namespace Player.Input
             _pulseAction = _inputActions.Player.Pulse;
             _pauseAction = _inputActions.UI.Cancel;
             _grabWallAction = _inputActions.Player.GrabWall;
+            _resetAction = _inputActions.Player.Reset;
 
             _inputActions.Player.Enable();
             _inputActions.UI.Enable();

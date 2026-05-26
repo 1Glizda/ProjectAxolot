@@ -24,10 +24,8 @@ namespace Player.StateMachine
             _p1 = new Vector2(ctx.rb.position.x, _p2.y);
             
             ctx.rb.bodyType = RigidbodyType2D.Kinematic;
-            ctx.bodyCollider.enabled = false;
-            ctx.feetCollider.enabled = false;
             _p0 = ctx.rb.position;
-            ctx.rb.linearVelocityY = 0f;
+            ctx.rb.linearVelocity = Vector2.zero;
         }
 
         public override void Tick(float dt)
@@ -87,8 +85,6 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             ctx.rb.bodyType = RigidbodyType2D.Dynamic;
-            ctx.bodyCollider.enabled = true;
-            ctx.feetCollider.enabled = true;
         }
 
         private Vector2 GetAngledVector(Vector2 wallNormal)

@@ -23,8 +23,13 @@ namespace Player.StateMachine
             ctx.stateProvider.NotifyJump();
 
             Vector2 dir = Vector2.up;
+            float slopeAngle = Vector2.Angle(ctx.stateProvider.GroundNormal, Vector2.up);
             
-            if (settings.UseDiagonalJump && !ctx.stateProvider.IsNearValidWall)
+            if (slopeAngle > settings.MaxSlopeAngle)
+            {
+                dir = ctx.stateProvider.GroundNormal;
+            }
+            else if (settings.UseDiagonalJump && !ctx.stateProvider.IsNearValidWall)
             {
                 float lAngle = ( 90f + settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
                 float rAngle = (90f - settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;

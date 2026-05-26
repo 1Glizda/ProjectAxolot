@@ -10,6 +10,7 @@ namespace Player
         public InputAction PulseAction { get; }
         public InputAction PauseAction { get; }
         public InputAction GrabWallAction { get; }
+        public InputAction ResetAction { get; }
         public void SetInputActive(bool active);
     }
 }

@@ -26,6 +26,8 @@ namespace Interactions
 
         [Header("Timing")]
         [SerializeField] private float _recoveryTime = 3f;
+        [SerializeField] private float _contactDelay = 0.5f;
+        [SerializeField] private Vector3 _preExplosionScale = new Vector3(0.8f, 0.8f, 1f);
 
         private bool _isExploded = false;
 
@@ -48,12 +50,44 @@ namespace Interactions
         public void PulseInteract()
         {
             if (_isExploded) return;
-            StartCoroutine(ExplodeRoutine());
+            StartCoroutine(ExplodeRoutine(_contactDelay));
         }
 
-        private IEnumerator ExplodeRoutine()
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player") || (collision.rigidbody != null && collision.rigidbody.CompareTag("Player")))
+            {
+                if (!_isExploded)
+                    StartCoroutine(ExplodeRoutine(_contactDelay));
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.CompareTag("Player") || (collider.attachedRigidbody != null && collider.attachedRigidbody.CompareTag("Player")))
+            {
+                if (!_isExploded)
+                    StartCoroutine(ExplodeRoutine(_contactDelay));
+            }
+        }
+
+        private IEnumerator ExplodeRoutine(float delay)
         {
             _isExploded = true;
+            Vector3 originalScale = transform.localScale;
+
+            if (delay > 0f)
+            {
+                float time = 0f;
+                while (time < delay)
+                {
+                    transform.localScale = Vector3.Lerp(originalScale, _preExplosionScale, time / delay);
+                    time += Time.deltaTime;
+                    yield return null;
+                }
+                transform.localScale = _preExplosionScale;
+            }
+
             SetSprite(true);
             if (_collider != null) _collider.enabled = false;
 
@@ -64,6 +98,7 @@ namespace Interactions
             _isExploded = false;
             SetSprite(false);
             if (_collider != null) _collider.enabled = true;
+            transform.localScale = originalScale;
         }
 
         private void Explode()

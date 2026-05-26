@@ -41,6 +41,14 @@ namespace Player.StateMachine
             base.Tick(dt);
             TryFlipSprite();
 
+            // Allow jumping if we have coyote time (e.g., just walked off a ledge) 
+            // OR if we are actively sliding down a steep slope
+            if ((isInCoyoteTime || ctx.stateProvider.IsOnSteepSlope) && stateMachine.IsInJumpBuffer)
+            {
+                stateMachine.ChangeState<PlayerJumpState>();
+                return;
+            }
+
             if (_graceTimer > 0)
             {
                 _graceTimer -= dt;
