@@ -46,7 +46,9 @@ namespace Player.GameState
         
         public void KillPlayer()
         {
+            #if UNITY_EDITOR
             Debug.LogError("Player Killed", this);
+            #endif
             ResetPlayer();
             onDeath?.Invoke();
         }
@@ -61,13 +63,11 @@ namespace Player.GameState
             if (_currentHp < 0) _currentHp = 0;
             _damageCooldownTimer = _damageCooldown;
 
+            onHpChange?.Invoke(initialHp, _currentHp);
+
             if (_currentHp <= 0)
             {
                 KillPlayer();
-            }
-            else
-            {
-                onHpChange?.Invoke(initialHp, _currentHp);
             }
 
             if (hazardCollider != null)
@@ -124,7 +124,7 @@ namespace Player.GameState
         {
             int previousHp = _currentHp;
             _currentHp = _maxHp;
-            _damageCooldownTimer = 0f;
+            _damageCooldownTimer = _damageCooldown;
             onHpChange?.Invoke(previousHp, _currentHp);
         }
         

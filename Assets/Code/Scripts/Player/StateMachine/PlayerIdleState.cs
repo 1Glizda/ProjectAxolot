@@ -8,7 +8,7 @@ namespace Player.StateMachine
 
         public override void EnterState()
         {
-            stateMachine.LastVine = null;
+            stateMachine.lastVine = null;
         }
 
         public override void Tick(float dt)

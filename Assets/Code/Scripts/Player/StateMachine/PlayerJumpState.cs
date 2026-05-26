@@ -23,8 +23,13 @@ namespace Player.StateMachine
             ctx.stateProvider.NotifyJump();
 
             Vector2 dir = Vector2.up;
+            float slopeAngle = Vector2.Angle(ctx.stateProvider.GroundNormal, Vector2.up);
             
-            if (settings.UseDiagonalJump && !ctx.stateProvider.IsNearValidWall)
+            if (slopeAngle > settings.MaxSlopeAngle)
+            {
+                dir = ctx.stateProvider.GroundNormal;
+            }
+            else if (settings.UseDiagonalJump && !ctx.stateProvider.IsNearValidWall)
             {
                 float lAngle = ( 90f + settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
                 float rAngle = (90f - settings.JumpRunningMaxAngle) * Mathf.Deg2Rad;
@@ -55,7 +60,7 @@ namespace Player.StateMachine
                 }
             }
 
-            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
+            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.lastVine;
             bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || jumpAction.triggered;
             if (wantsToGrab && ctx.collisionHandler.CanSwing)
             {

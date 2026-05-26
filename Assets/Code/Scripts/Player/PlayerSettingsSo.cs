@@ -36,6 +36,10 @@ namespace Player
         public float ApplyRotationThreshold => _applyRotationThreshold;
         public float MaxRotation => _maxRotation;
         
+        public float MaxSlopeAngle => _maxSlopeAngle;
+        public float SlopeSlideSpeed => _slopeSlideSpeed;
+        public float SlopeSlideAccel => _slopeSlideAccel;
+        
         public float WallDetectionRange => _wallDetectionRange;
         public LayerMask WallLayers => _wallLayers;
         public float WallAcceleration => _wallAcceleration;
@@ -140,6 +144,11 @@ namespace Player
         [SerializeField] private float _applyRotationThreshold;
         
         [SerializeField] private float _maxRotation;
+
+        [Header("Slope Sliding")]
+        [SerializeField] private float _maxSlopeAngle = 45f;
+        [SerializeField] private float _slopeSlideSpeed = 12f;
+        [SerializeField] private float _slopeSlideAccel = 40f;
 
         [Header("Wall Climbing")]
         [SerializeField] private float _wallDetectionRange;

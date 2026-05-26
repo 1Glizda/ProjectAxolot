@@ -12,10 +12,10 @@ namespace Player.StateMachine
     {
         public Action<Type> onChangeState;
         public bool IsInJumpBuffer { get {return _jumpBuffer > 0f && _isJumpBuffered;}}
-        public bool WasDetached;
+        public bool wasDetached;
         public Type PreviousStateType { get; private set; }
-        public VineHelper LastVine;
-        public Vector2 LastWallNormal;
+        public VineHelper lastVine;
+        public Vector2 lastWallNormal;
 
         public void ConsumeJumpBuffer()
         {

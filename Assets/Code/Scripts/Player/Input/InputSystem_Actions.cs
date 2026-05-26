@@ -192,6 +192,15 @@ namespace Player.Input
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""90d89857-3f1f-4f0e-a4bd-d02ef8300df6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -588,6 +597,17 @@ namespace Player.Input
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""GrabWall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4db11059-c603-4bb6-8706-f127e5dc4074"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1120,6 +1140,7 @@ namespace Player.Input
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
             m_Player_Pulse = m_Player.FindAction("Pulse", throwIfNotFound: true);
             m_Player_GrabWall = m_Player.FindAction("GrabWall", throwIfNotFound: true);
+            m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1224,6 +1245,7 @@ namespace Player.Input
         private readonly InputAction m_Player_Point;
         private readonly InputAction m_Player_Pulse;
         private readonly InputAction m_Player_GrabWall;
+        private readonly InputAction m_Player_Reset;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1279,6 +1301,10 @@ namespace Player.Input
             /// Provides access to the underlying input action "Player/GrabWall".
             /// </summary>
             public InputAction @GrabWall => m_Wrapper.m_Player_GrabWall;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Reset".
+            /// </summary>
+            public InputAction @Reset => m_Wrapper.m_Player_Reset;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1338,6 +1364,9 @@ namespace Player.Input
                 @GrabWall.started += instance.OnGrabWall;
                 @GrabWall.performed += instance.OnGrabWall;
                 @GrabWall.canceled += instance.OnGrabWall;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
             }
 
             /// <summary>
@@ -1382,6 +1411,9 @@ namespace Player.Input
                 @GrabWall.started -= instance.OnGrabWall;
                 @GrabWall.performed -= instance.OnGrabWall;
                 @GrabWall.canceled -= instance.OnGrabWall;
+                @Reset.started -= instance.OnReset;
+                @Reset.performed -= instance.OnReset;
+                @Reset.canceled -= instance.OnReset;
             }
 
             /// <summary>
@@ -1746,6 +1778,13 @@ namespace Player.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnGrabWall(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Reset" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnReset(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

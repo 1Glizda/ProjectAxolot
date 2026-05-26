@@ -16,6 +16,8 @@ namespace Player
         
         public bool IsGrounded { get; }
         public bool IsInCoyoteTime { get; }
+        public bool IsOnSteepSlope { get; }
+        public Vector2 GroundNormal { get; }
  
         public bool IsNearValidWall { get; }
         public bool IsFootNearValidWall { get; }

@@ -59,6 +59,15 @@ namespace Player.GameState
             {
                 Vector2 position = _currentCheckpoint ?  _currentCheckpoint.transform.position : _startingCheckpoint.transform.position;
                 _playerController.Teleport(position);
+                
+                if (_currentCheckpoint)
+                {
+                    _currentCheckpoint.ResetSavedObjects();
+                }
+                else if (_startingCheckpoint)
+                {
+                    _startingCheckpoint.ResetSavedObjects();
+                }
             }
         }
     }

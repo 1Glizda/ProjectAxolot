@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8909677743871139362}
   - component: {fileID: 2313850560903093861}
   - component: {fileID: 255361279062140548}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SpikeHazard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: b03f4ccd56426e64f88fb0228aebc641, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a08367028fb34fc43908b1231e571fff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

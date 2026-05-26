@@ -16,7 +16,7 @@ namespace Player.StateMachine
 
         public override void EnterState()
         {
-            stateMachine.LastVine = null;
+            stateMachine.lastVine = null;
             ctx.stateProvider.NotifyStartClimb();
             ctx.rb.linearVelocity = Vector2.zero;
             _jumpTriggered = false;
@@ -49,7 +49,7 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.WallHitNormal != Vector2.zero)
             {
-                stateMachine.LastWallNormal = ctx.stateProvider.WallHitNormal;
+                stateMachine.lastWallNormal = ctx.stateProvider.WallHitNormal;
             }
 
             if (isGrounded)
@@ -95,7 +95,7 @@ namespace Player.StateMachine
                 ctx.stateProvider.NotifyJump();
                 ctx.rb.linearVelocity = Vector2.zero;
                 ctx.rb.AddForce(GetAngledVector() * settings.WallJumpForce, ForceMode2D.Impulse);
-                stateMachine.WasDetached = true;
+                stateMachine.wasDetached = true;
                 stateMachine.ChangeState<PlayerFallingState>();
                 return;
             }

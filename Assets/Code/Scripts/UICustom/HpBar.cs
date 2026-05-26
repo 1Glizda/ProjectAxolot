@@ -30,6 +30,12 @@ namespace UICustom
 
             if (_updateCoroutine != null) StopCoroutine(_updateCoroutine);
 
+            // Snap visual state to match 'previous' before animating to 'current'
+            for (int i = 0; i < _points.Length; i++)
+            {
+                _points[i].AnimatePoint(0f, i < previous);
+            }
+
             if (previous > current)
             {
                 _updateCoroutine = StartCoroutine(DecreasePoints(previous, current));

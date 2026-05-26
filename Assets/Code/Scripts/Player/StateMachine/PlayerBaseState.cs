@@ -126,6 +126,16 @@ namespace Player.StateMachine
             }
             else
             {
+                if (ctx.stateProvider.IsOnSteepSlope)
+                {
+                    Vector2 normal = ctx.stateProvider.GroundNormal;
+                    Vector2 slideDir = normal.x > 0 ? new Vector2(normal.y, -normal.x) : new Vector2(-normal.y, normal.x);
+                    Vector2 targetVelocity = slideDir * settings.SlopeSlideSpeed;
+                    
+                    ctx.rb.linearVelocity = Vector2.MoveTowards(ctx.rb.linearVelocity, targetVelocity, settings.SlopeSlideAccel * dt);
+                    return;
+                }
+
                 // Traditional horizontal-only movement in the air
                 float currentV = ctx.rb.linearVelocityX;
                 float targetV = horizontalInput * maxV;

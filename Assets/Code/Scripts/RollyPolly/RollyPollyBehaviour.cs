@@ -21,6 +21,7 @@ namespace RollyPolly
         
         [Header("Patrol")] 
         [SerializeField] private float _speed;
+        [SerializeField] private float _patrolAcceleration = 15f;
         [SerializeField] private LayerMask _patrolBlockingLayers;
         [SerializeField] private bool _turnAtLedges = true;
         [SerializeField] private float _ledgeCheckDistance = 0.5f;
@@ -33,11 +34,13 @@ namespace RollyPolly
         [SerializeField] private float _poofTime;
         [SerializeField] private GameObject _poofEffectPrefab;
         
-        [Header("Attack")]
+        [Header("Attack & Stun")]
         [SerializeField] private LayerMask _rollBlockingLayers;
         [SerializeField] private float _rollSpeed = 8f;
         [SerializeField] private float _rollAcceleration = 10f;
         [SerializeField] private float _rollRotationSpeed = 360f;
+        [SerializeField] private float _stunDuration = 0.2f;
+        [SerializeField] private float _postStunAggroCooldown = 1.5f;
 
         [Header("Pulse Interactions")]
         [SerializeField] private float _pulseHitCooldown = 2f;
@@ -62,6 +65,7 @@ namespace RollyPolly
         [SerializeField] private float _enemyRecoilForceY = 4f;
         [SerializeField] private float _enemyRecoilDuration = 0.3f;
         [SerializeField] private float _movablePushForce = 2000f;
+        [SerializeField] private float _movableImpulse = 5f;
         
         private Rigidbody2D _rb;
         private Rigidbody2D _playerRb;
@@ -76,8 +80,10 @@ namespace RollyPolly
         private float _stutterTimer;
         private float _recoilTimer;
         private float _playerLostTimer;
+        private float _postStunTimer;
         
         private bool _isDead;
+        private Vector2 _smoothedGroundNormal = Vector2.up;
         
         
         
@@ -123,6 +129,7 @@ namespace RollyPolly
             if (_pulseCooldownTimer > 0f) _pulseCooldownTimer -= Time.deltaTime;
             if (_stutterTimer > 0f) _stutterTimer -= Time.deltaTime;
             if (_recoilTimer > 0f) _recoilTimer -= Time.deltaTime;
+            if (_postStunTimer > 0f) _postStunTimer -= Time.deltaTime;
 
             if (_currentState == ERollyState.Patrol)
             {
@@ -133,6 +140,20 @@ namespace RollyPolly
             {
                 RotateAttackSprite();
             }
+
+            // Smooth the ground normal every frame for visual stability
+            if (IsGrounded())
+            {
+                Vector2 rawNormal = GetGroundNormal();
+                _smoothedGroundNormal = Vector2.Lerp(_smoothedGroundNormal, rawNormal, 8f * Time.deltaTime).normalized;
+            }
+            else
+            {
+                _smoothedGroundNormal = Vector2.Lerp(_smoothedGroundNormal, Vector2.up, 8f * Time.deltaTime).normalized;
+            }
+
+            RotatePatrolSprite();
+
             _stateTimer += Time.deltaTime;
         }
 
@@ -159,29 +180,59 @@ namespace RollyPolly
                 case ERollyState.Patrol: TickPatrol(); break;
                 case ERollyState.Transition: TickTransition(); break;
                 case ERollyState.Attack: TickAttack(); break;
+                case ERollyState.Stunned: TickStunned(); break;
             }
+        }
+
+        private bool CheckForWall(Vector2 direction)
+        {
+            var wallHit = Physics2D.Raycast(transform.position + 0.5f * Vector3.up, direction, _wallCheckDistance, _patrolBlockingLayers);
+            Debug.DrawRay(transform.position + 0.5f * Vector3.up, direction * _wallCheckDistance, Color.red);
+            
+            if (wallHit.collider)
+            {
+                float hitAngle = Vector2.Angle(wallHit.normal, Vector2.up);
+                if (hitAngle > 50f)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void TryFlip()
         {
             Vector2 direction = _isFlipped ? Vector2.left : Vector2.right;
+            bool shouldFlip = CheckForWall(direction);
             
-            // 1. Wall check
-            var wallHit = Physics2D.Raycast(transform.position + 0.5f * Vector3.up, direction, _wallCheckDistance, _patrolBlockingLayers);
-            Debug.DrawRay(transform.position + 0.5f * Vector3.up, direction * _wallCheckDistance, Color.red);
-            
-            bool shouldFlip = false;
-            
-            if (wallHit.collider)
+            // 2. Geyser check (avoid geysers ahead)
+            if (!shouldFlip && _currentState == ERollyState.Patrol)
             {
-                shouldFlip = true;
+                float geyserCheckDistance = 1.5f;
+                RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + 0.5f * Vector3.up, direction, geyserCheckDistance);
+                foreach (var hit in hits)
+                {
+                    if (hit.collider != null && hit.collider.gameObject != gameObject)
+                    {
+                        var geyser = hit.collider.GetComponent<Platforming.GeyserBehaviour>() ?? hit.collider.GetComponentInParent<Platforming.GeyserBehaviour>();
+                        if (geyser != null)
+                        {
+                            shouldFlip = true;
+                            break;
+                        }
+                    }
+                }
             }
-            // 2. Ledge check (only if enabled and currently patrolling on the ground)
-            else if (_turnAtLedges && IsGrounded())
+
+            // 3. Ledge check (only if enabled and currently patrolling on the ground)
+            // Always cast straight DOWN — immune to slope-peak normal discontinuities
+            if (!shouldFlip && _turnAtLedges && IsGrounded())
             {
-                Vector2 ledgeCheckOrigin = (Vector2)transform.position + direction * _ledgeCheckDistance;
-                var ledgeHit = Physics2D.Raycast(ledgeCheckOrigin + 0.1f * Vector2.up, Vector2.down, 0.5f, _patrolBlockingLayers);
-                Debug.DrawRay(ledgeCheckOrigin + 0.1f * Vector2.up, Vector2.down * 0.5f, Color.green);
+                float dirX = _isFlipped ? -1f : 1f;
+                Vector2 feetCenter = GetColliderBottom();
+                Vector2 ledgeCheckOrigin = feetCenter + new Vector2(dirX * _ledgeCheckDistance, 0.15f);
+                var ledgeHit = Physics2D.Raycast(ledgeCheckOrigin, Vector2.down, 0.6f, _patrolBlockingLayers);
+                Debug.DrawRay(ledgeCheckOrigin, Vector2.down * 0.6f, Color.green);
                 
                 if (!ledgeHit.collider)
                 {
@@ -209,14 +260,18 @@ namespace RollyPolly
         private void TryDetectPlayer()
         {
             if (_playerRb == null) return;
+            if (!IsGrounded()) return;
+            if (_postStunTimer > 0f) return; // Cannot aggro during post-stun cooldown
 
             Vector2 playerPos = _playerRb.transform.position;
             Vector2 myPos = transform.position;
 
-            // 1. Same level check (height tolerance)
-            float heightDiff = playerPos.y - myPos.y;
+            // 1. Same level check (height tolerance relative to slope normal)
+            // Use cached smoothed normal instead of firing a fresh raycast every frame
+            Vector2 normal = _smoothedGroundNormal;
+            float relativeHeightDiff = Vector2.Dot(playerPos - myPos, normal);
             // Do not detect if player is too far below, or if player is above the enemy (with slope/pivot tolerance)
-            if (heightDiff < -_detectionHeightTolerance || heightDiff > _aboveHeightTolerance) return;
+            if (relativeHeightDiff < -_detectionHeightTolerance || relativeHeightDiff > _aboveHeightTolerance) return;
 
             // 2. Range check
             float distance = Vector2.Distance(myPos, playerPos);
@@ -232,11 +287,39 @@ namespace RollyPolly
             }
 
             // 4. Patrol zone membership check
-            if (IsInPatrolZone(playerPos.x))
+            if (!IsInPatrolZone(playerPos.x)) return;
+
+            // 5. Line of Sight (LoS) check
+            // Ensure no walls or ground bumps are blocking the view. We offset by 0.5f to simulate "eye level"
+            // for both the Rolly Polly and the Player, avoiding ground clipping.
+            Vector2 eyePos = myPos + Vector2.up * 0.5f;
+            Vector2 targetPos = playerPos + Vector2.up * 0.5f;
+            Vector2 losDir = (targetPos - eyePos).normalized;
+            float losDist = Vector2.Distance(eyePos, targetPos);
+            
+            var hit = Physics2D.Raycast(eyePos, losDir, losDist, _patrolBlockingLayers);
+            if (hit.collider != null)
             {
-                // No obstacle in the way -> Player detected within patrol bounds!
-                ChangeState(ERollyState.Transition);
+                return; // Obstacle is blocking the view!
             }
+
+            // 6. Gap check (Don't aggro if there is a pit between us)
+            // Step along the line of sight every 0.5 units and cast downwards.
+            float stepSize = 0.5f;
+            int stepCount = Mathf.CeilToInt(losDist / stepSize);
+            for (int i = 1; i < stepCount; i++)
+            {
+                Vector2 stepOrigin = eyePos + losDir * (i * stepSize);
+                // Cast down 2.5 units (enough to tolerate slopes, but short enough to detect actual pits)
+                var groundHit = Physics2D.Raycast(stepOrigin, Vector2.down, 2.5f, _patrolBlockingLayers);
+                if (groundHit.collider == null)
+                {
+                    return; // Gap/Pit detected! Abort attack.
+                }
+            }
+
+            // Player detected with valid line of sight and continuous ground!
+            ChangeState(ERollyState.Transition);
         }
 
         private void UpdateSpriteDirection()
@@ -247,22 +330,97 @@ namespace RollyPolly
             transform.localScale = scale;
         }
 
+        /// <summary>
+        /// Returns the world-space position at the bottom-center of the active collider.
+        /// This accounts for all nested child offsets and scaling automatically via Bounds.
+        /// </summary>
+        private Vector2 GetColliderBottom()
+        {
+            if (_activeCollider != null)
+            {
+                Bounds b = _activeCollider.bounds;
+                return new Vector2(b.center.x, b.min.y);
+            }
+            return (Vector2)transform.position;
+        }
+
         private bool IsGrounded()
         {
-            // Simple downward raycast to check if grounded
-            float rayLength = 0.2f;
-            Vector2 origin = (Vector2)transform.position + 0.05f * Vector2.up;
+            // Raycast from slightly above the active collider's bottom edge straight down.
+            // This correctly matches the physical contact point regardless of nested child scaling.
+            Vector2 bottom = GetColliderBottom();
+            Vector2 origin = bottom + Vector2.up * 0.1f;
+            float rayLength = 0.25f;
             var hit = Physics2D.Raycast(origin, Vector2.down, rayLength, _patrolBlockingLayers);
-            Debug.DrawRay(origin, Vector2.down * rayLength, Color.yellow);
             return hit.collider != null;
+        }
+
+        private Vector2 GetGroundNormal()
+        {
+            // Raycast from the active collider's bottom for stable, consistent surface normals.
+            Vector2 bottom = GetColliderBottom();
+            Vector2 origin = bottom + Vector2.up * 0.1f;
+            float rayLength = 0.4f;
+            var hit = Physics2D.Raycast(origin, Vector2.down, rayLength, _patrolBlockingLayers);
+            if (hit.collider != null)
+            {
+                return hit.normal;
+            }
+            return Vector2.up;
+        }
+
+        private void RotatePatrolSprite()
+        {
+            if (_patrolSprite == null) return;
+
+            if (_currentState == ERollyState.Patrol && IsGrounded())
+            {
+                // Use the pre-smoothed normal for jitter-free visual rotation
+                float angle = Vector2.SignedAngle(Vector2.up, _smoothedGroundNormal);
+                
+                // Adjust for parent local scale mirroring when flipped horizontally
+                float scaleSign = Mathf.Sign(transform.localScale.x);
+                float localAngle = angle * scaleSign;
+                
+                // Smoothly tilt visually along the sloped ground
+                Quaternion targetRotation = Quaternion.Euler(0f, 0f, localAngle);
+                _patrolSprite.transform.localRotation = Quaternion.Lerp(_patrolSprite.transform.localRotation, targetRotation, 10f * Time.deltaTime);
+            }
+            else
+            {
+                // Smoothly return visual back to default upright rotation when airborne or transitioned
+                _patrolSprite.transform.localRotation = Quaternion.Lerp(_patrolSprite.transform.localRotation, Quaternion.identity, 10f * Time.deltaTime);
+            }
         }
         
         private void TickPatrol()
         {
             if (_recoilTimer > 0f) return; // Allow drifting while recoiling from player hit
             
-            // Apply horizontal velocity based on direction while preserving the vertical velocity from gravity
-            _rb.linearVelocityX = _isFlipped ? -_speed : _speed;
+            if (IsGrounded())
+            {
+                // Use the pre-smoothed normal to avoid tangent direction flickering at slope transitions.
+                Vector2 normal = _smoothedGroundNormal;
+                Vector2 slopeTangent = new Vector2(normal.y, -normal.x);
+                Vector2 travelDir = _isFlipped ? -slopeTangent : slopeTangent;
+
+                // Strip the velocity component sinking into the slope surface so gravity
+                // accumulation doesn't push the body through the ground between ticks.
+                Vector2 currentVel = _rb.linearVelocity;
+                float normalComponent = Vector2.Dot(currentVel, normal);
+                if (normalComponent < 0f)
+                    currentVel -= normalComponent * normal;
+                _rb.linearVelocity = currentVel;
+
+                // Apply constant physical acceleration capped at target speed
+                Vector2 targetVelocity = travelDir * _speed;
+                _rb.linearVelocity = Vector2.MoveTowards(currentVel, targetVelocity, _patrolAcceleration * Time.fixedDeltaTime);
+            }
+            else
+            {
+                // Airborne: do not actively drive horizontal velocity.
+                // Let momentum and gravity handle the trajectory naturally.
+            }
         }
 
         private void TickTransition()
@@ -308,38 +466,48 @@ namespace RollyPolly
                 return; // Allow drifting while stuttered or recoiling
             }
 
-            if (_playerRb == null) return;
+            Vector2 direction = _isFlipped ? Vector2.left : Vector2.right;
 
-            Vector2 playerPos = _playerRb.transform.position;
-            Vector2 myPos = transform.position;
-
-            // 1. Distance check
-            float distance = Vector2.Distance(myPos, playerPos);
-
-            // 2. Chase max range, height, and patrol zone membership check
-            float heightDiff = playerPos.y - myPos.y;
-            bool isLost = (distance > _chaseMaxRange) || 
-                          (heightDiff > _aboveHeightTolerance) || 
-                          (heightDiff < -_detectionHeightTolerance) || 
-                          !IsInPatrolZone(playerPos.x);
-
-            if (isLost)
+            // 2. Safety timeout check (gives up if it rolls forever without hitting a wall)
+            if (_stateTimer > 5f)
             {
-                _playerLostTimer += Time.fixedDeltaTime;
-                if (_playerLostTimer >= _loseTrackTime)
-                {
-                    ChangeState(ERollyState.Patrol);
-                    return;
-                }
+                ChangeState(ERollyState.Patrol);
+                return;
+            }
+
+            if (IsGrounded())
+            {
+                // Use smoothed normal to avoid jitter from raw normal flicker at slope transitions.
+                Vector2 smoothNormal = _smoothedGroundNormal;
+                Vector2 slopeTangent = new Vector2(smoothNormal.y, -smoothNormal.x);
+                float sign = _isFlipped ? -1f : 1f;
+                Vector2 travelDir = sign * slopeTangent;
+
+                // Strip into-slope velocity so gravity accumulation doesn't fight the roll.
+                Vector2 currentVel = _rb.linearVelocity;
+                float normalComponent = Vector2.Dot(currentVel, smoothNormal);
+                if (normalComponent < 0f)
+                    currentVel -= normalComponent * smoothNormal;
+                _rb.linearVelocity = currentVel;
+
+                // Apply constant physical acceleration capped at target speed
+                Vector2 targetVelocity = travelDir * _rollSpeed;
+                _rb.linearVelocity = Vector2.MoveTowards(currentVel, targetVelocity, _rollAcceleration * Time.fixedDeltaTime);
             }
             else
             {
-                _playerLostTimer = 0f;
+                // Airborne: do not actively drive horizontal velocity.
+                // Let momentum and gravity handle the trajectory naturally.
             }
+        }
 
-            // Roll towards player horizontally
-            float targetXSpeed = Mathf.Sign(playerPos.x - myPos.x) * _rollSpeed;
-            _rb.linearVelocityX = Mathf.MoveTowards(_rb.linearVelocityX, targetXSpeed, _rollAcceleration * Time.fixedDeltaTime);
+        private void TickStunned()
+        {
+            if (_stateTimer >= _stunDuration)
+            {
+                _postStunTimer = _postStunAggroCooldown;
+                ChangeState(ERollyState.Patrol);
+            }
         }
 
         public void PulseInteract()
@@ -368,7 +536,7 @@ namespace RollyPolly
             if (_isDead) return;
 
             Platforming.GeyserBehaviour geyser = other.GetComponent<Platforming.GeyserBehaviour>() ?? other.GetComponentInParent<Platforming.GeyserBehaviour>();
-            if (geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
+            if (_currentState != ERollyState.Patrol && geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
             {
                 YeetAndKill();
                 return;
@@ -393,7 +561,7 @@ namespace RollyPolly
             if (_isDead) return;
 
             Platforming.GeyserBehaviour geyser = other.collider.GetComponent<Platforming.GeyserBehaviour>() ?? other.collider.GetComponentInParent<Platforming.GeyserBehaviour>();
-            if (geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
+            if (_currentState != ERollyState.Patrol && geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
             {
                 YeetAndKill();
                 return;
@@ -411,14 +579,23 @@ namespace RollyPolly
                         Vector2 knockbackVelocity = new Vector2(dirX * _knockbackForceX, _knockbackForceY);
                         knockbackable.ApplyKnockback(knockbackVelocity);
 
-                        // Apply enemy recoil/knockback
+                        // Apply enemy recoil/knockback and stun
                         _recoilTimer = _enemyRecoilDuration;
+                        ChangeState(ERollyState.Stunned);
+
                         if (_rb != null)
                         {
                             _rb.linearVelocity = new Vector2(-dirX * _enemyRecoilForceX, _enemyRecoilForceY);
                         }
                     }
                 }
+            }
+
+            // Prevent offensive interactions (breaking walls, pushing movables, getting stunned) 
+            // if currently knocked back or stuttering.
+            if (_currentState == ERollyState.Attack && (_recoilTimer > 0f || _stutterTimer > 0f))
+            {
+                return;
             }
 
             // 2. Breakable Wall contact (only in Attack mode)
@@ -440,27 +617,88 @@ namespace RollyPolly
                     // Break the wall
                     wall.Break(breakDir);
 
-                    // Disable Rolly Polly game object
+                    // Poof effect and die
+                    if (_poofEffectPrefab != null)
+                    {
+                        Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
+                    }
                     gameObject.SetActive(false);
                     return;
                 }
             }
 
-            // 3. Movable object contact (only in Attack state)
+            // 3. Boulder contact (only in Attack state) — rolling into a boulder kills the Rolly
             if (_currentState == ERollyState.Attack && other.gameObject.layer == LayerMask.NameToLayer("Movable"))
             {
+                Platforming.BoulderBehaviour boulder = other.gameObject.GetComponent<Platforming.BoulderBehaviour>() 
+                                                    ?? other.gameObject.GetComponentInParent<Platforming.BoulderBehaviour>();
+                if (boulder != null)
+                {
+                    // Give the boulder a strong impulse in the rolling direction
+                    float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
+                    boulder.ApplyPushForce(new Vector2(dirX, 0f) * _movablePushForce);
+                    
+                    // The Rolly dies dramatically from the impact
+                    YeetAndKill();
+                    return;
+                }
+                
+                // Generic movable (non-boulder) push
                 Rigidbody2D movableRb = other.gameObject.GetComponent<Rigidbody2D>();
                 if (movableRb != null)
                 {
                     float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
-                    Vector2 pushForce = new Vector2(dirX, 0f).normalized * _movablePushForce;
-                    movableRb.AddForce(pushForce, ForceMode2D.Impulse);
+                    
+                    Vector2 normal = GetGroundNormal();
+                    Vector2 slopeTangent = new Vector2(normal.y, -normal.x);
+                    Vector2 pushImpulse = dirX * slopeTangent * _movableImpulse;
+                    movableRb.AddForce(pushImpulse, ForceMode2D.Impulse);
 
                     // Apply enemy recoil/knockback (same as for player)
                     _recoilTimer = _enemyRecoilDuration;
                     if (_rb != null)
                     {
                         _rb.linearVelocity = new Vector2(-dirX * _enemyRecoilForceX, _enemyRecoilForceY);
+                    }
+                }
+                return; // Skip normal wall stun if we hit a movable block
+            }
+
+            // 4. Regular Solid Wall contact -> Stunned (only in Attack state)
+            if (_currentState == ERollyState.Attack)
+            {
+                if (other.contactCount > 0 && !other.collider.CompareTag("Player"))
+                {
+                    foreach (var contact in other.contacts)
+                    {
+                        float hitAngle = Vector2.Angle(contact.normal, Vector2.up);
+                        // If the normal is steep (it's a wall)
+                        if (hitAngle > 50f)
+                        {
+                            ChangeState(ERollyState.Stunned);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void OnCollisionStay2D(Collision2D other)
+        {
+            if (_isDead) return;
+
+            // Catch any wall impacts that were missed on the initial Enter frame (e.g. corner glides)
+            if (_currentState == ERollyState.Attack && _recoilTimer <= 0f && _stutterTimer <= 0f)
+            {
+                if (other.contactCount > 0 && !other.collider.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Movable"))
+                {
+                    foreach (var contact in other.contacts)
+                    {
+                        if (Vector2.Angle(contact.normal, Vector2.up) > 50f)
+                        {
+                            ChangeState(ERollyState.Stunned);
+                            return;
+                        }
                     }
                 }
             }
@@ -509,8 +747,11 @@ namespace RollyPolly
 
         private void ChangeState(ERollyState newState)
         {
-            // Transition back to Patrol from Attack
-            if (newState == ERollyState.Patrol && _currentState == ERollyState.Attack)
+            bool wasAttackOrStunned = _currentState == ERollyState.Attack || _currentState == ERollyState.Stunned;
+            // Only revert to patrol visuals when actually returning to Patrol state
+            bool isReverting = newState == ERollyState.Patrol && wasAttackOrStunned;
+
+            if (isReverting)
             {
                 // Play transformation poof effect
                 if (_poofEffectPrefab != null)
@@ -537,8 +778,8 @@ namespace RollyPolly
                     _activeCollider = patrolCollider;
                 }
 
-                // Re-align flipping to travel direction based on current physical velocity
-                if (_rb != null)
+                // Re-align flipping to travel direction based on current physical velocity when resuming Patrol
+                if (_rb != null && newState == ERollyState.Patrol)
                 {
                     _isFlipped = _rb.linearVelocityX < 0f;
                 }
@@ -548,7 +789,7 @@ namespace RollyPolly
             _currentState = newState;
             _stateTimer = 0f;
 
-            // Stop horizontal velocity immediately when leaving Patrol or Attack states (except when starting to patrol)
+            // Stop horizontal velocity immediately when entering Stunned, Transition, etc.
             if (_currentState != ERollyState.Patrol && _currentState != ERollyState.Attack && _rb != null)
             {
                 _rb.linearVelocityX = 0f;
@@ -558,6 +799,14 @@ namespace RollyPolly
             {
                 _poofFired = false;
                 _playerLostTimer = 0f; // Reset loss timer when starting chase transition
+                
+                // Snap to face player immediately upon detecting them
+                if (_playerRb != null)
+                {
+                    _isFlipped = _playerRb.transform.position.x < transform.position.x;
+                    UpdateSpriteDirection();
+                }
+
                 if (_attackSprite != null)
                 {
                     _attackSprite.transform.localRotation = Quaternion.identity;
@@ -616,5 +865,6 @@ namespace RollyPolly
         Patrol,
         Transition,
         Attack,
+        Stunned
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using Interfaces;
+using Player.GameState;
 using Player.Input;
 using Player.StateMachine;
 using TMPro;
@@ -24,6 +25,8 @@ namespace Player
 
         public bool IsGrounded => _isGrounded;
         public bool IsInCoyoteTime => _isInCoyoteTime;
+        public bool IsOnSteepSlope => _isOnSteepSlope;
+        public Vector2 GroundNormal => _groundNormal;
         public bool IsNearValidWall => (!_isWallHitMovable || !((IPlayerInputHandler)inputHandler).GrabWallAction.IsPressed()) && _isNearValidWall;
         public bool IsFootNearValidWall => (!_isWallHitMovable || !((IPlayerInputHandler)inputHandler).GrabWallAction.IsPressed()) && _isFootNearValidWall;
         public bool IsHeadBlocked => _isHeadBlocked;
@@ -61,6 +64,8 @@ namespace Player
         private bool _isInClimbingState;
         private bool _isJumping;
         private bool _isInCoyoteTime;
+        private bool _isOnSteepSlope;
+        private Vector2 _groundNormal = Vector2.up;
         
         private bool _isNearValidWall;
         private bool _isFootNearValidWall;
@@ -88,6 +93,7 @@ namespace Player
         private RaycastHit2D[] _groundHits;
         private Vector2[] _checkOrigins = new Vector2[3];
         private int _pushableLayerIndex;
+        private float _resetHoldTimer;
 
         
         
@@ -112,8 +118,12 @@ namespace Player
             _groundHits = new RaycastHit2D[3];   
             
             _stateMachine.onChangeState += type => {
+                
+                #if UNITY_EDITOR
                 if (_debugMode) Debug.Log(type, this);
-                if (_stateText != null) _stateText.text = type.Name;
+                if (_stateText) _stateText.text = type.Name;
+                #endif
+                
                 _isInClimbingState = type == typeof(PlayerClimbingState);
                 _isJumping = type == typeof(PlayerJumpState);
             };
@@ -145,6 +155,26 @@ namespace Player
             if (((IPlayerInputHandler)inputHandler).MoveAction.ReadValue<Vector2>().y < -0.5f)
             {
                 TryDropThroughPlatform();
+            }
+
+            if (((IPlayerInputHandler)inputHandler).ResetAction != null)
+            {
+                if (((IPlayerInputHandler)inputHandler).ResetAction.IsPressed())
+                {
+                    _resetHoldTimer += dt;
+                    if (_resetHoldTimer >= 1.0f)
+                    {
+                        _resetHoldTimer = 0f;
+                        if (GameStateManager.Instance != null)
+                        {
+                            GameStateManager.Instance.KillPlayer();
+                        }
+                    }
+                }
+                else
+                {
+                    _resetHoldTimer = 0f;
+                }
             }
         }
 
@@ -200,6 +230,7 @@ namespace Player
 
         public void NotifyJump()
         {
+            _isInCoyoteTime = false;
             OnJump?.Invoke();
         }
 
@@ -331,6 +362,7 @@ namespace Player
             {
                 _isGrounded = false;
                 _isInCoyoteTime = false;
+                _isOnSteepSlope = false;
                 return;
             }
 
@@ -346,33 +378,108 @@ namespace Player
             LayerMask mask = _settings.GroundLayers;
 
             bool wasGrounded = _isGrounded;
+            bool wasOnSteepSlope = _isOnSteepSlope;
             bool didHit = MultiRaycast(_groundHits, _checkOrigins, Vector2.down, distance, mask);
             
+            _isOnSteepSlope = false;
             
             if (didHit)
             {
-               
-                _isGrounded = true;
-                _isInCoyoteTime = false;
+                Vector2 normal = Vector2.zero;
+                int validHits = 0;
+                foreach (RaycastHit2D hit in _groundHits)
+                {
+                    if (hit.collider)
+                    {
+                        normal += hit.normal;
+                        validHits++;
+                    }
+                }
                 
-                // Fire landing event on the frame we touch the ground
-                if (!wasGrounded) NotifyLand();
+                if (validHits > 0)
+                {
+                    normal /= validHits;
+                    normal.Normalize();
+                }
+                else
+                {
+                    normal = Vector2.up;
+                }
+
+                _groundNormal = normal;
+                float slopeAngle = Vector2.Angle(normal, Vector2.up);
+
+                if (slopeAngle > _settings.MaxSlopeAngle)
+                {
+                    _isGrounded = false;
+                    _isInCoyoteTime = false;
+                    _isOnSteepSlope = true;
+                }
+                else
+                {
+                    _isGrounded = true;
+                    _isInCoyoteTime = false;
+                    
+                    // Fire landing event on the frame we touch the ground
+                    if (!wasGrounded) NotifyLand();
+                }
             }
             else
             {
-                RaycastHit2D hit = Physics2D.Raycast(middleOrigin, Vector2.down, Mathf.Infinity, mask);
-                _isGrounded = false;
+                // Run a slightly deeper raycast to detect steep slopes that might be physically colliding 
+                // but suspended slightly below the feet check distance due to body collider contact.
+                RaycastHit2D[] steepHits = new RaycastHit2D[3];
+                float steepDistance = 0.25f + yOffset;
+                bool hitSteep = MultiRaycast(steepHits, _checkOrigins, Vector2.down, steepDistance, mask);
                 
-                if (!_isInCoyoteTime)
+                if (hitSteep)
                 {
-                    _isInCoyoteTime = true;
-                    _coyoteTimer = 0f;
+                    Vector2 normal = Vector2.zero;
+                    int validHits = 0;
+                    foreach (RaycastHit2D hit in steepHits)
+                    {
+                        if (hit.collider)
+                        {
+                            normal += hit.normal;
+                            validHits++;
+                        }
+                    }
+                    
+                    if (validHits > 0)
+                    {
+                        normal /= validHits;
+                        normal.Normalize();
+                    }
+                    else
+                    {
+                        normal = Vector2.up;
+                    }
+
+                    float slopeAngle = Vector2.Angle(normal, Vector2.up);
+                    if (slopeAngle > _settings.MaxSlopeAngle)
+                    {
+                        _isGrounded = false;
+                        _isInCoyoteTime = false;
+                        _isOnSteepSlope = true;
+                        _groundNormal = normal;
+                    }
                 }
-                else if(_coyoteTimer > _settings.CoyoteTime)
+
+                if (!_isOnSteepSlope)
                 {
-                    _isInCoyoteTime = false;
+                    RaycastHit2D hit = Physics2D.Raycast(middleOrigin, Vector2.down, Mathf.Infinity, mask);
+                    _isGrounded = false;
+                    
+                    if (wasGrounded || wasOnSteepSlope)
+                    {
+                        _isInCoyoteTime = true;
+                        _coyoteTimer = 0f;
+                    }
+                    else if(_coyoteTimer > _settings.CoyoteTime)
+                    {
+                        _isInCoyoteTime = false;
+                    }
                 }
-                
             }
             _coyoteTimer += Time.deltaTime;
             
@@ -402,6 +509,7 @@ namespace Player
                 normal = Vector2.up;
             }
             
+            _groundNormal = normal;
             Vector2 slope = new (normal.y, -normal.x);
             
             if (_debugMode && _isGrounded)

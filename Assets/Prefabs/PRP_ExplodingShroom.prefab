@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1520925343419990113}
   - component: {fileID: 8184689740489526753}
   - component: {fileID: 3220336546996261368}
-  m_Layer: 27
+  m_Layer: 0
   m_Name: PRP_ExplodingShroom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,12 +50,17 @@ MonoBehaviour:
   _collider: {fileID: 3220336546996261368}
   _activeSprite: {fileID: 21300000, guid: 36b39ff67a1446c47beb256bc128b211, type: 3}
   _explodedSprite: {fileID: 21300000, guid: b34308b09cee4d84db3ec7d34612708e, type: 3}
-  _explosionRadius: 2.45
+  _explosionRadius: 1.13
+  _innerRadius: 0.57
   _explosionForce: 12
   _affectedLayers:
     serializedVersion: 2
-    m_Bits: 10240
+    m_Bits: 8192
+  _innerZoneDamage: 3
+  _outerZoneDamage: 1
   _recoveryTime: 3
+  _contactDelay: 0.15
+  _preExplosionScale: {x: 0.8, y: 0.8, z: 1}
 --- !u!58 &3220336546996261368
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -86,7 +91,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -102,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6842649550009255924}
   - component: {fileID: 2926862807755254325}
-  m_Layer: 27
+  m_Layer: 0
   m_Name: Main_exploding_mushroom_full
   m_TagString: Untagged
   m_Icon: {fileID: 0}

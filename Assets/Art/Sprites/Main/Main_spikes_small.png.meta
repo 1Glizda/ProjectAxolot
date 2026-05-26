@@ -1,0 +1,637 @@
+fileFormatVersion: 2
+guid: a08367028fb34fc43908b1231e571fff
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7013146853269705268
+    second: spikes_small_0
+  - first:
+      213: 6840022054116999649
+    second: spikes_small_1
+  - first:
+      213: -5276572087492397330
+    second: spikes_small_2
+  - first:
+      213: -112776172247386776
+    second: spikes_small_3
+  - first:
+      213: 5700641791723221627
+    second: spikes_small_4
+  - first:
+      213: 3003235705198049064
+    second: spikes_small_5
+  - first:
+      213: 6440097670038677062
+    second: spikes_small_6
+  - first:
+      213: -5642706195422812838
+    second: spikes_small_7
+  - first:
+      213: 6114595513343714643
+    second: spikes_small_8
+  - first:
+      213: -7065809676083864099
+    second: spikes_small_9
+  - first:
+      213: -1610310264127438265
+    second: spikes_small_10
+  - first:
+      213: -5338222239035163785
+    second: spikes_small_11
+  - first:
+      213: 5497814798328315421
+    second: spikes_small_12
+  - first:
+      213: -4749804863241234512
+    second: spikes_small_13
+  - first:
+      213: 5950121000416981803
+    second: spikes_small_14
+  - first:
+      213: -9216764421539501920
+    second: spikes_small_15
+  - first:
+      213: 8953192087648918936
+    second: spikes_small_16
+  - first:
+      213: 1059661177532720281
+    second: spikes_small_17
+  - first:
+      213: -2918269854530051035
+    second: spikes_small_18
+  - first:
+      213: 6907064198411131113
+    second: spikes_small_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: spikes_small_0
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 308
+        width: 14
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccde53d181c4cae90800000000000000
+      internalID: -7013146853269705268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_1
+      rect:
+        serializedVersion: 2
+        x: 1256
+        y: 307
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e14b7771d3acee50800000000000000
+      internalID: 6840022054116999649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 65
+        width: 59
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee6364594a9d5c6b0800000000000000
+      internalID: -5276572087492397330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_3
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 38
+        width: 134
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 865f01a3ba65f6ef0800000000000000
+      internalID: -112776172247386776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_4
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 46
+        width: 75
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b72b86b918fbc1f40800000000000000
+      internalID: 5700641791723221627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_5
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 48
+        width: 203
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 827791946f2ada920800000000000000
+      internalID: 3003235705198049064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_6
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 62
+        width: 74
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 646e975b5b2df5950800000000000000
+      internalID: 6440097670038677062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_7
+      rect:
+        serializedVersion: 2
+        x: 603
+        y: 71
+        width: 59
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a556de19c9411b1b0800000000000000
+      internalID: -5642706195422812838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_8
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 46
+        width: 99
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 355ac0e09386bd450800000000000000
+      internalID: 6114595513343714643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_9
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 66
+        width: 99
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dddd08e298331fd90800000000000000
+      internalID: -7065809676083864099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_10
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 39
+        width: 63
+        height: 194
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 742c488b85707a9e0800000000000000
+      internalID: -1610310264127438265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_11
+      rect:
+        serializedVersion: 2
+        x: 953
+        y: 56
+        width: 65
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77bf73e1823dae5b0800000000000000
+      internalID: -5338222239035163785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_12
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 62
+        width: 63
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1ebe3f2e692c4c40800000000000000
+      internalID: 5497814798328315421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_13
+      rect:
+        serializedVersion: 2
+        x: 1155
+        y: 47
+        width: 91
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b7551674ad451eb0800000000000000
+      internalID: -4749804863241234512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_14
+      rect:
+        serializedVersion: 2
+        x: 1201
+        y: 37
+        width: 75
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2332785683139250800000000000000
+      internalID: 5950121000416981803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_15
+      rect:
+        serializedVersion: 2
+        x: 1297
+        y: 59
+        width: 75
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a8eda35799771080800000000000000
+      internalID: -9216764421539501920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_16
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 50
+        width: 191
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89dd62684c0204c70800000000000000
+      internalID: 8953192087648918936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_17
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 44
+        width: 110
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9942c150a3ca4be00800000000000000
+      internalID: 1059661177532720281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_18
+      rect:
+        serializedVersion: 2
+        x: 334
+        y: 31
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 524610a67093087d0800000000000000
+      internalID: -2918269854530051035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: spikes_small_19
+      rect:
+        serializedVersion: 2
+        x: 1196
+        y: 22
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e81d131b42dadf50800000000000000
+      internalID: 6907064198411131113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      spikes_small_0: -7013146853269705268
+      spikes_small_1: 6840022054116999649
+      spikes_small_10: -1610310264127438265
+      spikes_small_11: -5338222239035163785
+      spikes_small_12: 5497814798328315421
+      spikes_small_13: -4749804863241234512
+      spikes_small_14: 5950121000416981803
+      spikes_small_15: -9216764421539501920
+      spikes_small_16: 8953192087648918936
+      spikes_small_17: 1059661177532720281
+      spikes_small_18: -2918269854530051035
+      spikes_small_19: 6907064198411131113
+      spikes_small_2: -5276572087492397330
+      spikes_small_3: -112776172247386776
+      spikes_small_4: 5700641791723221627
+      spikes_small_5: 3003235705198049064
+      spikes_small_6: 6440097670038677062
+      spikes_small_7: -5642706195422812838
+      spikes_small_8: 6114595513343714643
+      spikes_small_9: -7065809676083864099
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
