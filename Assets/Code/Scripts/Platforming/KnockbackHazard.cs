@@ -18,13 +18,13 @@ namespace Platforming
         public event System.Action OnPlayerHit;
         
         
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            if (!other.collider.CompareTag("Player")) return;
-            if (!other.collider.TryGetComponent<IKnockbackable>(out var knockbackable)) return;
+            if (!other.CompareTag("Player")) return;
+            if (!other.TryGetComponent<IKnockbackable>(out var knockbackable)) return;
 
             // Only apply knockback if the player was successfully damaged (not currently in their invulnerability state)
-            if (GameStateManager.Instance.DamagePlayer(_damageAmount, other.otherCollider))
+            if (GameStateManager.Instance.DamagePlayer(_damageAmount, GetComponent<Collider2D>()))
             {
                 float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
                 Vector2 knockbackVelocity = new Vector2(dirX * _horizontalForce, _verticalForce);

@@ -97,6 +97,8 @@ namespace Interactions
         
         private void SetLightIntensity(float normalizedValue)
         {
+            OnNormalizedValueChanged(normalizedValue);
+            
             if(_lights == null || _lights.Length == 0) return;
 
             foreach (Light2D lightComp in _lights)
@@ -104,5 +106,7 @@ namespace Interactions
                 lightComp.intensity = normalizedValue * _maxIntensity;
             }
         }
+
+        protected virtual void OnNormalizedValueChanged(float normalizedValue) { }
     }
 }
