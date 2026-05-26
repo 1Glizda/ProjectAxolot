@@ -71,12 +71,10 @@ namespace UICustom
         private void UpdateEyeExpressions(int currentHp)
         {
             if (_happyEyes == null || _neutralEyes == null || _sadEyes == null) return;
-
-            float percentage = (float)currentHp / _points.Length;
-
-            _happyEyes.SetActive(percentage >= 0.7f);
-            _neutralEyes.SetActive(percentage > 0.3f && percentage < 0.7f);
-            _sadEyes.SetActive(percentage <= 0.3f);
+            
+            _happyEyes.SetActive(currentHp == 3);
+            _neutralEyes.SetActive(currentHp == 2);
+            _sadEyes.SetActive(currentHp == 1);
         }
     }
 }
