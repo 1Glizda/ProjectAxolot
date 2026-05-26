@@ -4,39 +4,42 @@ using UnityEngine.Splines;
 namespace Player.AI
 {
     /// <summary>
-    /// Temporary/Permanent controller to bridge the AI character's state to the Player's Animator Controller.
-    /// Works automatically for both Spline-based movement (using SplineAnimate) and normal physics-based movement (using SimpleAi).
+    /// Animator controller that drives Walk/Idle animations purely based on Spline movement,
+    /// and handles 2D sprite flipping and smooth slope-tilting along the spline.
     /// </summary>
     public class SimpleAiAnimatorController : MonoBehaviour
     {
         [Header("References")]
         [SerializeField] private Animator animator;
-        [SerializeField] private SimpleAi simpleAi;
         [SerializeField] private SplineAnimate splineAnimate;
-        [SerializeField] private SpriteRenderer spriteRenderer;
 
-        [Header("Grounded Detection (For Splines)")]
-        [SerializeField] private LayerMask groundLayers;
-        [SerializeField] private float groundCheckDistance = 0.5f;
+        [Header("Animator Parameter Names")]
+        [Tooltip("Boolean parameter set to true when moving along the spline, false when stopped.")]
+        [SerializeField] private string isWalkingParameter = "IsWalking";
 
-        // Player Animator Controller Parameter Hashes
-        private static readonly int HorizontalVelocity = Animator.StringToHash("HorizontalVelocity");
-        private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
-        private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
-        private static readonly int Jump = Animator.StringToHash("Jump");
-        private static readonly int IsClimbing = Animator.StringToHash("IsClimbing");
+        [Tooltip("Float parameter set to the current spline speed, 0 when stopped.")]
+        [SerializeField] private string speedParameter = "Speed";
+
+        [Header("Movement Settings")]
+        [SerializeField] private float speedThreshold = 0.05f;
+        
+        [Header("Tilt Settings")]
+        [Tooltip("Smoothness of the rotation. Lower values are smoother; higher values snap faster.")]
+        [SerializeField] private float tiltSmoothSpeed = 10f;
+        [Tooltip("Maximum allowed tilt angle in degrees.")]
+        [SerializeField] private float maxTiltAngle = 60f;
 
         private Vector3 _lastPosition;
-        private bool _wasGrounded = true;
+        private float _initialScaleX;
+        private float _currentTiltAngle;
 
         private void Start()
         {
             if (animator == null) animator = GetComponentInChildren<Animator>();
-            if (simpleAi == null) simpleAi = GetComponent<SimpleAi>();
             if (splineAnimate == null) splineAnimate = GetComponent<SplineAnimate>();
-            if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
             _lastPosition = transform.position;
+            _initialScaleX = Mathf.Abs(transform.localScale.x);
         }
 
         private void Update()
@@ -44,57 +47,61 @@ namespace Player.AI
             if (animator == null) return;
 
             float horizontalSpeed = 0f;
-            float verticalSpeed = 0f;
-            bool grounded = true;
-            bool climbing = false;
+            float directionX = 0f;
+            float targetTiltAngle = 0f;
 
-            // Detect if we are currently moving along a spline
-            bool isUsingSpline = splineAnimate != null && splineAnimate.isPlaying;
+            // Calculate movement velocity based on position changes (since Rb velocity is 0 during SplineAnimate)
+            Vector3 currentPosition = transform.position;
+            Vector3 velocity = (currentPosition - _lastPosition) / Time.deltaTime;
+            _lastPosition = currentPosition;
 
-            if (isUsingSpline)
+            // Update movement stats only if SplineAnimate is currently running
+            if (splineAnimate != null && splineAnimate.isPlaying)
             {
-                // Calculate manual velocity based on position changes (since Rb velocity is 0 during SplineAnimate)
-                Vector3 currentPosition = transform.position;
-                Vector3 velocity = (currentPosition - _lastPosition) / Time.deltaTime;
-                _lastPosition = currentPosition;
-
                 horizontalSpeed = Mathf.Abs(velocity.x);
-                verticalSpeed = velocity.y;
-                
-                // Spline Ground Check
-                grounded = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayers);
+                directionX = velocity.x;
 
-                // Handle sprite flipping along the spline path
-                if (horizontalSpeed > 0.05f && spriteRenderer != null)
+                // Only calculate a tilt angle if we are actually moving
+                if (horizontalSpeed > speedThreshold)
                 {
-                    spriteRenderer.flipX = velocity.x < 0f;
+                    // Calculate slope angle relative to facing direction
+                    // Using absolute X ensures rotation goes in the correct direction whether facing left or right
+                    targetTiltAngle = Mathf.Atan2(velocity.y, Mathf.Abs(velocity.x)) * Mathf.Rad2Deg;
+                    targetTiltAngle = Mathf.Clamp(targetTiltAngle, -maxTiltAngle, maxTiltAngle);
                 }
             }
-            else if (simpleAi != null)
+
+            // Determine if the character is active/walking
+            bool isWalking = horizontalSpeed > speedThreshold;
+
+            // Update Animator parameters
+            if (!string.IsNullOrEmpty(isWalkingParameter))
             {
-                // Read directly from the physics-based companion AI component
-                Rigidbody2D rb = simpleAi.Rb;
-                if (rb != null)
+                animator.SetBool(isWalkingParameter, isWalking);
+            }
+            if (!string.IsNullOrEmpty(speedParameter))
+            {
+                animator.SetFloat(speedParameter, horizontalSpeed);
+            }
+
+            // Flip the entire rigged character using localScale.x (flips all child sprites and bones together)
+            if (horizontalSpeed > speedThreshold)
+            {
+                Vector3 scale = transform.localScale;
+                if (directionX < 0f)
                 {
-                    horizontalSpeed = Mathf.Abs(rb.linearVelocityX);
-                    verticalSpeed = rb.linearVelocityY;
+                    scale.x = -_initialScaleX;
                 }
-                grounded = simpleAi.IsGrounded;
-                climbing = simpleAi.CurrentState.Contains("CLIMB") || simpleAi.CurrentState.Contains("WALL_JUMP");
+                else if (directionX > 0f)
+                {
+                    scale.x = _initialScaleX;
+                }
+                transform.localScale = scale;
             }
 
-            // Trigger Jump animation trigger on ground-to-air transitions
-            if (!grounded && _wasGrounded && verticalSpeed > 0.5f)
-            {
-                animator.SetTrigger(Jump);
-            }
-            _wasGrounded = grounded;
-
-            // Update parameters matching the Player's controller variables
-            animator.SetFloat(HorizontalVelocity, horizontalSpeed);
-            animator.SetFloat(VerticalVelocity, verticalSpeed);
-            animator.SetBool(IsGrounded, grounded);
-            animator.SetBool(IsClimbing, climbing);
+            // Smoothly interpolate the tilt rotation
+            _currentTiltAngle = Mathf.LerpAngle(_currentTiltAngle, targetTiltAngle, Time.deltaTime * tiltSmoothSpeed);
+            transform.localRotation = Quaternion.Euler(0, 0, _currentTiltAngle);
         }
     }
 }

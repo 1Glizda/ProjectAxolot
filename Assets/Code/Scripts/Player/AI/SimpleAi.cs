@@ -41,8 +41,18 @@ namespace Player.AI
 
         // ─── Public read-only state for AiSoundController ──────────
         public bool IsGrounded => _isGrounded;
+        public bool IsClimbing => _isClimbing;
         public string CurrentState => _currentStateStr;
         public Rigidbody2D Rb => _rb;
+
+        // ─── Events for sound/VFX (stubs — call Trigger* from gameplay code) ──
+        public event System.Action OnEat;
+        public event System.Action OnTongue;
+
+        /// <summary>Call this from animation events or gameplay logic when the AI eats.</summary>
+        public void TriggerEat() => OnEat?.Invoke();
+        /// <summary>Call this from animation events or gameplay logic when the AI uses its tongue.</summary>
+        public void TriggerTongue() => OnTongue?.Invoke();
 
         private Rigidbody2D _rb;
         private float _defaultGravity;

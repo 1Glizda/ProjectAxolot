@@ -14,6 +14,11 @@ namespace Player.Sound
         public AudioClip footstepLoop;
         [Range(0f, 1f)] public float footstepVolume = 0.6f;
 
+        [Header("Climbing")]
+        [Tooltip("Looping clip played while climbing moss/walls.")]
+        public AudioClip climbLoop;
+        [Range(0f, 1f)] public float climbVolume = 0.5f;
+
         [Header("Idle")]
         [Tooltip("Periodic chirp / shuffle clips played at random while idle.")]
         public AudioClip[] idleChirps;
@@ -34,7 +39,10 @@ namespace Player.Sound
         [Range(0f, 1f)] public float landVolume = 0.7f;
 
         [Header("Pulse (Player only)")]
+        [Tooltip("Single fallback pulse sound (deprecated).")]
         public AudioClip pulseClip;
+        [Tooltip("List of pulse sounds played sequentially (1-2-1-2-1-2...).")]
+        public AudioClip[] pulseClips;
         [Range(0f, 1f)] public float pulseVolume = 0.8f;
 
         [Header("Singing (AI only)")]
@@ -45,6 +53,17 @@ namespace Player.Sound
         public float singingMinDelay = 8f;
         [Tooltip("Maximum seconds between singing attempts.")]
         public float singingMaxDelay = 20f;
+
+        [Header("AI Actions")]
+        [Tooltip("Looping clip for AI running/walking movement.")]
+        public AudioClip runLoop;
+        [Range(0f, 1f)] public float runVolume = 0.6f;
+        [Tooltip("One-shot clip for AI eating.")]
+        public AudioClip eatClip;
+        [Range(0f, 1f)] public float eatVolume = 0.7f;
+        [Tooltip("One-shot clip for AI tongue.")]
+        public AudioClip tongueClip;
+        [Range(0f, 1f)] public float tongueVolume = 0.7f;
 
         [Header("Pitch Variance")]
         [Tooltip("How much to randomize the pitch of one-shot SFX (0 = none, 0.1 = ±10%).")]

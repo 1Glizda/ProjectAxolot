@@ -6,14 +6,16 @@ namespace Player.AI
     /// <summary>
     /// AI-specific sound controller for the SimpleAi companion.
     /// Reads exposed state from SimpleAi and drives a SoundController for:
-    /// - Looping footsteps when moving on ground
+    /// - Looping footsteps / run when moving on ground
+    /// - Looping climbing sound when on moss/walls
+    /// - One-shot eat and tongue SFX (triggered via SimpleAi events)
     /// - Periodic idle chirps when arrived/stationary
     /// - Random singing clips when off-camera (3D positioned audio)
     /// 
     /// Setup:
     /// 1. Add this component to the AI companion root GameObject
     /// 2. Add a SoundController component with TWO AudioSources:
-    ///    - Loop source: for footstep loops
+    ///    - Loop source: for footstep/climb loops
     ///    - OneShot source: set Spatial Blend to 1.0 for 3D singing
     /// 3. Assign the SoundProfile SO with your AI audio clips
     /// 4. Wire up the SimpleAi and Renderer references in the inspector
@@ -32,6 +34,7 @@ namespace Player.AI
 
         // Movement tracking
         private bool _isMoving;
+        private bool _isClimbingLoop;
 
         // Idle chirp timer
         private float _idleTimer;
@@ -69,9 +72,15 @@ namespace Player.AI
                 return;
             }
 
+            // Subscribe to AI action events
+            simpleAi.OnEat += HandleEat;
+            simpleAi.OnTongue += HandleTongue;
+
             // Log warnings for unassigned clips to guide the developer
-            if (soundProfile.footstepLoop == null)
-                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Footstep loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.runLoop == null && soundProfile.footstepLoop == null)
+                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Neither runLoop nor footstepLoop is assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.climbLoop == null)
+                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Climb loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.idleChirps == null || soundProfile.idleChirps.Length == 0)
                 Debug.LogWarning($"[{gameObject.name}] AiSoundController: Idle chirps are not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.singingClips == null || soundProfile.singingClips.Length == 0)
@@ -81,33 +90,63 @@ namespace Player.AI
             ResetSingingTimer();
         }
 
+        private void OnDestroy()
+        {
+            if (simpleAi != null)
+            {
+                simpleAi.OnEat -= HandleEat;
+                simpleAi.OnTongue -= HandleTongue;
+            }
+        }
+
         private void Update()
         {
             if (simpleAi == null || soundProfile == null || soundController == null) return;
 
             Rigidbody2D rb = simpleAi.Rb;
             bool grounded = simpleAi.IsGrounded;
+            bool climbing = simpleAi.IsClimbing;
             string state = simpleAi.CurrentState;
             float absHSpeed = rb != null ? Mathf.Abs(rb.linearVelocityX) : 0f;
 
-            bool moving = grounded && absHSpeed > movementThreshold;
+            bool moving = grounded && absHSpeed > movementThreshold && !climbing;
             bool arrived = state == "ARRIVED" || state == "NO TARGET";
 
-            // ─── Footstep loop ─────────────────────────────────────
-            if (moving && !_isMoving)
+            // ─── Climbing loop ─────────────────────────────────────
+            if (climbing && !_isClimbingLoop)
             {
-                soundController.PlayLoop(soundProfile.footstepLoop, soundProfile.footstepVolume);
-                _isMoving = true;
+                soundController.PlayLoop(soundProfile.climbLoop, soundProfile.climbVolume);
+                _isClimbingLoop = true;
+                _isMoving = false;
                 ResetIdleState();
             }
-            else if (!moving && _isMoving)
+            else if (!climbing && _isClimbingLoop)
             {
                 soundController.StopLoop();
-                _isMoving = false;
+                _isClimbingLoop = false;
+            }
+
+            // ─── Run / footstep loop (only when not climbing) ──────
+            if (!climbing)
+            {
+                if (moving && !_isMoving)
+                {
+                    // Prefer runLoop if assigned, fallback to footstepLoop
+                    AudioClip moveClip = soundProfile.runLoop != null ? soundProfile.runLoop : soundProfile.footstepLoop;
+                    float moveVol = soundProfile.runLoop != null ? soundProfile.runVolume : soundProfile.footstepVolume;
+                    soundController.PlayLoop(moveClip, moveVol);
+                    _isMoving = true;
+                    ResetIdleState();
+                }
+                else if (!moving && _isMoving)
+                {
+                    soundController.StopLoop();
+                    _isMoving = false;
+                }
             }
 
             // ─── Idle chirps ───────────────────────────────────────
-            if (arrived && !moving)
+            if (arrived && !moving && !climbing)
             {
                 _idleTimer += Time.deltaTime;
 
@@ -127,6 +166,20 @@ namespace Player.AI
 
             // ─── Off-camera singing (3D positioned) ───────────────
             UpdateSinging();
+        }
+
+        // ─── Action Event Handlers ─────────────────────────────────
+
+        private void HandleEat()
+        {
+            if (soundProfile.eatClip != null)
+                soundController.PlayOneShot(soundProfile.eatClip, soundProfile.eatVolume, soundProfile.pitchVariance);
+        }
+
+        private void HandleTongue()
+        {
+            if (soundProfile.tongueClip != null)
+                soundController.PlayOneShot(soundProfile.tongueClip, soundProfile.tongueVolume, soundProfile.pitchVariance);
         }
 
         // ─── Singing ───────────────────────────────────────────────

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4360f9ae3d5624ebe8e2b865d7568799, type: 3}
   m_Name: Sound Profile
   m_EditorClassIdentifier: Game.Player::Player.Sound.SoundProfileSo
-  footstepLoop: {fileID: 8300000, guid: 9007393e73624114ebd0e92eba55488a, type: 3}
+  footstepLoop: {fileID: 8300000, guid: cf40012e73c4147bebc2ae6d70c4c3d4, type: 3}
   footstepVolume: 0.3
+  climbLoop: {fileID: 8300000, guid: 937b3d55204894e27b7a241245aaf73f, type: 3}
+  climbVolume: 0.5
   idleChirps:
   - {fileID: 8300000, guid: 82cf2d44c724a0c4c8c338cdc934a97b, type: 3}
   idleChirpVolume: 0.704
@@ -25,9 +27,18 @@ MonoBehaviour:
   landClip: {fileID: 8300000, guid: fb475f2511407df4a85cbc938875e616, type: 3}
   landVolume: 0.7
   pulseClip: {fileID: 8300000, guid: 68ec9f9310aa9f743ac13c412e32c559, type: 3}
+  pulseClips:
+  - {fileID: 8300000, guid: 23247e49bd7cd4c89a9924e02f3a4266, type: 3}
+  - {fileID: 8300000, guid: 664c0bf03967b49d988e4a4565329984, type: 3}
   pulseVolume: 0.237
   singingClips: []
   singingVolume: 0.5
   singingMinDelay: 8
   singingMaxDelay: 20
+  runLoop: {fileID: 0}
+  runVolume: 0.6
+  eatClip: {fileID: 0}
+  eatVolume: 0.7
+  tongueClip: {fileID: 0}
+  tongueVolume: 0.7
   pitchVariance: 0.05
