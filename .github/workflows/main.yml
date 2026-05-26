@@ -1,9 +1,10 @@
-name: WebGL Build and Deploy
+name: CI/CD Build and Deploy
 
 on:
   push:
     branches:
       - main
+      - Bogdan/main
 
 permissions:
   contents: write
@@ -14,14 +15,58 @@ env:
   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
 jobs:
+  # --- JOB 1: INCREMENT VERSION ---
+  versioning:
+    name: Increment Build Version
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.bump_version.outputs.new_version }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump Patch Version
+        id: bump_version
+        run: |
+          # Read current version from file
+          VERSION=$(cat version.txt)
+          echo "Current Version: $VERSION"
+          
+          # Split version into x, y, z
+          IFS='.' read -r major minor patch <<< "$VERSION"
+          
+          # Increment patch (z)
+          patch=$((patch + 1))
+          NEW_VERSION="$major.$minor.$patch"
+          echo "New Version: $NEW_VERSION"
+          
+          # Save new version back to file
+          echo "$NEW_VERSION" > version.txt
+          
+          # Set output variable for other jobs
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Commit and Push New Version
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add version.txt
+          git commit -m "chore: bump build version to ${{ steps.bump_version.outputs.new_version }} [skip ci]"
+          git push
+
+  # --- JOB 2: BUILD WEBGL ---
   buildWebGL:
     name: Build WebGL
+    needs: versioning
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
+          ref: ${{ github.ref }} # Ensures it pulls the latest commit including the version bump
 
       - name: Git LFS Pull
         run: |
@@ -42,18 +87,60 @@ jobs:
         with:
           targetPlatform: WebGL
           buildsPath: build
+          buildVersion: ${{ needs.versioning.outputs.new_version }}
 
       - name: Upload WebGL Build Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
-          # Change: Adding '/*' ensures we upload the CONTENTS, not the folder itself
           path: build/WebGL/*
 
+  # --- JOB 3: BUILD WINDOWS ---
+  buildWindows:
+    name: Build Windows Standalone
+    needs: versioning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+          ref: ${{ github.ref }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
+      - name: Restore Library Cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-Windows-
+
+      - name: Build Windows
+        uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: StandaloneWindows64
+          buildsPath: build
+          buildVersion: ${{ needs.versioning.outputs.new_version }}
+
+      - name: Upload Windows Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-Windows
+          path: build/StandaloneWindows64/*
+
+  # --- JOB 4: DEPLOY WEBGL TO PAGES ---
   deployPages:
-    needs: buildWebGL
+    needs: [versioning, buildWebGL]
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    # Only deploy to Pages if the push came from the main branch
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -62,11 +149,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-WebGL
-          path: build_files # Keep this a temp folder
+          path: build_files
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          # This will take the contents of build_files and put them at the root of gh-pages
           folder: build_files
