@@ -216,7 +216,7 @@ CircleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4496aca7d36f5f74dbbe602f759fdf2b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -594,7 +594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7306227738895683805}
-  - component: {fileID: 2203280542834384146}
+  - component: {fileID: 2646674534464273153}
   m_Layer: 28
   m_Name: rolly_polly_for_rig
   m_TagString: Untagged
@@ -640,8 +640,8 @@ Transform:
   - {fileID: 2554138483628365306}
   m_Father: {fileID: 5531637125374746915}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &2203280542834384146
-BoxCollider2D:
+--- !u!70 &2646674534464273153
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -650,7 +650,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4496aca7d36f5f74dbbe602f759fdf2b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -674,18 +674,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -1.8999999, y: 10.157489}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 7.338799, y: 3.8572445}
-  m_EdgeRadius: 0
+  m_Offset: {x: -1.91, y: 10.19}
+  m_Size: {x: 4.93, y: 6.08}
+  m_Direction: 0
 --- !u!1 &1380214081956586837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,6 +1556,7 @@ MonoBehaviour:
   _wallCheckDistance: 1
   _isFlipped: 0
   _speed: 2
+  _patrolAcceleration: 15
   _patrolBlockingLayers:
     serializedVersion: 2
     m_Bits: 1024
@@ -1580,17 +1572,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _rollSpeed: 15
-  _rollAcceleration: 10
+  _rollAcceleration: 25
   _rollRotationSpeed: 360
+  _stunDuration: 0.2
   _pulseHitCooldown: 2
   _pulseStutterDuration: 0.05
   _pulseMomentumRatio: 0.05
-  _detectionRange: 6
+  _detectionRange: 8
   _detectionHeightTolerance: 1
-  _aboveHeightTolerance: 0.35
+  _aboveHeightTolerance: 2
   _onlyDetectInFacingDirection: 0
   _chaseMaxRange: 15
-  _loseTrackTime: 2
+  _loseTrackTime: 3
   _damageAmount: 1
   _knockbackForceX: 15
   _knockbackForceY: 9
