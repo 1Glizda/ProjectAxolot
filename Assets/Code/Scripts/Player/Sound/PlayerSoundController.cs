@@ -26,6 +26,8 @@ namespace Player.Sound
 
         private IPlayerStateProvider _state;
         private bool _isMoving;
+        private bool _isClimbingLoop;
+        private int _pulseClipIndex;
 
         // Idle chirp timer
         private float _idleTimer;
@@ -62,6 +64,7 @@ namespace Player.Sound
             // Subscribe to existing events
             _state.OnJump += HandleJump;
             _state.OnLand += HandleLand;
+            _state.OnStartClimb += HandleStartClimb;
 
             // Subscribe to pulse event
             if (pulseController != null)
@@ -76,8 +79,10 @@ namespace Player.Sound
                 Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Jump clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.landClip == null)
                 Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Land clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
-            if (soundProfile.pulseClip == null)
-                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Pulse clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if ((soundProfile.pulseClips == null || soundProfile.pulseClips.Length == 0) && soundProfile.pulseClip == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Pulse clips are not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.climbLoop == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Climb loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.idleChirps == null || soundProfile.idleChirps.Length == 0)
                 Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Idle chirps are not assigned in the SoundProfile '{soundProfile.name}'.", this);
 
@@ -90,6 +95,7 @@ namespace Player.Sound
             {
                 _state.OnJump -= HandleJump;
                 _state.OnLand -= HandleLand;
+                _state.OnStartClimb -= HandleStartClimb;
             }
 
             if (pulseController != null)
@@ -101,26 +107,44 @@ namespace Player.Sound
             if (_state == null || soundProfile == null || soundController == null) return;
 
             bool grounded = _state.IsGrounded;
+            bool climbing = _state.IsClimbing;
             float absHSpeed = Mathf.Abs(_state.HorizontalVelocity);
-            bool moving = grounded && absHSpeed > movementThreshold;
+            bool moving = grounded && absHSpeed > movementThreshold && !climbing;
 
-            // ─── Footstep loop ─────────────────────────────────────
-            if (moving && !_isMoving)
+            // ─── Climbing loop ─────────────────────────────────────
+            if (climbing && !_isClimbingLoop)
             {
-                // Started moving
-                soundController.PlayLoop(soundProfile.footstepLoop, soundProfile.footstepVolume);
-                _isMoving = true;
+                Debug.Log($"[{gameObject.name}] PlayerSoundController: Start climbing loop. Clip: {(soundProfile.climbLoop != null ? soundProfile.climbLoop.name : "null")}, Volume: {soundProfile.climbVolume}", this);
+                soundController.PlayLoop(soundProfile.climbLoop, soundProfile.climbVolume);
+                _isClimbingLoop = true;
+                _isMoving = false;
                 ResetIdleState();
             }
-            else if (!moving && _isMoving)
+            else if (!climbing && _isClimbingLoop)
             {
-                // Stopped moving
+                Debug.Log($"[{gameObject.name}] PlayerSoundController: Stop climbing loop.", this);
                 soundController.StopLoop();
-                _isMoving = false;
+                _isClimbingLoop = false;
+            }
+
+            // ─── Footstep loop (only when not climbing) ────────────
+            if (!climbing)
+            {
+                if (moving && !_isMoving)
+                {
+                    soundController.PlayLoop(soundProfile.footstepLoop, soundProfile.footstepVolume);
+                    _isMoving = true;
+                    ResetIdleState();
+                }
+                else if (!moving && _isMoving)
+                {
+                    soundController.StopLoop();
+                    _isMoving = false;
+                }
             }
 
             // ─── Idle chirps ───────────────────────────────────────
-            if (grounded && !moving)
+            if (grounded && !moving && !climbing)
             {
                 _idleTimer += Time.deltaTime;
 
@@ -140,6 +164,7 @@ namespace Player.Sound
 
         private void HandleJump()
         {
+            Debug.Log($"[{gameObject.name}] PlayerSoundController: HandleJump called!");
             // Stop footsteps when jumping
             if (_isMoving)
             {
@@ -153,14 +178,37 @@ namespace Player.Sound
 
         private void HandleLand()
         {
+            Debug.Log($"[{gameObject.name}] PlayerSoundController: HandleLand called!");
             if (soundProfile.landClip != null)
                 soundController.PlayOneShotDebounced(soundProfile.landClip, soundProfile.landVolume, 0.15f, soundProfile.pitchVariance);
         }
 
+        private void HandleStartClimb()
+        {
+            Debug.Log($"[{gameObject.name}] PlayerSoundController: HandleStartClimb called!");
+            // Stop footsteps when entering climb
+            if (_isMoving)
+            {
+                soundController.StopLoop();
+                _isMoving = false;
+            }
+        }
+
         private void HandlePulse(float _)
         {
-            if (soundProfile.pulseClip != null)
+            if (soundProfile.pulseClips != null && soundProfile.pulseClips.Length > 0)
+            {
+                AudioClip clip = soundProfile.pulseClips[_pulseClipIndex];
+                if (clip != null)
+                {
+                    soundController.PlayOneShot(clip, soundProfile.pulseVolume);
+                }
+                _pulseClipIndex = (_pulseClipIndex + 1) % soundProfile.pulseClips.Length;
+            }
+            else if (soundProfile.pulseClip != null)
+            {
                 soundController.PlayOneShot(soundProfile.pulseClip, soundProfile.pulseVolume);
+            }
         }
 
         // ─── Idle Timer ────────────────────────────────────────────

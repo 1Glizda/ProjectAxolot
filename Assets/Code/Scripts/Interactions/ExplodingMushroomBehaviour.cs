@@ -31,6 +31,11 @@ namespace Interactions
 
         private bool _isExploded = false;
 
+        /// <summary>Fired when the mushroom explodes.</summary>
+        public event System.Action OnExplode;
+        /// <summary>Fired when the mushroom recovers after explosion.</summary>
+        public event System.Action OnRecover;
+
         private void Awake()
         {
             if (_spriteRenderer == null)
@@ -92,6 +97,7 @@ namespace Interactions
             if (_collider != null) _collider.enabled = false;
 
             Explode();
+            OnExplode?.Invoke();
 
             yield return new WaitForSeconds(_recoveryTime);
 
@@ -99,6 +105,7 @@ namespace Interactions
             SetSprite(false);
             if (_collider != null) _collider.enabled = true;
             transform.localScale = originalScale;
+            OnRecover?.Invoke();
         }
 
         private void Explode()

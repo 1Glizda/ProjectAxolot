@@ -13,6 +13,9 @@ namespace Platforming
         [Header("Damage")]
         [SerializeField] private bool _applyDamage;
         [SerializeField] private int _damageAmount = 1;
+
+        /// <summary>Fired when the player is hit and damaged by this hazard.</summary>
+        public event System.Action OnPlayerHit;
         
         
         private void OnCollisionEnter2D(Collision2D other)
@@ -26,6 +29,7 @@ namespace Platforming
                 float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
                 Vector2 knockbackVelocity = new Vector2(dirX * _horizontalForce, _verticalForce);
                 knockbackable.ApplyKnockback(knockbackVelocity);
+                OnPlayerHit?.Invoke();
             }
         }
 

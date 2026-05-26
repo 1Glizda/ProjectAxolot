@@ -11,6 +11,9 @@ namespace Platforming
         [SerializeField] private List<Rigidbody2D> _wallPebbles;
         [SerializeField] private float _breakForceThreshold;
 
+        /// <summary>Fired when the wall breaks. Subscribe from sound/VFX controllers.</summary>
+        public event System.Action OnBreak;
+
         public void TryBreak(float force, Vector2 direction)
         {
             if (force >= _breakForceThreshold)
@@ -33,6 +36,8 @@ namespace Platforming
             {
                 obj.gameObject.layer = LayerMask.NameToLayer("Clutter");
             }
+
+            OnBreak?.Invoke();
         }
 
         private void OnCollisionEnter2D(Collision2D other)

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f18d34406214a2aad4b27addf79f19, type: 3}
+  m_Name: Environment Sound Profile
+  m_EditorClassIdentifier: Game.Interfaces::Interfaces.EnvironmentSoundProfileSo
+  waterDropletsLoop: {fileID: 0}
+  waterDropletsVolume: 0.4
+  windWhoosh1: {fileID: 0}
+  windWhoosh2: {fileID: 0}
+  windVolume: 0.5
+  windMinInterval: 3
+  windMaxInterval: 8
+  windPitchVariance: 0.1
+  rockExplosionClip: {fileID: 0}
+  rockExplosionVolume: 0.8
+  rockExplosionPitchVariance: 0.05
+  geyserOnClip: {fileID: 0}
+  geyserOffClip: {fileID: 0}
+  geyserActiveLoop: {fileID: 0}
+  geyserOneShotVolume: 0.7
+  geyserLoopVolume: 0.4
+  mushroomExplosionClip: {fileID: 0}
+  mushroomCloudLoop: {fileID: 0}
+  mushroomExplosionVolume: 0.8
+  mushroomCloudVolume: 0.3
+  mossContactClip: {fileID: 0}
+  mossAmbientLoop: {fileID: 0}
+  mossContactVolume: 0.6
+  mossAmbientVolume: 0.3
+  spikeDamageClip: {fileID: 0}
+  spikeDamageVolume: 0.8
+  spikePitchVariance: 0.05
