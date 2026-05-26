@@ -1,4 +1,4 @@
-name: CI/CD Build and Deploy
+name: WebGL and Windows Build and Deploy
 
 on:
   push:
@@ -24,8 +24,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump Patch Version
         id: bump_version
@@ -58,15 +56,14 @@ jobs:
 
   # --- JOB 2: BUILD WEBGL ---
   buildWebGL:
-    name: Build WebGL
     needs: versioning
+    name: Build WebGL
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
-          ref: ${{ github.ref }} # Ensures it pulls the latest commit including the version bump
 
       - name: Git LFS Pull
         run: |
@@ -87,7 +84,7 @@ jobs:
         with:
           targetPlatform: WebGL
           buildsPath: build
-          buildVersion: ${{ needs.versioning.outputs.new_version }}
+          version: ${{ needs.versioning.outputs.new_version }}
 
       - name: Upload WebGL Build Artifact
         uses: actions/upload-artifact@v4
@@ -97,15 +94,14 @@ jobs:
 
   # --- JOB 3: BUILD WINDOWS ---
   buildWindows:
-    name: Build Windows Standalone
     needs: versioning
+    name: Build Windows Standalone
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
-          ref: ${{ github.ref }}
 
       - name: Git LFS Pull
         run: |
@@ -126,7 +122,7 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           buildsPath: build
-          buildVersion: ${{ needs.versioning.outputs.new_version }}
+          version: ${{ needs.versioning.outputs.new_version }}
 
       - name: Upload Windows Build Artifact
         uses: actions/upload-artifact@v4
@@ -139,8 +135,7 @@ jobs:
     needs: [versioning, buildWebGL]
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
-    # Only deploy to Pages if the push came from the main branch
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' # Only push WebGL live if on main branch
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -156,3 +151,31 @@ jobs:
         with:
           branch: gh-pages
           folder: build_files
+
+  # --- JOB 5: DEPLOY WINDOWS TO BRANCH SIDE-BY-SIDE ---
+  deployWindows:
+    needs: [versioning, buildWindows]
+    name: Deploy Windows to Branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Windows Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-Windows
+          path: windows_temp
+
+      # Create a version-named subfolder and move the download into it
+      - name: Organize Version Folder
+        run: |
+          mkdir -p deploy_windows/v${{ needs.versioning.outputs.new_version }}
+          cp -r windows_temp/* deploy_windows/v${{ needs.versioning.outputs.new_version }}/
+
+      - name: Deploy Windows to Dedicated Branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: windows-builds   # The branch housing all your zip/exe histories
+          folder: deploy_windows   # Targets the folder containing 'v0.5.x'
+          clean: false             # CRITICAL: Keeps old version folders intact!
