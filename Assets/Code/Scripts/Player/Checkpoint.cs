@@ -16,6 +16,7 @@ namespace Player.GameState
 
         private CheckpointsManager _manager;
         private Color _initialColor;
+        public bool IsActivated { get; private set; }
 
         private void Awake()
         {
@@ -36,6 +37,9 @@ namespace Player.GameState
 
         public void NotifyEnable()
         {
+            if (IsActivated) return;
+            IsActivated = true;
+
             if (_spriteRenderer != null)
                 StartCoroutine(FadeIn());
         }
