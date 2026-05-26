@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Platforming
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    internal class BoulderBehaviour : MonoBehaviour, IPushable
+    public class BoulderBehaviour : MonoBehaviour, IPushable
     {
         public Rigidbody2D Rb => _rb;
         public Vector2 Velocity => _rb.linearVelocity;

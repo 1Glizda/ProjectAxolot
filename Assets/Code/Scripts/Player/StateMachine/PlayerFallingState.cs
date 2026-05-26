@@ -24,7 +24,7 @@ namespace Player.StateMachine
             jumpAction.performed += BufferCatch;
             _isCatchBuffered = false;
             _graceTimer = 0.35f; // Prevent immediate regrab and allow clearing the trigger for auto-grab
-            _wallJumpLockoutTimer = stateMachine.WasDetached ? 0.15f : 0f;
+            _wallJumpLockoutTimer = stateMachine.wasDetached ? 0.15f : 0f;
 
             if (stateMachine.PreviousStateType == typeof(PlayerClimbingState))
             {
@@ -65,7 +65,7 @@ namespace Player.StateMachine
                 
                 if (jumpAction.triggered)
                 {
-                    Vector2 wallNormal = stateMachine.LastWallNormal;
+                    Vector2 wallNormal = stateMachine.lastWallNormal;
                     if (wallNormal.x > 0f)
                     {
                         Vector3 euler = ctx.spriteObject.transform.localEulerAngles;
@@ -87,7 +87,7 @@ namespace Player.StateMachine
                     Vector2 forceVec = (rotation * wallNormal) * settings.WallJumpForce;
 
                     ctx.rb.AddForce(forceVec, ForceMode2D.Impulse);
-                    stateMachine.WasDetached = true;
+                    stateMachine.wasDetached = true;
                     _wallJumpLockoutTimer = 0.15f;
                     _wallCoyoteTimer = 0f;
                     return;
@@ -110,10 +110,10 @@ namespace Player.StateMachine
                 return;
             }
 
-            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
+            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.lastVine;
             bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || (_isCatchBuffered && _catchBuffer > 0f);
             
-            bool isSameVine = ctx.collisionHandler.SwingBone != null && ctx.collisionHandler.SwingBone.VineHelper == stateMachine.LastVine;
+            bool isSameVine = ctx.collisionHandler.SwingBone != null && ctx.collisionHandler.SwingBone.VineHelper == stateMachine.lastVine;
             // Cooldown only applies to auto-grabbing the same vine.
             // Explicit player actions (manual catch buffer) bypass the cooldown for maximum responsiveness.
             bool grabCooldownActive = isSameVine && _graceTimer > 0f && !_isCatchBuffered;
@@ -126,7 +126,7 @@ namespace Player.StateMachine
 
             if (ctx.stateProvider.IsNearValidWall)
             {
-                if (!stateMachine.WasDetached)
+                if (!stateMachine.wasDetached)
                 {
                     float dot = Vector2.Dot(new Vector2(ctx.rb.linearVelocityX, 0f), ctx.stateProvider.WallHitNormal);
                     bool canGrab = dot <= 0.01f;
@@ -159,7 +159,7 @@ namespace Player.StateMachine
                             Vector2 forceVec = (rotation * wallNormal) * settings.WallJumpForce;
 
                             ctx.rb.AddForce(forceVec, ForceMode2D.Impulse);
-                            stateMachine.WasDetached = true;
+                            stateMachine.wasDetached = true;
                             _wallJumpLockoutTimer = 0.15f;
                             return;
                         }
@@ -174,7 +174,7 @@ namespace Player.StateMachine
             else
             {
                 // Player cleared the wall — allow grabbing a new wall
-                stateMachine.WasDetached = false;
+                stateMachine.wasDetached = false;
             }
 
         }
@@ -202,7 +202,7 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             jumpAction.performed -= BufferCatch;
-            stateMachine.WasDetached = false;
+            stateMachine.wasDetached = false;
         }
     }
 }

@@ -160,7 +160,7 @@ namespace Player.StateMachine
         
         public override void ExitState()
         {
-            stateMachine.LastVine = _vine;
+            stateMachine.lastVine = _vine;
             ctx.swingHinge.enabled = false;
             ctx.swingHinge.connectedBody = null;
             ctx.swingHinge.autoConfigureConnectedAnchor = true;

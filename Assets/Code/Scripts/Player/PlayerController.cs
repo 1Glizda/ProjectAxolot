@@ -1,5 +1,6 @@
 using System.Collections;
 using Interfaces;
+using Player.GameState;
 using Player.Input;
 using Player.StateMachine;
 using TMPro;
@@ -117,8 +118,12 @@ namespace Player
             _groundHits = new RaycastHit2D[3];   
             
             _stateMachine.onChangeState += type => {
+                
+                #if UNITY_EDITOR
                 if (_debugMode) Debug.Log(type, this);
-                if (_stateText != null) _stateText.text = type.Name;
+                if (_stateText) _stateText.text = type.Name;
+                #endif
+                
                 _isInClimbingState = type == typeof(PlayerClimbingState);
                 _isJumping = type == typeof(PlayerJumpState);
             };
@@ -160,9 +165,9 @@ namespace Player
                     if (_resetHoldTimer >= 1.0f)
                     {
                         _resetHoldTimer = 0f;
-                        if (Player.GameState.GameStateManager.Instance != null)
+                        if (GameStateManager.Instance != null)
                         {
-                            Player.GameState.GameStateManager.Instance.KillPlayer();
+                            GameStateManager.Instance.KillPlayer();
                         }
                     }
                 }

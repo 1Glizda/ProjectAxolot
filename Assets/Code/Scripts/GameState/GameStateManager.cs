@@ -46,7 +46,9 @@ namespace Player.GameState
         
         public void KillPlayer()
         {
+            #if UNITY_EDITOR
             Debug.LogError("Player Killed", this);
+            #endif
             ResetPlayer();
             onDeath?.Invoke();
         }

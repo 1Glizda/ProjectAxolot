@@ -60,7 +60,7 @@ namespace Player.StateMachine
                 }
             }
 
-            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.LastVine;
+            bool autoGrabAllowed = ctx.collisionHandler.SwingBone == null || ctx.collisionHandler.SwingBone.VineHelper != stateMachine.lastVine;
             bool wantsToGrab = (settings.AutoGrabVines && autoGrabAllowed) || jumpAction.triggered;
             if (wantsToGrab && ctx.collisionHandler.CanSwing)
             {

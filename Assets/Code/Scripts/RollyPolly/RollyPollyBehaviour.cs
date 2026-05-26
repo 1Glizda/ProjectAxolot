@@ -40,6 +40,7 @@ namespace RollyPolly
         [SerializeField] private float _rollAcceleration = 10f;
         [SerializeField] private float _rollRotationSpeed = 360f;
         [SerializeField] private float _stunDuration = 0.2f;
+        [SerializeField] private float _postStunAggroCooldown = 1.5f;
 
         [Header("Pulse Interactions")]
         [SerializeField] private float _pulseHitCooldown = 2f;
@@ -64,6 +65,7 @@ namespace RollyPolly
         [SerializeField] private float _enemyRecoilForceY = 4f;
         [SerializeField] private float _enemyRecoilDuration = 0.3f;
         [SerializeField] private float _movablePushForce = 2000f;
+        [SerializeField] private float _movableImpulse = 5f;
         
         private Rigidbody2D _rb;
         private Rigidbody2D _playerRb;
@@ -78,6 +80,7 @@ namespace RollyPolly
         private float _stutterTimer;
         private float _recoilTimer;
         private float _playerLostTimer;
+        private float _postStunTimer;
         
         private bool _isDead;
         private Vector2 _smoothedGroundNormal = Vector2.up;
@@ -126,6 +129,7 @@ namespace RollyPolly
             if (_pulseCooldownTimer > 0f) _pulseCooldownTimer -= Time.deltaTime;
             if (_stutterTimer > 0f) _stutterTimer -= Time.deltaTime;
             if (_recoilTimer > 0f) _recoilTimer -= Time.deltaTime;
+            if (_postStunTimer > 0f) _postStunTimer -= Time.deltaTime;
 
             if (_currentState == ERollyState.Patrol)
             {
@@ -256,7 +260,8 @@ namespace RollyPolly
         private void TryDetectPlayer()
         {
             if (_playerRb == null) return;
-            if (!IsGrounded()) return; // Do not detect or transition if mid-air/falling
+            if (!IsGrounded()) return;
+            if (_postStunTimer > 0f) return; // Cannot aggro during post-stun cooldown
 
             Vector2 playerPos = _playerRb.transform.position;
             Vector2 myPos = transform.position;
@@ -500,6 +505,7 @@ namespace RollyPolly
         {
             if (_stateTimer >= _stunDuration)
             {
+                _postStunTimer = _postStunAggroCooldown;
                 ChangeState(ERollyState.Patrol);
             }
         }
@@ -621,9 +627,23 @@ namespace RollyPolly
                 }
             }
 
-            // 3. Movable object contact (only in Attack state)
+            // 3. Boulder contact (only in Attack state) — rolling into a boulder kills the Rolly
             if (_currentState == ERollyState.Attack && other.gameObject.layer == LayerMask.NameToLayer("Movable"))
             {
+                Platforming.BoulderBehaviour boulder = other.gameObject.GetComponent<Platforming.BoulderBehaviour>() 
+                                                    ?? other.gameObject.GetComponentInParent<Platforming.BoulderBehaviour>();
+                if (boulder != null)
+                {
+                    // Give the boulder a strong impulse in the rolling direction
+                    float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
+                    boulder.ApplyPushForce(new Vector2(dirX, 0f) * _movablePushForce);
+                    
+                    // The Rolly dies dramatically from the impact
+                    YeetAndKill();
+                    return;
+                }
+                
+                // Generic movable (non-boulder) push
                 Rigidbody2D movableRb = other.gameObject.GetComponent<Rigidbody2D>();
                 if (movableRb != null)
                 {
@@ -631,9 +651,8 @@ namespace RollyPolly
                     
                     Vector2 normal = GetGroundNormal();
                     Vector2 slopeTangent = new Vector2(normal.y, -normal.x);
-                    Vector2 pushForce = dirX * slopeTangent * _movablePushForce;
-                    
-                    movableRb.AddForce(pushForce, ForceMode2D.Impulse);
+                    Vector2 pushImpulse = dirX * slopeTangent * _movableImpulse;
+                    movableRb.AddForce(pushImpulse, ForceMode2D.Impulse);
 
                     // Apply enemy recoil/knockback (same as for player)
                     _recoilTimer = _enemyRecoilDuration;

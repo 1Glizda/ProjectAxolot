@@ -1865,6 +1865,7 @@ GameObject:
   - component: {fileID: 7397648783941994165}
   - component: {fileID: 8874296226019805568}
   - component: {fileID: 7804800198185896060}
+  - component: {fileID: 5343559995475026607}
   m_Layer: 0
   m_Name: BreakableWall
   m_TagString: Untagged
@@ -1882,7 +1883,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 1.4454643, y: 1.2916902, z: 0}
-  m_LocalScale: {x: 0.53449, y: 0.53449, z: 0.53449}
+  m_LocalScale: {x: 1.2409861, y: 1.2409861, z: 1.2409861}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6122846840160394505}
@@ -1949,6 +1950,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5343559995475026607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789420716477974618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afe4eb5c478f9d04481f419852e5d96a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Interactions::Interactions.ResetObject
+  _prefabToRespawn: {fileID: 6789420716477974618}
 --- !u!1 &7156903363288286744
 GameObject:
   m_ObjectHideFlags: 0

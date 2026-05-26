@@ -51,7 +51,9 @@ namespace Player.AI
 
             if (simpleAi == null)
             {
+                #if UNITY_EDITOR
                 Debug.LogError($"[{gameObject.name}] AiSoundController: SimpleAi reference is missing! Please assign it in the Inspector.", this);
+                #endif
                 return;
             }
 

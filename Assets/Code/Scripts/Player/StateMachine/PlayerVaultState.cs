@@ -44,7 +44,7 @@ namespace Player.StateMachine
             if (_jumpTriggered)
             {
                 // Transitioning will call ExitState and make the Rigidbody dynamic/re-enable colliders
-                stateMachine.WasDetached = true;
+                stateMachine.wasDetached = true;
                 stateMachine.ChangeState<PlayerFallingState>();
 
                 // Determine wall normal from vault direction
