@@ -9,6 +9,8 @@ namespace Player.StateMachine
         private bool _isDetached;
         private float _attachTimer;
         private float _slideDelayTimer;
+        private float _groundedTimer;
+        private const float GroundedExitDelay = 0.05f;
         public PlayerClimbingState(PlayerControllerContext ctx, MovementStateMachine stateMachine) : base(ctx, stateMachine)
         {
             
@@ -23,6 +25,7 @@ namespace Player.StateMachine
             _isDetached = false;
             _attachTimer = settings.WallAttachGraceTime;
             _slideDelayTimer = settings.WallSlideDelay;
+            _groundedTimer = 0f;
         }
         
         public override void Tick(float dt)
@@ -54,8 +57,16 @@ namespace Player.StateMachine
 
             if (isGrounded)
             {
-                stateMachine.ChangeState<PlayerIdleState>();
-                return;
+                _groundedTimer += dt;
+                if (_groundedTimer >= GroundedExitDelay)
+                {
+                    stateMachine.ChangeState<PlayerIdleState>();
+                    return;
+                }
+            }
+            else
+            {
+                _groundedTimer = 0f;
             }
 
             if (_attachTimer > 0f)

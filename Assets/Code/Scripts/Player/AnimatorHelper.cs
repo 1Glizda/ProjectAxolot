@@ -12,6 +12,8 @@ namespace Player
         private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
         private static readonly int StartClimb = Animator.StringToHash("StartClimb");
         private static readonly int GrabVine = Animator.StringToHash("GrabVine");
+        private static readonly int IsWallIdle = Animator.StringToHash("IsWallIdle");
+        private static readonly int IsWallResting = Animator.StringToHash("IsWallResting");
 
 
         [SerializeField] private Animator _animator;
@@ -28,6 +30,8 @@ namespace Player
             _animator.SetFloat(VerticalVelocity, _playerState.VerticalVelocity);
             _animator.SetFloat(HorizontalVelocity, Mathf.Abs(_playerState.HorizontalVelocity));
             _animator.SetBool(IsGrounded, _playerState.IsGrounded);
+            _animator.SetBool(IsWallIdle, _playerState.IsWallIdle);
+            _animator.SetBool(IsWallResting, _playerState.IsWallResting);
         }
         
         

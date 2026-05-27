@@ -18,7 +18,9 @@ namespace Player
         public event System.Action OnLand;
         public event System.Action OnGrabVine;
         
-        public bool IsClimbing => _isClimbingAnim && _isInClimbingState;
+        public bool IsClimbing => _isInClimbingState;
+        public bool IsWallIdle => _isInClimbingState && !_isClimbingAnim;
+        public bool IsWallResting => _isGrounded && _isNearValidWall;
         public bool IsJumping => _isJumping;
         public float VerticalVelocity => _rb.linearVelocityY;
         public float HorizontalVelocity => _rb.linearVelocityX;

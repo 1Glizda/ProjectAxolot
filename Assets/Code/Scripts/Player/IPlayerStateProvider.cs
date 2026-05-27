@@ -10,6 +10,8 @@ namespace Player
         public event System.Action OnLand;
         public event System.Action OnGrabVine;
         public bool IsClimbing { get; }
+        public bool IsWallIdle { get; }
+        public bool IsWallResting { get; }
         public bool IsJumping { get; }
         public float VerticalVelocity { get; }
         public float HorizontalVelocity { get; }
