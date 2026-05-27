@@ -19,6 +19,7 @@ namespace Interactions
         private Transform _initialParent;
         
         private Rigidbody2D _rb;
+        private RigidbodyType2D _initialBodyType;
 
         private void Awake()
         {
@@ -28,6 +29,7 @@ namespace Interactions
             _initialParent = transform.parent;
             
             _rb = GetComponent<Rigidbody2D>();
+            if (_rb != null) _initialBodyType = _rb.bodyType;
         }
 
         public void TriggerReset()
@@ -46,6 +48,7 @@ namespace Interactions
             }
 
             // Fallback: just move the transform
+            gameObject.SetActive(true);
             transform.localPosition = _initialLocalPosition;
             transform.localRotation = _initialLocalRotation;
             transform.localScale = _initialLocalScale;
@@ -56,6 +59,7 @@ namespace Interactions
             {
                 _rb.linearVelocity = Vector2.zero;
                 _rb.angularVelocity = 0f;
+                _rb.bodyType = _initialBodyType;
             }
         }
     }
