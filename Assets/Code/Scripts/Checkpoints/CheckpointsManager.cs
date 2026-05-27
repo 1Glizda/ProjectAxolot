@@ -55,6 +55,7 @@ namespace Player.GameState
         
         private void OnDeath()
         {
+            Debug.Log($"[CheckpointsManager] OnDeath fired. Current checkpoint: '{(_currentCheckpoint ? _currentCheckpoint.name : "none")}'  Starting: '{(_startingCheckpoint ? _startingCheckpoint.name : "none")}'", this);
             if ( _playerController)
             {
                 Vector2 position = _currentCheckpoint ?  _currentCheckpoint.transform.position : _startingCheckpoint.transform.position;

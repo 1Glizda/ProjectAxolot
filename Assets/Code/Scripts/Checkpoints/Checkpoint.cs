@@ -1,14 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using Interfaces;
+using Interactions;
 
 namespace Player.GameState
 {
     public class Checkpoint : MonoBehaviour
     {
-        // Accepts any MonoBehaviour that implements IResettable (e.g. ResetObject)
-        [SerializeField] private List<MonoBehaviour> _stateSave = new List<MonoBehaviour>();
+        // Drag ResetObject components here
+        [SerializeField] private List<ResetObject> _stateSave = new List<ResetObject>();
 
         [Header("Activation Effect")]
         [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -63,12 +63,10 @@ namespace Player.GameState
 
         public void ResetSavedObjects()
         {
-            foreach (var behaviour in _stateSave)
+            foreach (var resetObject in _stateSave)
             {
-                if (behaviour is IResettable resettable)
-                {
-                    resettable.TriggerReset();
-                }
+                if (resetObject == null) continue;
+                resetObject.TriggerReset();
             }
         }
     }

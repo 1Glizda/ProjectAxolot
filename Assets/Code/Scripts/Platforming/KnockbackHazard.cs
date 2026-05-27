@@ -1,5 +1,6 @@
 using Interfaces;
 using Player.GameState;
+using System.Collections;
 using UnityEngine;
 
 namespace Platforming
@@ -13,23 +14,51 @@ namespace Platforming
         [Header("Damage")]
         [SerializeField] private bool _applyDamage;
         [SerializeField] private int _damageAmount = 1;
+        [SerializeField] private float _repeatInterval = 0.1f;
 
         /// <summary>Fired when the player is hit and damaged by this hazard.</summary>
         public event System.Action OnPlayerHit;
-        
-        
+
+        private Coroutine _damageCoroutine;
+        private Collider2D _playerCollider;
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
-            if (!other.TryGetComponent<IKnockbackable>(out var knockbackable)) return;
+            if (!other.TryGetComponent<IKnockbackable>(out _)) return;
 
-            // Only apply knockback if the player was successfully damaged (not currently in their invulnerability state)
-            if (GameStateManager.Instance.DamagePlayer(_damageAmount, GetComponent<Collider2D>()))
+            _playerCollider = other;
+            if (_damageCoroutine != null) StopCoroutine(_damageCoroutine);
+            _damageCoroutine = StartCoroutine(DamageLoop());
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!other.CompareTag("Player")) return;
+
+            if (_damageCoroutine != null)
             {
-                float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
-                Vector2 knockbackVelocity = new Vector2(dirX * _horizontalForce, _verticalForce);
-                knockbackable.ApplyKnockback(knockbackVelocity);
-                OnPlayerHit?.Invoke();
+                StopCoroutine(_damageCoroutine);
+                _damageCoroutine = null;
+            }
+            _playerCollider = null;
+        }
+
+        private IEnumerator DamageLoop()
+        {
+            while (_playerCollider != null)
+            {
+                if (_playerCollider.TryGetComponent<IKnockbackable>(out var knockbackable))
+                {
+                    if (GameStateManager.Instance.DamagePlayer(_damageAmount, GetComponent<Collider2D>()))
+                    {
+                        float dirX = Mathf.Sign(_playerCollider.transform.position.x - transform.position.x);
+                        Vector2 knockbackVelocity = new Vector2(dirX * _horizontalForce, _verticalForce);
+                        knockbackable.ApplyKnockback(knockbackVelocity);
+                        OnPlayerHit?.Invoke();
+                    }
+                }
+                yield return new WaitForSeconds(_repeatInterval);
             }
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Player
 {
-    internal class PlayerCollisionHandler : MonoBehaviour
+    public class PlayerCollisionHandler : MonoBehaviour
     {
         public bool CanSwing => _canSwing;
         

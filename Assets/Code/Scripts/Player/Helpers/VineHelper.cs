@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Player.Helpers
 {
-    internal class VineHelper : MonoBehaviour
+    public class VineHelper : MonoBehaviour
     {
 
         [SerializeField] private List<SwingBone> _bones;

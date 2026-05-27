@@ -10,7 +10,7 @@ using UnityEngine.Serialization;
 namespace Player
 {
     //controls the StateMachine and talks to the engine
-    internal class PlayerController : MonoBehaviour, IPlayerStateProvider, IKnockbackable
+    public class PlayerController : MonoBehaviour, IPlayerStateProvider, IKnockbackable
     {
         
         public event System.Action OnJump;

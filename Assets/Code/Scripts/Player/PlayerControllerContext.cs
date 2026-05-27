@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Player
 {
     //player references container
-    internal sealed class PlayerControllerContext
+    public sealed class PlayerControllerContext
     {
 
         public readonly IPlayerInputHandler handler;
