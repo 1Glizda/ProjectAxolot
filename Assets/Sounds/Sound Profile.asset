@@ -18,14 +18,14 @@ MonoBehaviour:
   climbVolume: 0.5
   idleChirps:
   - {fileID: 8300000, guid: 82cf2d44c724a0c4c8c338cdc934a97b, type: 3}
-  idleChirpVolume: 0.704
+  idleChirpVolume: 0
   idleChirpInitialDelay: 3
   idleChirpMinInterval: 4
   idleChirpMaxInterval: 8
   jumpClip: {fileID: 8300000, guid: 7ad96b90f7035d148a169a052f8572c2, type: 3}
-  jumpVolume: 0.935
+  jumpVolume: 0
   landClip: {fileID: 8300000, guid: fb475f2511407df4a85cbc938875e616, type: 3}
-  landVolume: 0.7
+  landVolume: 0
   pulseClip: {fileID: 8300000, guid: 68ec9f9310aa9f743ac13c412e32c559, type: 3}
   pulseClips:
   - {fileID: 8300000, guid: 23247e49bd7cd4c89a9924e02f3a4266, type: 3}

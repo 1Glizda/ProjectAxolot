@@ -194,7 +194,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4135882908612250048}
-  - component: {fileID: 7321326004379401393}
   - component: {fileID: 4087353955128720309}
   m_Layer: 26
   m_Name: PRP_Main_moss_horizontal_large
@@ -220,25 +219,6 @@ Transform:
   - {fileID: 5595742630678714736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7321326004379401393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4948782619767164660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e664a5127594a9e8261ab8c5e63185e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Interactions::Interactions.MossBehaviour
-  _lights: []
-  _timeLitUp: 5
-  _fadeIn: 0.2
-  _fadeOut: 0.8
-  _maxIntensity: 1
-  _isPermanent: 0
-  _climbableLayer: 15
 --- !u!61 &4087353955128720309
 BoxCollider2D:
   m_ObjectHideFlags: 0

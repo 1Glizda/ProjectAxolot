@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: 0a7dce1d7ffb5f6488e647fe1f1254bd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6922391310998444418
+    second: Main_spikes_tiny_0
+  - first:
+      213: -2955792704756574870
+    second: Main_spikes_tiny_1
+  - first:
+      213: 2347301902195146553
+    second: Main_spikes_tiny_2
+  - first:
+      213: 2714534155991259162
+    second: Main_spikes_tiny_3
+  - first:
+      213: 5312623140266019327
+    second: Main_spikes_tiny_4
+  - first:
+      213: 5593832443179026179
+    second: Main_spikes_tiny_5
+  - first:
+      213: 2383951722212310251
+    second: Main_spikes_tiny_6
+  - first:
+      213: 6081992383596352721
+    second: Main_spikes_tiny_7
+  - first:
+      213: -3136370284621119259
+    second: Main_spikes_tiny_8
+  - first:
+      213: 5199394140195870476
+    second: Main_spikes_tiny_9
+  - first:
+      213: 6419598844438227245
+    second: Main_spikes_tiny_10
+  - first:
+      213: -8126414161488425123
+    second: Main_spikes_tiny_11
+  - first:
+      213: 8500608087936387491
+    second: Main_spikes_tiny_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 200
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Main_spikes_tiny_0
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 41
+        width: 203
+        height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28910509836411060800000000000000
+      internalID: 6922391310998444418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_1
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 307
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a651b4b023aeaf6d0800000000000000
+      internalID: -2955792704756574870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 58
+        width: 59
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93fb0fcb4aa439020800000000000000
+      internalID: 2347301902195146553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_3
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 31
+        width: 136
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a181682ce66fba520800000000000000
+      internalID: 2714534155991259162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_4
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 39
+        width: 75
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff9831d399a3ab940800000000000000
+      internalID: 5312623140266019327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_5
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 55
+        width: 74
+        height: 121
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 307cdbc38f841ad40800000000000000
+      internalID: 5593832443179026179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_6
+      rect:
+        serializedVersion: 2
+        x: 561
+        y: 47
+        width: 91
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bec352ce57f751120800000000000000
+      internalID: 2383951722212310251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_7
+      rect:
+        serializedVersion: 2
+        x: 607
+        y: 37
+        width: 75
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d454ee59d3976450800000000000000
+      internalID: 6081992383596352721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_8
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 59
+        width: 75
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e04115e7df5974d0800000000000000
+      internalID: -3136370284621119259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_9
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 50
+        width: 191
+        height: 248
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c075f954c65f72840800000000000000
+      internalID: 5199394140195870476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_10
+      rect:
+        serializedVersion: 2
+        x: 905
+        y: 44
+        width: 110
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d29af33f22ff61950800000000000000
+      internalID: 6419598844438227245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_11
+      rect:
+        serializedVersion: 2
+        x: 314
+        y: 24
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5f47ce206d293f80800000000000000
+      internalID: -8126414161488425123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Main_spikes_tiny_12
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 22
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a9c240940a38f570800000000000000
+      internalID: 8500608087936387491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Main_spikes_tiny_0: 6922391310998444418
+      Main_spikes_tiny_1: -2955792704756574870
+      Main_spikes_tiny_10: 6419598844438227245
+      Main_spikes_tiny_11: -8126414161488425123
+      Main_spikes_tiny_12: 8500608087936387491
+      Main_spikes_tiny_2: 2347301902195146553
+      Main_spikes_tiny_3: 2714534155991259162
+      Main_spikes_tiny_4: 5312623140266019327
+      Main_spikes_tiny_5: 5593832443179026179
+      Main_spikes_tiny_6: 2383951722212310251
+      Main_spikes_tiny_7: 6081992383596352721
+      Main_spikes_tiny_8: -3136370284621119259
+      Main_spikes_tiny_9: 5199394140195870476
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

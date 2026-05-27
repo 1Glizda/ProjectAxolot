@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8261258483776825059}
   - component: {fileID: 1397292017016207242}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 0.81446534, g: 1, b: 0.9194017, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 5
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
@@ -115,7 +115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3034390672885480872}
   - component: {fileID: 2471960626912564720}
-  m_Layer: 26
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,9 +206,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8024486742969080613}
   - component: {fileID: 5816501456705940220}
-  - component: {fileID: 1757796516334182171}
   - component: {fileID: 6756685866856986801}
-  m_Layer: 26
+  m_Layer: 27
   m_Name: PRP_Main_moss_vertical_large
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,33 +294,6 @@ PolygonCollider2D:
       - {x: 0.042150497, y: -0.023880959}
       - {x: 0.4705515, y: 0.8358869}
   m_UseDelaunayMesh: 1
---- !u!50 &1757796516334182171
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6936147672340479978}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &6756685866856986801
 MonoBehaviour:
   m_ObjectHideFlags: 0
