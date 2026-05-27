@@ -1,37 +1,43 @@
 fileFormatVersion: 2
-guid: ba4adc33dc2412a4da9129415945a63e
+guid: 94660fe39b8bfb7409b223765a207a04
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1082420900394798114
-    second: King_Shroom_Bent_Light_0
+      213: -4598706326267086366
+    second: SIGN_MOVABLE_0
   - first:
-      213: -7127915668406680572
-    second: King_Shroom_Bent_Light_1
+      213: 286226414462574451
+    second: SIGN_MOVABLE_1
   - first:
-      213: -8890806856808871382
-    second: King_Shroom_Bent_Light_2
+      213: 3622943211600802519
+    second: SIGN_MOVABLE_2
   - first:
-      213: 7399007351602746237
-    second: King_Shroom_Bent_Light_3
+      213: 2975644160685897424
+    second: SIGN_MOVABLE_3
   - first:
-      213: -6333280646321892847
-    second: King_Shroom_Bent_Light_4
+      213: -1071869649752695886
+    second: SIGN_MOVABLE_4
   - first:
-      213: 8031928521108876008
-    second: King_Shroom_Bent_Light_5
+      213: -1379982033796232356
+    second: SIGN_MOVABLE_5
   - first:
-      213: 9006680593982331500
-    second: King_Shroom_Bent_Light_6
+      213: 3965080580058706554
+    second: SIGN_MOVABLE_6
   - first:
-      213: -5473548085561891360
-    second: King_Shroom_Bent_Light_7
+      213: 4227601989146312695
+    second: SIGN_MOVABLE_7
   - first:
-      213: 3331008173197268197
-    second: King_Shroom_Bent_Light_8
+      213: -2362875769326467438
+    second: SIGN_MOVABLE_8
   - first:
-      213: 2803671056697961022
-    second: King_Shroom_Bent_Light_9
+      213: -1833613104109556686
+    second: SIGN_MOVABLE_9
+  - first:
+      213: 7884616765881486272
+    second: SIGN_MOVABLE_10
+  - first:
+      213: -2631662303285969406
+    second: SIGN_MOVABLE_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -73,12 +79,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 400
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -127,13 +133,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_0
+      name: SIGN_MOVABLE_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 253
-        width: 115
-        height: 267
+        x: 151
+        y: 470
+        width: 250
+        height: 319
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +148,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ed3728e0de77af0f0800000000000000
-      internalID: -1082420900394798114
+      spriteID: 2e9328416fc1e20c0800000000000000
+      internalID: -4598706326267086366
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_1
+      name: SIGN_MOVABLE_1
       rect:
         serializedVersion: 2
-        x: 142
-        y: 308
-        width: 237
-        height: 292
+        x: 555
+        y: 757
+        width: 7
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +170,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 404cda3077e841d90800000000000000
-      internalID: -7127915668406680572
+      spriteID: 37f106f4861e8f300800000000000000
+      internalID: 286226414462574451
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_2
+      name: SIGN_MOVABLE_2
       rect:
         serializedVersion: 2
-        x: 391
-        y: 284
-        width: 80
-        height: 316
+        x: 573
+        y: 760
+        width: 66
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -186,20 +192,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2acc4de4428d9480800000000000000
-      internalID: -8890806856808871382
+      spriteID: 7d2f0e0e7a7474230800000000000000
+      internalID: 3622943211600802519
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_3
+      name: SIGN_MOVABLE_3
       rect:
         serializedVersion: 2
-        x: 540
-        y: 134
-        width: 95
-        height: 424
+        x: 578
+        y: 757
+        width: 8
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,20 +214,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d7319c21cfd8ea660800000000000000
-      internalID: 7399007351602746237
+      spriteID: 0d6f5a7399c9b4920800000000000000
+      internalID: 2975644160685897424
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_4
+      name: SIGN_MOVABLE_4
       rect:
         serializedVersion: 2
-        x: 684
-        y: 0
-        width: 105
-        height: 382
+        x: 716
+        y: 766
+        width: 11
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,20 +236,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 112902daecaab18a0800000000000000
-      internalID: -6333280646321892847
+      spriteID: 2bbd7f88b34ff11f0800000000000000
+      internalID: -1071869649752695886
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_5
+      name: SIGN_MOVABLE_5
       rect:
         serializedVersion: 2
-        x: 157
-        y: 213
-        width: 45
-        height: 80
+        x: 135
+        y: 312
+        width: 451
+        height: 447
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -252,20 +258,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8eae50a5f64277f60800000000000000
-      internalID: 8031928521108876008
+      spriteID: c5b8727d6a159dce0800000000000000
+      internalID: -1379982033796232356
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_6
+      name: SIGN_MOVABLE_6
       rect:
         serializedVersion: 2
-        x: 275
-        y: 190
-        width: 34
-        height: 76
+        x: 503
+        y: 478
+        width: 244
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,20 +280,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c6a98b1e7482efc70800000000000000
-      internalID: 9006680593982331500
+      spriteID: a72f23897cbc60730800000000000000
+      internalID: 3965080580058706554
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_7
+      name: SIGN_MOVABLE_7
       rect:
         serializedVersion: 2
-        x: 423
-        y: 134
-        width: 23
-        height: 60
+        x: 740
+        y: 722
+        width: 21
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -296,20 +302,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0e5601b240d0a04b0800000000000000
-      internalID: -5473548085561891360
+      spriteID: 7fffcce3c957baa30800000000000000
+      internalID: 4227601989146312695
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_8
+      name: SIGN_MOVABLE_8
       rect:
         serializedVersion: 2
-        x: 502
-        y: 93
-        width: 30
-        height: 52
+        x: 377
+        y: 154
+        width: 476
+        height: 481
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,20 +324,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e4985bf84e1a3e20800000000000000
-      internalID: 3331008173197268197
+      spriteID: 2960be0c101653fd0800000000000000
+      internalID: -2362875769326467438
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: King_Shroom_Bent_Light_9
+      name: SIGN_MOVABLE_9
       rect:
         serializedVersion: 2
-        x: 681
-        y: 1
-        width: 51
-        height: 151
+        x: 852
+        y: 604
+        width: 14
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -340,8 +346,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e3aa689b8f3a8e620800000000000000
-      internalID: 2803671056697961022
+      spriteID: 23c6c02c892bd86e0800000000000000
+      internalID: -1833613104109556686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SIGN_MOVABLE_10
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 312
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cb84709c29cb6d60800000000000000
+      internalID: 7884616765881486272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SIGN_MOVABLE_11
+      rect:
+        serializedVersion: 2
+        x: 390
+        y: 160
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e7adb04157a7bd0800000000000000
+      internalID: -2631662303285969406
       vertices: []
       indices: 
       edges: []
@@ -350,7 +400,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -360,16 +410,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      King_Shroom_Bent_Light_0: -1082420900394798114
-      King_Shroom_Bent_Light_1: -7127915668406680572
-      King_Shroom_Bent_Light_2: -8890806856808871382
-      King_Shroom_Bent_Light_3: 7399007351602746237
-      King_Shroom_Bent_Light_4: -6333280646321892847
-      King_Shroom_Bent_Light_5: 8031928521108876008
-      King_Shroom_Bent_Light_6: 9006680593982331500
-      King_Shroom_Bent_Light_7: -5473548085561891360
-      King_Shroom_Bent_Light_8: 3331008173197268197
-      King_Shroom_Bent_Light_9: 2803671056697961022
+      SIGN_MOVABLE_0: -4598706326267086366
+      SIGN_MOVABLE_1: 286226414462574451
+      SIGN_MOVABLE_10: 7884616765881486272
+      SIGN_MOVABLE_11: -2631662303285969406
+      SIGN_MOVABLE_2: 3622943211600802519
+      SIGN_MOVABLE_3: 2975644160685897424
+      SIGN_MOVABLE_4: -1071869649752695886
+      SIGN_MOVABLE_5: -1379982033796232356
+      SIGN_MOVABLE_6: 3965080580058706554
+      SIGN_MOVABLE_7: 4227601989146312695
+      SIGN_MOVABLE_8: -2362875769326467438
+      SIGN_MOVABLE_9: -1833613104109556686
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

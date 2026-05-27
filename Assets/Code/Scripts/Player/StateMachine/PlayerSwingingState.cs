@@ -125,8 +125,9 @@ namespace Player.StateMachine
                     // Snap precisely before enabling the joint
                     ctx.rb.position = targetPos;
                     ctx.rb.rotation = targetAngle;
-                    ctx.rb.linearVelocity = _currentBoneRb.linearVelocity;
-                    ctx.rb.angularVelocity = _currentBoneRb.angularVelocity;
+                    // Restore the player's entry velocity so the hinge joint converts it into swing momentum
+                    ctx.rb.linearVelocity = _entryVelocity;
+                    ctx.rb.angularVelocity = 0f;
                     ctx.swingHinge.enabled = true;
                 }
                 return;

@@ -535,12 +535,6 @@ namespace RollyPolly
         {
             if (_isDead) return;
 
-            Platforming.GeyserBehaviour geyser = other.GetComponent<Platforming.GeyserBehaviour>() ?? other.GetComponentInParent<Platforming.GeyserBehaviour>();
-            if (_currentState != ERollyState.Patrol && geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
-            {
-                YeetAndKill();
-                return;
-            }
 
             if (_currentState != ERollyState.Attack || _pulseCooldownTimer > 0f) return;
 
@@ -560,12 +554,6 @@ namespace RollyPolly
         {
             if (_isDead) return;
 
-            Platforming.GeyserBehaviour geyser = other.collider.GetComponent<Platforming.GeyserBehaviour>() ?? other.collider.GetComponentInParent<Platforming.GeyserBehaviour>();
-            if (_currentState != ERollyState.Patrol && geyser != null && geyser.CurrentState == Platforming.GeyserBehaviour.GeyserState.Active)
-            {
-                YeetAndKill();
-                return;
-            }
 
             // 1. Player contact (applies to both Patrol and Attack states)
             if (other.collider.CompareTag("Player"))
