@@ -1,19 +1,31 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using Object = UnityEngine.Object;
 
 namespace Player.GameState
 {
+    [DefaultExecutionOrder(-5)]
     public class CheckpointsManager : MonoBehaviour
     {
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private Checkpoint _startingCheckpoint;
-        
+
+        [Header("Death Transition")]
+        [Tooltip("Seconds to wait after death before resetting the scene. Use this for a fade-out or death animation.")]
+        [SerializeField] private float _preResetDelay = 0.5f;
+        [Tooltip("Seconds to wait after the scene is reset before re-enabling the player. Use this for a fade-in.")]
+        [SerializeField] private float _postResetDelay = 0.3f;
+
+        [Header("Events")]
+        [Tooltip("Fired immediately on death, before any delay. Hook up your screen fade-out here.")]
+        public UnityEvent OnDeathStart;
+        [Tooltip("Fired after the scene has been reset and the player has been teleported. Hook up your fade-in here.")]
+        public UnityEvent OnReviveStart;
+
         private Checkpoint _currentCheckpoint;
-        
+
         private static HashSet<Interfaces.IResettable> _resettables = new HashSet<Interfaces.IResettable>();
 
         public static void RegisterResettable(Interfaces.IResettable resettable)
@@ -26,9 +38,13 @@ namespace Player.GameState
             if (resettable != null) _resettables.Remove(resettable);
         }
 
-
         private void Awake()
         {
+            // Static fields survive between editor Play sessions, so we must clear
+            // stale entries every time the scene starts to prevent ghost references
+            // from accumulating across play sessions or scene reloads.
+            _resettables.Clear();
+
             _currentCheckpoint = _startingCheckpoint;
             if (_playerController == null)
             {
@@ -42,7 +58,7 @@ namespace Player.GameState
                 checkpoint.Initialize(this);
             }
         }
-        
+
         private void OnEnable()
         {
             GameStateManager.Instance.onDeath.AddListener(OnDeath);
@@ -64,34 +80,49 @@ namespace Player.GameState
                 }
             }
         }
-        
+
         private void OnDeath()
         {
-            Debug.Log($"[CheckpointsManager] OnDeath fired. Current checkpoint: '{(_currentCheckpoint ? _currentCheckpoint.name : "none")}'  Starting: '{(_startingCheckpoint ? _startingCheckpoint.name : "none")}'", this);
-            if ( _playerController)
+            StartCoroutine(DeathSequence());
+        }
+
+        private IEnumerator DeathSequence()
+        {
+            Checkpoint respawnAt = _currentCheckpoint ? _currentCheckpoint : _startingCheckpoint;
+
+            if (respawnAt == null)
             {
-                Checkpoint respawnAt = _currentCheckpoint ? _currentCheckpoint : _startingCheckpoint;
+                Debug.LogError("[CheckpointsManager] OnDeath: no checkpoint to respawn at — assign _startingCheckpoint in the inspector!", this);
+                yield break;
+            }
 
-                if (respawnAt == null)
-                {
-                    Debug.LogError("[CheckpointsManager] OnDeath: no checkpoint to respawn at — assign _startingCheckpoint in the inspector!", this);
-                    return;
-                }
+            // 1. Notify UI immediately so it can start fading out
+            OnDeathStart?.Invoke();
 
-                _playerController.Teleport(respawnAt.transform.position);
-                
-                // Reset all globally registered objects. 
-                // We use .ToList() to create a snapshot because TriggerReset might spawn/destroy 
-                // objects, which modifies the _resettables HashSet during iteration.
-                foreach (var resettable in _resettables.ToList())
+            // 2. Wait — gives time for fade-out animation AND lets physics settle
+            //    naturally without forcing SyncTransforms
+            if (_preResetDelay > 0f)
+                yield return new WaitForSeconds(_preResetDelay);
+
+            // 3. Reset the world while the screen is black / faded
+            foreach (var resettable in _resettables.ToList())
+            {
+                if (resettable != null && resettable is MonoBehaviour mb && mb != null)
                 {
-                    // Double check in case an object was destroyed but failed to unregister
-                    if (resettable != null && resettable is MonoBehaviour mb && mb != null)
-                    {
-                        resettable.TriggerReset();
-                    }
+                    resettable.TriggerReset();
                 }
             }
+
+            // 4. Teleport the player (TeleportRoutine already waits a WaitForFixedUpdate internally)
+            _playerController.Teleport(respawnAt.transform.position);
+
+            // 5. Wait for a post-reset window — physics bodies fully settle across
+            //    multiple fixed update frames before the player sees anything
+            if (_postResetDelay > 0f)
+                yield return new WaitForSeconds(_postResetDelay);
+
+            // 6. Scene is clean — tell UI to fade back in
+            OnReviveStart?.Invoke();
         }
     }
 }

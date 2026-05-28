@@ -27,6 +27,9 @@ namespace Player.StateMachine
             _vine = swingBone.VineHelper;
             _currentBoneIndex = _vine.GetBoneIndex(swingBone);
             
+            // Change vine layer to Clutter so it doesn't interfere with physics while swinging
+            _vine.SetLayer("Clutter");
+            
             // Cache the player's initial velocity at the moment of entry
             _entryVelocity = ctx.rb.linearVelocity;
             
@@ -162,10 +165,17 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             stateMachine.lastVine = _vine;
+            if (_vine != null) _vine.RestoreLayerDelayed("Swing", 0.5f);
+
             ctx.swingHinge.enabled = false;
             ctx.swingHinge.connectedBody = null;
             ctx.swingHinge.autoConfigureConnectedAnchor = true;
             
+            // Explicitly clear the swing bone reference! 
+            // Since the vine layer was changed to Clutter, OnTriggerExit2D fails its layer mask check, 
+            // leaving the player permanently thinking they are overlapping the old vine.
+            ctx.collisionHandler.StoppedSwinging();
+
             ctx.rb.angularVelocity = 0f;
             ctx.rb.angularDamping = 0f;
             ctx.rb.MoveRotation(Quaternion.identity);

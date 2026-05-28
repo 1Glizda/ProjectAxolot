@@ -1513,7 +1513,6 @@ GameObject:
   - component: {fileID: 5531637125374746915}
   - component: {fileID: 5387775367596920812}
   - component: {fileID: 2059971479005423249}
-  - component: {fileID: 4071867123503232747}
   m_Layer: 28
   m_Name: P_RollyPolly
   m_TagString: Untagged
@@ -1576,6 +1575,7 @@ MonoBehaviour:
   _rollAcceleration: 25
   _rollRotationSpeed: 360
   _stunDuration: 0.2
+  _postStunAggroCooldown: 1.5
   _pulseHitCooldown: 2
   _pulseStutterDuration: 0.05
   _pulseMomentumRatio: 0.05
@@ -1592,6 +1592,7 @@ MonoBehaviour:
   _enemyRecoilForceY: 3
   _enemyRecoilDuration: 0.3
   _movablePushForce: 300
+  _movableImpulse: 5
 --- !u!50 &2059971479005423249
 Rigidbody2D:
   serializedVersion: 5
@@ -1617,21 +1618,8 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4071867123503232747
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2516818168138345157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe4eb5c478f9d04481f419852e5d96a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Interactions::Interactions.ResetObject
-  _prefabToRespawn: {fileID: 2516818168138345157}
 --- !u!1 &2739081465683122776
 GameObject:
   m_ObjectHideFlags: 0

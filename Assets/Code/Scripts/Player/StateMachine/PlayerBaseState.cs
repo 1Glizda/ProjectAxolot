@@ -54,6 +54,13 @@ namespace Player.StateMachine
 
         protected void UpdateInput()
         {
+            if (!ctx.handler.IsInputActive)
+            {
+                horizontalInput = 0f;
+                verticalInput = 0f;
+                return;
+            }
+
             Vector2 input = moveAction.ReadValue<Vector2>();
             horizontalInput = input.x;
             verticalInput = input.y;
