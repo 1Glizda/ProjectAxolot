@@ -57,10 +57,12 @@ namespace UI
             if (_text != null)
             {
                 _originalLocalPos = _text.rectTransform.localPosition;
-                _originalColor = Color.white;
+                _originalColor = _text.color;
                 
                 // Hide initially
-                _text.color = Color.clear;
+                Color clearColor = _originalColor;
+                clearColor.a = 0f;
+                _text.color = clearColor;
                 _isInitialized = true;
             }
         }
@@ -80,69 +82,79 @@ namespace UI
             float elapsed;
 
             // FADE IN
-            elapsed = 0f;
-            Vector3 startPos = _originalLocalPos + Vector3.down * _yMoveDistance;
-            
-            while (elapsed < _fadeInDuration)
+            if (_fadeInDuration > 0f)
             {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / _fadeInDuration);
+                elapsed = 0f;
+                Vector3 startPos = _originalLocalPos + Vector3.down * _yMoveDistance;
                 
-                // Ease Out Cubic (starts fast, smoothly slows down to a stop at the target position)
-                float easeT = 1f - Mathf.Pow(1f - t, 3f); 
-                
-                Color c = _originalColor;
-                c.a = t; // Fade from 0 to 1 (clear to white)
-                _text.color = c;
-                
-                _text.rectTransform.localPosition = Vector3.LerpUnclamped(startPos, _originalLocalPos, easeT);
-                
-                yield return null;
+                while (elapsed < _fadeInDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsed / _fadeInDuration);
+                    
+                    // Ease Out Cubic
+                    float easeT = 1f - Mathf.Pow(1f - t, 3f); 
+                    
+                    Color c = _originalColor;
+                    c.a = Mathf.Lerp(0f, _originalColor.a, t);
+                    _text.color = c;
+                    
+                    _text.rectTransform.localPosition = Vector3.LerpUnclamped(startPos, _originalLocalPos, easeT);
+                    yield return null;
+                }
             }
             
             _text.color = _originalColor;
             _text.rectTransform.localPosition = _originalLocalPos;
 
             // STAY
-            elapsed = 0f;
-            Vector3 stayStartPos = _originalLocalPos;
-            Vector3 stayEndPos = _originalLocalPos + Vector3.up * _stayMoveDistance;
-            
-            while (elapsed < _stayDuration)
+            Vector3 stayEndPos = _originalLocalPos;
+            if (_stayDuration > 0f)
             {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / _stayDuration);
+                elapsed = 0f;
+                stayEndPos = _originalLocalPos + Vector3.up * _stayMoveDistance;
                 
-                // Linear drift during stay
-                _text.rectTransform.localPosition = Vector3.LerpUnclamped(stayStartPos, stayEndPos, t);
+                while (elapsed < _stayDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsed / _stayDuration);
+                    
+                    // Linear drift during stay
+                    _text.rectTransform.localPosition = Vector3.LerpUnclamped(_originalLocalPos, stayEndPos, t);
+                    yield return null;
+                }
                 
-                yield return null;
+                _text.rectTransform.localPosition = stayEndPos;
             }
 
             // FADE OUT
-            elapsed = 0f;
-            Vector3 fadeOutStartPos = stayEndPos;
-            Vector3 fadeOutEndPos = fadeOutStartPos + Vector3.up * _yMoveDistance;
-            
-            while (elapsed < _fadeOutDuration)
+            if (_fadeOutDuration > 0f)
             {
-                elapsed += Time.deltaTime;
-                float t = Mathf.Clamp01(elapsed / _fadeOutDuration);
+                elapsed = 0f;
+                Vector3 fadeOutStartPos = stayEndPos;
+                Vector3 fadeOutEndPos = fadeOutStartPos + Vector3.up * _yMoveDistance;
                 
-                // Ease In Cubic (starts slow, speeds up smoothly as it drifts away)
-                float easeT = t * t * t;
-                
-                Color c = _originalColor;
-                c.a = 1f - t; // Fade from 1 to 0 (white to clear)
-                _text.color = c;
-                
-                _text.rectTransform.localPosition = Vector3.LerpUnclamped(fadeOutStartPos, fadeOutEndPos, easeT);
-                
-                yield return null;
+                while (elapsed < _fadeOutDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsed / _fadeOutDuration);
+                    
+                    // Ease In Cubic
+                    float easeT = t * t * t;
+                    
+                    Color c = _originalColor;
+                    c.a = Mathf.Lerp(_originalColor.a, 0f, t);
+                    _text.color = c;
+                    
+                    _text.rectTransform.localPosition = Vector3.LerpUnclamped(fadeOutStartPos, fadeOutEndPos, easeT);
+                    yield return null;
+                }
             }
 
             // Hide and revert position at the very end
-            _text.color = Color.clear;
+            Color finalClear = _originalColor;
+            finalClear.a = 0f;
+            _text.color = finalClear;
             _text.rectTransform.localPosition = _originalLocalPos;
             
             _animationRoutine = null;
