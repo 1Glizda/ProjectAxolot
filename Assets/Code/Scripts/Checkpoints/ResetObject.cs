@@ -23,6 +23,8 @@ namespace Interactions
 
         private void Awake()
         {
+            Player.GameState.CheckpointsManager.RegisterResettable(this);
+            
             _initialLocalPosition = transform.localPosition;
             _initialLocalRotation = transform.localRotation;
             _initialLocalScale = transform.localScale;
@@ -30,6 +32,11 @@ namespace Interactions
             
             _rb = GetComponent<Rigidbody2D>();
             if (_rb != null) _initialBodyType = _rb.bodyType;
+        }
+
+        private void OnDestroy()
+        {
+            Player.GameState.CheckpointsManager.UnregisterResettable(this);
         }
 
         public void TriggerReset()
@@ -59,9 +66,22 @@ namespace Interactions
             // If there's a Rigidbody2D attached, kill its momentum so it doesn't instantly snap back out
             if (_rb != null)
             {
+                // Temporarily disable interpolation to prevent visual "sweeping" from the old position
+                var interp = _rb.interpolation;
+                _rb.interpolation = RigidbodyInterpolation2D.None;
+
                 _rb.linearVelocity = Vector2.zero;
                 _rb.angularVelocity = 0f;
                 _rb.bodyType = _initialBodyType;
+                
+                // Clear any accumulated forces
+                _rb.Sleep(); 
+                _rb.WakeUp();
+
+                // Force Physics2D to immediately recognize the transform change
+                Physics2D.SyncTransforms();
+
+                _rb.interpolation = interp;
             }
         }
     }

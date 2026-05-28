@@ -7,9 +7,6 @@ namespace Player.GameState
 {
     public class Checkpoint : MonoBehaviour
     {
-        // Drag ResetObject components here
-        [SerializeField] private List<ResetObject> _stateSave = new List<ResetObject>();
-
         [Header("Activation Effect")]
         [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private float _fadeInDuration = 0.5f;
@@ -61,13 +58,5 @@ namespace Player.GameState
             _spriteRenderer.color = _initialColor;
         }
 
-        public void ResetSavedObjects()
-        {
-            foreach (var resetObject in _stateSave)
-            {
-                if (resetObject == null) continue;
-                resetObject.TriggerReset();
-            }
-        }
     }
 }

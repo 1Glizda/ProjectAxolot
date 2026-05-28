@@ -13,6 +13,18 @@ namespace Player.GameState
         [SerializeField] private Checkpoint _startingCheckpoint;
         
         private Checkpoint _currentCheckpoint;
+        
+        private static HashSet<Interfaces.IResettable> _resettables = new HashSet<Interfaces.IResettable>();
+
+        public static void RegisterResettable(Interfaces.IResettable resettable)
+        {
+            if (resettable != null) _resettables.Add(resettable);
+        }
+
+        public static void UnregisterResettable(Interfaces.IResettable resettable)
+        {
+            if (resettable != null) _resettables.Remove(resettable);
+        }
 
 
         private void Awake()
@@ -67,7 +79,18 @@ namespace Player.GameState
                 }
 
                 _playerController.Teleport(respawnAt.transform.position);
-                respawnAt.ResetSavedObjects();
+                
+                // Reset all globally registered objects. 
+                // We use .ToList() to create a snapshot because TriggerReset might spawn/destroy 
+                // objects, which modifies the _resettables HashSet during iteration.
+                foreach (var resettable in _resettables.ToList())
+                {
+                    // Double check in case an object was destroyed but failed to unregister
+                    if (resettable != null && resettable is MonoBehaviour mb && mb != null)
+                    {
+                        resettable.TriggerReset();
+                    }
+                }
             }
         }
     }

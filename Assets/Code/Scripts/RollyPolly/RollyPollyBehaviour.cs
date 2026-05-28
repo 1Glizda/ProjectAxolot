@@ -7,7 +7,7 @@ using Interfaces;
 namespace RollyPolly
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class RollyPollyBehaviour : MonoBehaviour, IPulseInteraction
+    public class RollyPollyBehaviour : MonoBehaviour, IPulseInteraction, IResettable
     {
 
         [Header("References")] 
@@ -89,6 +89,8 @@ namespace RollyPolly
         
         private void Awake()
         {
+            Player.GameState.CheckpointsManager.RegisterResettable(this);
+
             GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null)
             {
@@ -110,6 +112,11 @@ namespace RollyPolly
             // Ensure initial sprite states
             if (_patrolSprite != null) _patrolSprite.SetActive(true);
             if (_attackSprite != null) _attackSprite.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            Player.GameState.CheckpointsManager.UnregisterResettable(this);
         }
 
         private void Start()
@@ -139,6 +146,7 @@ namespace RollyPolly
             else if (_currentState == ERollyState.Attack)
             {
                 RotateAttackSprite();
+                TryFlipAttack();
             }
 
             // Smooth the ground normal every frame for visual stability
@@ -244,6 +252,30 @@ namespace RollyPolly
             {
                 _isFlipped = !_isFlipped;
                 UpdateSpriteDirection();
+            }
+        }
+
+        private void TryFlipAttack()
+        {
+            Vector2 direction = _isFlipped ? Vector2.left : Vector2.right;
+            var wallHit = Physics2D.Raycast(transform.position + 0.5f * Vector3.up, direction, _wallCheckDistance, _rollBlockingLayers);
+            Debug.DrawRay(transform.position + 0.5f * Vector3.up, direction * _wallCheckDistance, Color.magenta);
+            
+            if (wallHit.collider)
+            {
+                // Let physical collision handle player hits and breakable walls
+                if (wallHit.collider.CompareTag("Player") || wallHit.collider.GetComponent<Platforming.BreakableWall>())
+                {
+                    return;
+                }
+
+                float hitAngle = Vector2.Angle(wallHit.normal, Vector2.up);
+                if (hitAngle > 50f)
+                {
+                    _isFlipped = !_isFlipped;
+                    UpdateSpriteDirection();
+                    if (_rb != null) _rb.linearVelocityX = 0f;
+                }
             }
         }
 
@@ -515,6 +547,65 @@ namespace RollyPolly
             // Satisfy IPulseInteraction interface
         }
 
+        public void TriggerReset()
+        {
+            _currentState = ERollyState.Patrol;
+            _stateTimer = 0f;
+            _pulseCooldownTimer = 0f;
+            _stutterTimer = 0f;
+            _recoilTimer = 0f;
+            _postStunTimer = 0f;
+            _playerLostTimer = 0f;
+            _isDead = false;
+            _poofFired = false;
+            
+            // Restore visual states to patrol default
+            if (_patrolSprite != null)
+            {
+                _patrolSprite.SetActive(true);
+                _patrolSprite.transform.localRotation = Quaternion.identity;
+                
+                var patrolCollider = _patrolSprite.GetComponent<Collider2D>();
+                if (patrolCollider != null)
+                {
+                    patrolCollider.enabled = true;
+                    _activeCollider = patrolCollider;
+                }
+            }
+
+            if (_attackSprite != null)
+            {
+                _attackSprite.SetActive(false);
+                _attackSprite.transform.localRotation = Quaternion.identity;
+                
+                var attackCollider = _attackSprite.GetComponent<Collider2D>();
+                if (attackCollider != null) attackCollider.enabled = false;
+            }
+
+            // Restore Rigidbody state
+            if (_rb != null)
+            {
+                _rb.bodyType = RigidbodyType2D.Dynamic;
+                _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+                _rb.linearVelocity = Vector2.zero;
+                _rb.angularVelocity = 0f;
+            }
+
+            // Ensure all colliders are re-enabled (they get disabled during Yeet)
+            Collider2D[] colliders = GetComponentsInChildren<Collider2D>(true);
+            foreach (var col in colliders)
+            {
+                if (col != null) col.enabled = true;
+            }
+
+            // Re-enforce attack collider to be disabled initially
+            if (_attackSprite != null)
+            {
+                var attackCollider = _attackSprite.GetComponent<Collider2D>();
+                if (attackCollider != null) attackCollider.enabled = false;
+            }
+        }
+
         private void OnParticleCollision(GameObject other)
         {
             if (_currentState != ERollyState.Attack || _pulseCooldownTimer > 0f) return;
@@ -610,53 +701,8 @@ namespace RollyPolly
                     {
                         Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
                     }
-                    gameObject.SetActive(false);
+                    HideOffscreen();
                     return;
-                }
-            }
-
-
-
-            // 4. Regular Solid Wall contact -> Flip direction immediately (only in Attack state)
-            if (_currentState == ERollyState.Attack)
-            {
-                if (other.contactCount > 0 && !other.collider.CompareTag("Player"))
-                {
-                    foreach (var contact in other.contacts)
-                    {
-                        float hitAngle = Vector2.Angle(contact.normal, Vector2.up);
-                        // If the normal is steep (it's a wall)
-                        if (hitAngle > 50f)
-                        {
-                            _isFlipped = !_isFlipped;
-                            UpdateSpriteDirection();
-                            if (_rb != null) _rb.linearVelocityX = 0f;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        private void OnCollisionStay2D(Collision2D other)
-        {
-            if (_isDead) return;
-
-            // Catch any wall impacts that were missed on the initial Enter frame (e.g. corner glides)
-            if (_currentState == ERollyState.Attack && _recoilTimer <= 0f && _stutterTimer <= 0f)
-            {
-                if (other.contactCount > 0 && !other.collider.CompareTag("Player") && other.gameObject.layer != LayerMask.NameToLayer("Movable"))
-                {
-                    foreach (var contact in other.contacts)
-                    {
-                        if (Vector2.Angle(contact.normal, Vector2.up) > 50f)
-                        {
-                            _isFlipped = !_isFlipped;
-                            UpdateSpriteDirection();
-                            if (_rb != null) _rb.linearVelocityX = 0f;
-                            return;
-                        }
-                    }
                 }
             }
         }
@@ -699,7 +745,24 @@ namespace RollyPolly
                 Instantiate(_poofEffectPrefab, transform.position, Quaternion.identity);
             }
 
-            gameObject.SetActive(false);
+            HideOffscreen();
+        }
+
+        private void HideOffscreen()
+        {
+            if (_rb != null)
+            {
+                _rb.linearVelocity = Vector2.zero;
+                _rb.angularVelocity = 0f;
+                _rb.bodyType = RigidbodyType2D.Static;
+            }
+            
+            // Hide visuals
+            if (_patrolSprite != null) _patrolSprite.SetActive(false);
+            if (_attackSprite != null) _attackSprite.SetActive(false);
+
+            // Move way off-screen
+            transform.position = new Vector3(0f, -9999f, 0f);
         }
 
         private void ChangeState(ERollyState newState)

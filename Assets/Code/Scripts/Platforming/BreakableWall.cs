@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Interfaces;
+using Player.GameState;
+
 namespace Platforming
 {
-    public class BreakableWall : MonoBehaviour
+    public class BreakableWall : MonoBehaviour, IResettable
     {
 
         [SerializeField] private Collider2D _wallCollider;
-        [SerializeField] private List<Rigidbody2D> _wallPebbles;
         [SerializeField] private float _breakForceThreshold;
 
         [Tooltip("Optional sprite that will be hidden when the wall breaks.")]
@@ -16,6 +18,40 @@ namespace Platforming
 
         /// <summary>Fired when the wall breaks. Subscribe from sound/VFX controllers.</summary>
         public event System.Action OnBreak;
+
+        private Dictionary<Transform, int> _initialLayers = new Dictionary<Transform, int>();
+
+        private void Awake()
+        {
+            Player.GameState.CheckpointsManager.RegisterResettable(this);
+
+            foreach (var obj in GetComponentsInChildren<Transform>(true))
+            {
+                _initialLayers[obj] = obj.gameObject.layer;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            CheckpointsManager.UnregisterResettable(this);
+        }
+
+        public void TriggerReset()
+        {
+            _wallCollider.enabled = true;
+
+            if (_spriteToHideOnBreak != null)
+                _spriteToHideOnBreak.enabled = true;
+
+            // Restore original layers
+            foreach (var obj in GetComponentsInChildren<Transform>(true))
+            {
+                if (_initialLayers.TryGetValue(obj, out int initialLayer))
+                {
+                    obj.gameObject.layer = initialLayer;
+                }
+            }
+        }
 
         public void TryBreak(float force, Vector2 direction)
         {
@@ -31,12 +67,6 @@ namespace Platforming
 
             if (_spriteToHideOnBreak != null)
                 _spriteToHideOnBreak.enabled = false;
-
-            foreach (var rb in _wallPebbles)
-            {
-                rb.bodyType = RigidbodyType2D.Dynamic;
-                rb.AddForce(direction.normalized * 20f, ForceMode2D.Impulse);
-            }
 
             foreach (var obj in GetComponentsInChildren<Transform>())
             {
