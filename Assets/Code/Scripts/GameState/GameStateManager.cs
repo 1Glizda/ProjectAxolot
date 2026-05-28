@@ -15,7 +15,7 @@ namespace Player.GameState
         
         //fields
         [Header("Health")]
-        [SerializeField] private int _maxHp = 5;
+        [SerializeField] private int _maxHp = 3;
         [SerializeField] private float _damageCooldown = 1f;
         private int _currentHp;
         private float _damageCooldownTimer;

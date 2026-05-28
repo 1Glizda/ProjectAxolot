@@ -33,8 +33,6 @@ namespace Player
         [SerializeField] private CinemachineImpulseSource _impulseSource;
 
         private SpriteRenderer[] _renderers;
-        private MaterialPropertyBlock _mpb;
-        private static readonly int ColorProp = Shader.PropertyToID("_Color");
 
         private Vignette _vignette;
         private float _vignetteBaseIntensity;
@@ -44,10 +42,19 @@ namespace Player
 
         private void Awake()
         {
-            _mpb = new MaterialPropertyBlock();
-
             if (_spriteRoot != null)
+            {
                 _renderers = _spriteRoot.GetComponentsInChildren<SpriteRenderer>();
+                
+                // Clear any existing/stuck MaterialPropertyBlocks which distort SpriteSkin skeletal joints
+                foreach (var sr in _renderers)
+                {
+                    if (sr != null)
+                    {
+                        sr.SetPropertyBlock(null);
+                    }
+                }
+            }
 
             if (_postProcessVolume != null && _postProcessVolume.profile.TryGet(out _vignette))
                 _vignetteBaseIntensity = _vignette.intensity.value;
@@ -111,9 +118,7 @@ namespace Player
             foreach (var sr in _renderers)
             {
                 if (sr == null) continue;
-                sr.GetPropertyBlock(_mpb);
-                _mpb.SetColor(ColorProp, color);
-                sr.SetPropertyBlock(_mpb);
+                sr.color = color;
             }
         }
 

@@ -615,44 +615,9 @@ namespace RollyPolly
                 }
             }
 
-            // 3. Boulder contact (only in Attack state) — rolling into a boulder kills the Rolly
-            if (_currentState == ERollyState.Attack && other.gameObject.layer == LayerMask.NameToLayer("Movable"))
-            {
-                Platforming.BoulderBehaviour boulder = other.gameObject.GetComponent<Platforming.BoulderBehaviour>() 
-                                                    ?? other.gameObject.GetComponentInParent<Platforming.BoulderBehaviour>();
-                if (boulder != null)
-                {
-                    // Give the boulder a strong impulse in the rolling direction
-                    float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
-                    boulder.ApplyPushForce(new Vector2(dirX, 0f) * _movablePushForce);
-                    
-                    // The Rolly dies dramatically from the impact
-                    YeetAndKill();
-                    return;
-                }
-                
-                // Generic movable (non-boulder) push
-                Rigidbody2D movableRb = other.gameObject.GetComponent<Rigidbody2D>();
-                if (movableRb != null)
-                {
-                    float dirX = Mathf.Sign(other.transform.position.x - transform.position.x);
-                    
-                    Vector2 normal = GetGroundNormal();
-                    Vector2 slopeTangent = new Vector2(normal.y, -normal.x);
-                    Vector2 pushImpulse = dirX * slopeTangent * _movableImpulse;
-                    movableRb.AddForce(pushImpulse, ForceMode2D.Impulse);
 
-                    // Apply enemy recoil/knockback (same as for player)
-                    _recoilTimer = _enemyRecoilDuration;
-                    if (_rb != null)
-                    {
-                        _rb.linearVelocity = new Vector2(-dirX * _enemyRecoilForceX, _enemyRecoilForceY);
-                    }
-                }
-                return; // Skip normal wall stun if we hit a movable block
-            }
 
-            // 4. Regular Solid Wall contact -> Stunned (only in Attack state)
+            // 4. Regular Solid Wall contact -> Flip direction immediately (only in Attack state)
             if (_currentState == ERollyState.Attack)
             {
                 if (other.contactCount > 0 && !other.collider.CompareTag("Player"))
@@ -663,7 +628,9 @@ namespace RollyPolly
                         // If the normal is steep (it's a wall)
                         if (hitAngle > 50f)
                         {
-                            ChangeState(ERollyState.Stunned);
+                            _isFlipped = !_isFlipped;
+                            UpdateSpriteDirection();
+                            if (_rb != null) _rb.linearVelocityX = 0f;
                             return;
                         }
                     }
@@ -684,7 +651,9 @@ namespace RollyPolly
                     {
                         if (Vector2.Angle(contact.normal, Vector2.up) > 50f)
                         {
-                            ChangeState(ERollyState.Stunned);
+                            _isFlipped = !_isFlipped;
+                            UpdateSpriteDirection();
+                            if (_rb != null) _rb.linearVelocityX = 0f;
                             return;
                         }
                     }

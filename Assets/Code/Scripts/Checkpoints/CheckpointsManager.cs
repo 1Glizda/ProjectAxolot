@@ -58,17 +58,16 @@ namespace Player.GameState
             Debug.Log($"[CheckpointsManager] OnDeath fired. Current checkpoint: '{(_currentCheckpoint ? _currentCheckpoint.name : "none")}'  Starting: '{(_startingCheckpoint ? _startingCheckpoint.name : "none")}'", this);
             if ( _playerController)
             {
-                Vector2 position = _currentCheckpoint ?  _currentCheckpoint.transform.position : _startingCheckpoint.transform.position;
-                _playerController.Teleport(position);
-                
-                if (_currentCheckpoint)
+                Checkpoint respawnAt = _currentCheckpoint ? _currentCheckpoint : _startingCheckpoint;
+
+                if (respawnAt == null)
                 {
-                    _currentCheckpoint.ResetSavedObjects();
+                    Debug.LogError("[CheckpointsManager] OnDeath: no checkpoint to respawn at — assign _startingCheckpoint in the inspector!", this);
+                    return;
                 }
-                else if (_startingCheckpoint)
-                {
-                    _startingCheckpoint.ResetSavedObjects();
-                }
+
+                _playerController.Teleport(respawnAt.transform.position);
+                respawnAt.ResetSavedObjects();
             }
         }
     }
