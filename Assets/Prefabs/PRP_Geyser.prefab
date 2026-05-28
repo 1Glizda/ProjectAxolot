@@ -508,8 +508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.GeyserSoundController
   soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
   geyserBehaviour: {fileID: 4948147392549128823}
-  spatialBlend: 0
-  maxDistance: 30
+  spatialBlend: 1
+  maxDistance: 35
 --- !u!1 &9189725496671404335
 GameObject:
   m_ObjectHideFlags: 0

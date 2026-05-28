@@ -23,6 +23,11 @@ namespace Interactions.Sound
         private AudioSource _oneShotSource;
         private AudioSource _loopSource;
 
+        private bool _isFadingOutLoop;
+        private float _fadeStartTime;
+        private float _initialLoopVolume;
+        private const float FadeDuration = 0.1f;
+
         private void Awake()
         {
             _oneShotSource = gameObject.AddComponent<AudioSource>();
@@ -74,9 +79,30 @@ namespace Interactions.Sound
             }
         }
 
+        private void Update()
+        {
+            if (_isFadingOutLoop && _loopSource != null)
+            {
+                float elapsed = Time.time - _fadeStartTime;
+                if (elapsed >= FadeDuration)
+                {
+                    _loopSource.Stop();
+                    _loopSource.volume = 0f;
+                    _isFadingOutLoop = false;
+                }
+                else
+                {
+                    _loopSource.volume = Mathf.Lerp(_initialLoopVolume, 0f, elapsed / FadeDuration);
+                }
+            }
+        }
+
         private void HandleExplode()
         {
             if (soundProfile == null) return;
+
+            // Stop any active loop fade out if re-exploded
+            _isFadingOutLoop = false;
 
             if (soundProfile.mushroomExplosionClip != null)
                 _oneShotSource.PlayOneShot(soundProfile.mushroomExplosionClip, soundProfile.mushroomExplosionVolume);
@@ -91,8 +117,12 @@ namespace Interactions.Sound
 
         private void HandleRecover()
         {
-            if (_loopSource.isPlaying)
-                _loopSource.Stop();
+            if (_loopSource.isPlaying && !_isFadingOutLoop)
+            {
+                _isFadingOutLoop = true;
+                _fadeStartTime = Time.time;
+                _initialLoopVolume = _loopSource.volume;
+            }
         }
     }
 }
