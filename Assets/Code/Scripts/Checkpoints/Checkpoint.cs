@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using Interactions;
@@ -17,12 +18,24 @@ namespace Player.GameState
         [Tooltip("Optional particle system to play when the checkpoint is first activated.")]
         [SerializeField] private ParticleSystem _activationParticles;
 
+        [Header("Sound")]
+        [Tooltip("One-shot clip played when the checkpoint is reached.")]
+        [SerializeField] public AudioClip _activationClip;
+        [Range(0f, 1f)]
+        [SerializeField] private float _activationVolume = 0.8f;
+        [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
+        [SerializeField] private AudioMixerGroup _sfxMixerGroup;
+        [Tooltip("0 for 2D (full volume everywhere), 1 for 3D (attenuates with distance). Default is 2D for checkpoints.")]
+        [Range(0f, 1f)]
+        [SerializeField] private float _spatialBlend = 0f;
+
         [Header("Events")]
         [Tooltip("Fired immediately when the checkpoint is reached/revealed.")]
         public UnityEvent OnCheckpointReveal;
 
         private CheckpointsManager _manager;
         private Color[] _initialColors;
+        private AudioSource _audioSource;
         public bool IsActivated { get; private set; }
 
         private void Awake()
@@ -42,6 +55,14 @@ namespace Player.GameState
                     }
                 }
             }
+
+            // Set up audio source for checkpoint activation sound
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.playOnAwake = false;
+            _audioSource.spatialBlend = _spatialBlend;
+            _audioSource.maxDistance = 30f;
+            _audioSource.rolloffMode = AudioRolloffMode.Linear;
+            if (_sfxMixerGroup != null) _audioSource.outputAudioMixerGroup = _sfxMixerGroup;
         }
 
         public void Initialize(CheckpointsManager manager)
@@ -51,6 +72,7 @@ namespace Player.GameState
 
         public void NotifyEnable()
         {
+            Debug.Log($"[Checkpoint] NotifyEnable() called on {gameObject.name}. IsActivated: {IsActivated}");
             if (IsActivated) return;
             IsActivated = true;
             
@@ -60,6 +82,17 @@ namespace Player.GameState
             }
             
             OnCheckpointReveal?.Invoke();
+
+            // Play activation sound
+            if (_activationClip != null && _audioSource != null)
+            {
+                Debug.Log($"[Checkpoint] Playing clip {_activationClip.name} with volume {_activationVolume} (MixerGroup: {_audioSource.outputAudioMixerGroup})");
+                _audioSource.PlayOneShot(_activationClip, _activationVolume);
+            }
+            else
+            {
+                Debug.LogWarning($"[Checkpoint] Cannot play sound on {gameObject.name}. Clip is null: {_activationClip == null}, AudioSource is null: {_audioSource == null}");
+            }
 
             if (_spriteRenderers != null && _spriteRenderers.Length > 0)
                 StartCoroutine(FadeInSequence());
