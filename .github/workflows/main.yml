@@ -1,4 +1,4 @@
-name: WebGL and Windows Build and Deploy
+name: CI/CD Build and Deploy
 
 on:
   push:
@@ -15,7 +15,7 @@ env:
   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
 
 jobs:
-  # --- JOB 1: INCREMENT VERSION ---
+  # --- JOB 1: INCREMENT VERSION (Conflict-Safe) ---
   versioning:
     name: Increment Build Version
     runs-on: ubuntu-latest
@@ -24,35 +24,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Bump Patch Version
         id: bump_version
         run: |
-          # Read current version from file
           VERSION=$(cat version.txt)
-          echo "Current Version: $VERSION"
-          
-          # Split version into x, y, z
           IFS='.' read -r major minor patch <<< "$VERSION"
-          
-          # Increment patch (z)
-          patch=$((patch + 1))
-          NEW_VERSION="$major.$minor.$patch"
-          echo "New Version: $NEW_VERSION"
-          
-          # Save new version back to file
+          NEW_VERSION="$major.$minor.$((patch + 1))"
           echo "$NEW_VERSION" > version.txt
-          
-          # Set output variable for other jobs
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Commit and Push New Version
+      - name: Commit and Push Version
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add version.txt
-          git commit -m "chore: bump build version to ${{ steps.bump_version.outputs.new_version }} [skip ci]"
-          git push
+          git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }} [skip ci]"
+          # Force with lease ensures we don't destroy other people's work, 
+          # but pushes our version change regardless of project file conflicts.
+          git push origin HEAD:${{ github.ref_name }} --force-with-lease
 
   # --- JOB 2: BUILD WEBGL ---
   buildWebGL:
@@ -60,33 +52,24 @@ jobs:
     name: Build WebGL
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Git LFS Pull
+        with: { lfs: true }
+      - name: Free Disk Space
         run: |
-          git lfs pull
-          git add .
-          git reset --hard
-
-      - name: Restore Library Cache
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+      - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-WebGL-
-
-      - name: Build WebGL
+      - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
-
-      - name: Upload WebGL Build Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
@@ -95,87 +78,81 @@ jobs:
   # --- JOB 3: BUILD WINDOWS ---
   buildWindows:
     needs: versioning
-    name: Build Windows Standalone
+    name: Build Windows
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Git LFS Pull
+        with: { lfs: true }
+      - name: Free Disk Space
         run: |
-          git lfs pull
-          git add .
-          git reset --hard
-
-      - name: Restore Library Cache
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+      - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-Windows-
-
-      - name: Build Windows
+      - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneWindows64
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
-
-      - name: Upload Windows Build Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-Windows
           path: build/StandaloneWindows64/*
 
-  # --- JOB 4: DEPLOY WEBGL TO PAGES ---
+  # --- JOB 4: DEPLOY WEBGL ---
   deployPages:
-    needs: [versioning, buildWebGL]
-    name: Deploy to GitHub Pages
+    needs: [buildWebGL]
+    name: Deploy WebGL
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' # Only push WebGL live if on main branch
     steps:
-      - name: Checkout code
+      - name: Checkout Base
         uses: actions/checkout@v4
-
-      - name: Download WebGL Build Artifact
+      - name: Download
         uses: actions/download-artifact@v4
         with:
           name: build-WebGL
           path: build_files
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build_files
 
-  # --- JOB 5: DEPLOY WINDOWS TO BRANCH SIDE-BY-SIDE ---
+  # --- JOB 5: DEPLOY WINDOWS (ZIPPED & PRUNED) ---
   deployWindows:
     needs: [versioning, buildWindows]
-    name: Deploy Windows to Branch
+    name: Deploy Windows
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Base
         uses: actions/checkout@v4
-
-      - name: Download Windows Build Artifact
+      - name: Smart Fetch Windows History
+        run: |
+          git clone --branch windows-builds --single-branch https://github.com/${{ github.repository }}.git windows_history || mkdir -p windows_history
+          rm -rf windows_history/.git || true
+      - name: Download
         uses: actions/download-artifact@v4
         with:
           name: build-Windows
           path: windows_temp
-
-      # Create a version-named subfolder and move the download into it
-      - name: Organize Version Folder
+      - name: Compress & Prune
         run: |
-          mkdir -p deploy_windows/v${{ needs.versioning.outputs.new_version }}
-          cp -r windows_temp/* deploy_windows/v${{ needs.versioning.outputs.new_version }}/
-
-      - name: Deploy Windows to Dedicated Branch
+          VERSION="v${{ needs.versioning.outputs.new_version }}"
+          cd windows_temp
+          zip -r ../windows_history/WindowsBuild_${VERSION}.zip ./*
+          cd ..
+          echo "*.zip filter=lfs diff=lfs merge=lfs -text" > windows_history/.gitattributes
+          cd windows_history
+          ls -1 WindowsBuild_*.zip 2>/dev/null | sort -V | head -n -3 | xargs -r rm -f
+      - name: Push
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: windows-builds   # The branch housing all your zip/exe histories
-          folder: deploy_windows   # Targets the folder containing 'v0.5.x'
-          clean: false             # CRITICAL: Keeps old version folders intact!
+          branch: windows-builds
+          folder: windows_history
+          clean: true
+          lfs: true
