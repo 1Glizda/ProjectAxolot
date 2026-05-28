@@ -21,6 +21,8 @@ namespace UI
         [Header("Movement")]
         [Tooltip("How far on the Y axis the text moves during fade in (moves from -distance to 0) and fade out (moves from 0 to +distance)")]
         [SerializeField] private float _yMoveDistance = 50f;
+        [Tooltip("How far on the Y axis the text slowly drifts during the Stay phase.")]
+        [SerializeField] private float _stayMoveDistance = 15f;
 
         [Header("Settings")]
         [Tooltip("If true, the animation starts automatically when the object is enabled.")]
@@ -102,14 +104,25 @@ namespace UI
             _text.rectTransform.localPosition = _originalLocalPos;
 
             // STAY
-            if (_stayDuration > 0f)
+            elapsed = 0f;
+            Vector3 stayStartPos = _originalLocalPos;
+            Vector3 stayEndPos = _originalLocalPos + Vector3.up * _stayMoveDistance;
+            
+            while (elapsed < _stayDuration)
             {
-                yield return new WaitForSeconds(_stayDuration);
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / _stayDuration);
+                
+                // Linear drift during stay
+                _text.rectTransform.localPosition = Vector3.LerpUnclamped(stayStartPos, stayEndPos, t);
+                
+                yield return null;
             }
 
             // FADE OUT
             elapsed = 0f;
-            Vector3 endPos = _originalLocalPos + Vector3.up * _yMoveDistance;
+            Vector3 fadeOutStartPos = stayEndPos;
+            Vector3 fadeOutEndPos = fadeOutStartPos + Vector3.up * _yMoveDistance;
             
             while (elapsed < _fadeOutDuration)
             {
@@ -123,7 +136,7 @@ namespace UI
                 c.a = 1f - t; // Fade from 1 to 0 (white to clear)
                 _text.color = c;
                 
-                _text.rectTransform.localPosition = Vector3.LerpUnclamped(_originalLocalPos, endPos, easeT);
+                _text.rectTransform.localPosition = Vector3.LerpUnclamped(fadeOutStartPos, fadeOutEndPos, easeT);
                 
                 yield return null;
             }
