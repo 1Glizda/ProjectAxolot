@@ -15,6 +15,8 @@ namespace Player.GameState
         [SerializeField] private float _fadeInDuration = 0.5f;
         [Tooltip("Delay in seconds between starting the fade of each sprite in the list.")]
         [SerializeField] private float _delayBetweenSprites = 0.2f;
+        [Tooltip("Optional particle system to play when the checkpoint is first activated.")]
+        [SerializeField] private ParticleSystem _activationParticles;
 
         [Header("Sound")]
         [Tooltip("One-shot clip played when the checkpoint is reached.")]
@@ -73,6 +75,11 @@ namespace Player.GameState
             Debug.Log($"[Checkpoint] NotifyEnable() called on {gameObject.name}. IsActivated: {IsActivated}");
             if (IsActivated) return;
             IsActivated = true;
+            
+            if (_activationParticles != null)
+            {
+                _activationParticles.Play();
+            }
             
             OnCheckpointReveal?.Invoke();
 
