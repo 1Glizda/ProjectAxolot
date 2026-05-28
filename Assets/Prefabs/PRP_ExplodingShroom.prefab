@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 8184689740489526753}
   - component: {fileID: 3220336546996261368}
   - component: {fileID: 7535671929928366107}
+  - component: {fileID: 2624647445090068104}
   m_Layer: 0
   m_Name: PRP_ExplodingShroom
   m_TagString: Untagged
@@ -321,6 +322,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2624647445090068104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2661550868097529680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0687b399ccec4233a9795c2a8bbe162, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Interactions::Interactions.Sound.MushroomSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  mushroom: {fileID: 8184689740489526753}
+  spatialBlend: 0
+  maxDistance: 35
 --- !u!1 &8399700549309672213
 GameObject:
   m_ObjectHideFlags: 0

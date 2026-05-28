@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 4505460005290718217}
   - component: {fileID: 2192176052391601554}
   - component: {fileID: 6004956188146845197}
+  - component: {fileID: 7191530885269432945}
   m_Layer: 27
   m_Name: Main_tempMoss_3m
   m_TagString: Untagged
@@ -363,3 +364,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7191530885269432945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485721309440060529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48583776e0e3745c79f3a7075bc86529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Interactions::Interactions.Sound.MossSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  spatialBlend: 0
+  maxDistance: 15

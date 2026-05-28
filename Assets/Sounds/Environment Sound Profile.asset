@@ -12,30 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f18d34406214a2aad4b27addf79f19, type: 3}
   m_Name: Environment Sound Profile
   m_EditorClassIdentifier: Game.Interfaces::Interfaces.EnvironmentSoundProfileSo
-  waterDropletsLoop: {fileID: 0}
+  waterDropletsLoop: {fileID: 8300000, guid: efe04fb6116224360a0496bcf88f0278, type: 3}
   waterDropletsVolume: 0.4
-  windWhoosh1: {fileID: 0}
+  windWhoosh1: {fileID: 8300000, guid: 34e31895565974647891676f8e1a9abb, type: 3}
   windWhoosh2: {fileID: 0}
   windVolume: 0.5
   windMinInterval: 3
   windMaxInterval: 8
   windPitchVariance: 0.1
-  rockExplosionClip: {fileID: 0}
+  rockExplosionClip: {fileID: 8300000, guid: 2cdfbc39180884b77aba8898d9c3e0b0, type: 3}
   rockExplosionVolume: 0.8
   rockExplosionPitchVariance: 0.05
-  geyserOnClip: {fileID: 0}
-  geyserOffClip: {fileID: 0}
+  geyserOnClip: {fileID: 8300000, guid: 98daa6dcfb15c4a86909f971ff2baad2, type: 3}
+  geyserOffClip: {fileID: 8300000, guid: 20f8362faf67844e9bb1695ed4543084, type: 3}
   geyserActiveLoop: {fileID: 0}
   geyserOneShotVolume: 0.7
   geyserLoopVolume: 0.4
-  mushroomExplosionClip: {fileID: 0}
-  mushroomCloudLoop: {fileID: 0}
+  mushroomExplosionClip: {fileID: 8300000, guid: 97d4bdc8bc708437888fce880be3e851, type: 3}
+  mushroomCloudLoop: {fileID: 8300000, guid: c305ac6c70fb34b4fb25d5d3b24b403a, type: 3}
   mushroomExplosionVolume: 0.8
   mushroomCloudVolume: 0.3
-  mossContactClip: {fileID: 0}
+  mossContactClip: {fileID: 8300000, guid: bc5553e86d67b4113a163214a9d9ce1f, type: 3}
   mossAmbientLoop: {fileID: 0}
   mossContactVolume: 0.6
   mossAmbientVolume: 0.3
-  spikeDamageClip: {fileID: 0}
+  spikeDamageClip: {fileID: 8300000, guid: 1cc863e367fe54eeca48b0dad516c114, type: 3}
   spikeDamageVolume: 0.8
   spikePitchVariance: 0.05

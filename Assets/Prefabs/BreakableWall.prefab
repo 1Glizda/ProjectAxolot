@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 7804800198185896060}
   - component: {fileID: 5343559995475026607}
   - component: {fileID: 2542032611833213776}
+  - component: {fileID: 8198050881034389735}
   m_Layer: 10
   m_Name: BreakableWall
   m_TagString: Untagged
@@ -141,25 +142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.BreakableWall
   _wallCollider: {fileID: 2542032611833213776}
-  _wallPebbles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _breakForceThreshold: 100
   _spriteToHideOnBreak: {fileID: 1494529778852055187}
 --- !u!50 &7804800198185896060
@@ -248,6 +230,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.49140605, y: 2.6116095}
   m_EdgeRadius: 0
+--- !u!114 &8198050881034389735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789420716477974618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d798e4b66444b7ea9d4077ffbe4978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.RockExplosionSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  breakableWall: {fileID: 8874296226019805568}
+  spatialBlend: 0
+  maxDistance: 30
 --- !u!1 &7026994957449031497
 GameObject:
   m_ObjectHideFlags: 0

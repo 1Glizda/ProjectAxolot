@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 86544740}
   - component: {fileID: 86544742}
   - component: {fileID: 86544741}
+  - component: {fileID: 86544743}
   m_Layer: 0
   m_Name: VFX_Drip_Wide
   m_TagString: Untagged
@@ -4971,6 +4972,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &86544743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86544739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e416700f39b4697911dd534041fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.WaterDropletsSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  spatialBlend: 1
+  maxDistance: 20
 --- !u!1 &126900529
 GameObject:
   m_ObjectHideFlags: 0
@@ -19769,6 +19785,7 @@ GameObject:
   - component: {fileID: 493841624}
   - component: {fileID: 493841626}
   - component: {fileID: 493841625}
+  - component: {fileID: 493841627}
   m_Layer: 0
   m_Name: VFX_Leaves_and_Wind
   m_TagString: Untagged
@@ -24595,6 +24612,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &493841627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493841623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cb13b236f504f04af9cc95920df393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.WindSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  spatialBlend: 1
+  maxDistance: 25
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -29723,6 +29755,7 @@ GameObject:
   - component: {fileID: 585609645}
   - component: {fileID: 585609647}
   - component: {fileID: 585609646}
+  - component: {fileID: 585609648}
   m_Layer: 0
   m_Name: VFX_Drip_Narrow
   m_TagString: Untagged
@@ -34548,6 +34581,21 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &585609648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585609644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83e416700f39b4697911dd534041fc62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.WaterDropletsSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  spatialBlend: 1
+  maxDistance: 20
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

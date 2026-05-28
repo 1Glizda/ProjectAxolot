@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4360f9ae3d5624ebe8e2b865d7568799, type: 3}
   m_Name: Sound Profile
   m_EditorClassIdentifier: Game.Player::Player.Sound.SoundProfileSo
-  footstepLoop: {fileID: 8300000, guid: cf40012e73c4147bebc2ae6d70c4c3d4, type: 3}
+  footstepLoop: {fileID: 0}
   footstepVolume: 0.3
-  climbLoop: {fileID: 8300000, guid: 937b3d55204894e27b7a241245aaf73f, type: 3}
-  climbVolume: 0.5
+  climbLoop: {fileID: 0}
+  climbVolume: 0.355
   idleChirps:
   - {fileID: 8300000, guid: 82cf2d44c724a0c4c8c338cdc934a97b, type: 3}
   idleChirpVolume: 0
@@ -24,10 +24,11 @@ MonoBehaviour:
   idleChirpMaxInterval: 8
   jumpClip: {fileID: 8300000, guid: 7ad96b90f7035d148a169a052f8572c2, type: 3}
   jumpVolume: 0
-  landClip: {fileID: 8300000, guid: fb475f2511407df4a85cbc938875e616, type: 3}
-  landVolume: 0
+  landClip: {fileID: 8300000, guid: 3c2157db1d9e74bc1b9949316de1c43a, type: 3}
+  landVolume: 0.055
   pulseClip: {fileID: 8300000, guid: 68ec9f9310aa9f743ac13c412e32c559, type: 3}
   pulseClips:
+  - {fileID: 8300000, guid: c69e5363cebda429f9a1c369ba47a943, type: 3}
   - {fileID: 8300000, guid: 23247e49bd7cd4c89a9924e02f3a4266, type: 3}
   - {fileID: 8300000, guid: 664c0bf03967b49d988e4a4565329984, type: 3}
   pulseVolume: 0.237
@@ -35,7 +36,7 @@ MonoBehaviour:
   singingVolume: 0.5
   singingMinDelay: 8
   singingMaxDelay: 20
-  runLoop: {fileID: 0}
+  runLoop: {fileID: 8300000, guid: 62550bcf804f946df8332734f276787f, type: 3}
   runVolume: 0.6
   eatClip: {fileID: 0}
   eatVolume: 0.7

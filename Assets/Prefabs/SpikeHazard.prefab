@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8909677743871139362}
   - component: {fileID: 2313850560903093861}
   - component: {fileID: 255361279062140548}
+  - component: {fileID: 6452593808279772835}
   m_Layer: 3
   m_Name: SpikeHazard
   m_TagString: Untagged
@@ -51,6 +52,7 @@ MonoBehaviour:
   _verticalForce: 7
   _applyDamage: 1
   _damageAmount: 1
+  _repeatInterval: 0.1
 --- !u!50 &8909677743871139362
 Rigidbody2D:
   serializedVersion: 5
@@ -183,3 +185,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 8.52, y: 1.2583764}
   m_EdgeRadius: 0
+--- !u!114 &6452593808279772835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2751361111591646855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b0ad3222a3d4f6c8d9787f849951f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.SpikeSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  knockbackHazard: {fileID: 7131846382835123340}
+  spatialBlend: 0
+  maxDistance: 35

@@ -342,6 +342,7 @@ MonoBehaviour:
   _verticalForce: 0
   _applyDamage: 1
   _damageAmount: 1
+  _repeatInterval: 0.1
 --- !u!61 &3713161565177913726
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -399,6 +400,7 @@ GameObject:
   - component: {fileID: 4647892893788015817}
   - component: {fileID: 4948147392549128823}
   - component: {fileID: 639543262447825572}
+  - component: {fileID: 426048019996289975}
   m_Layer: 0
   m_Name: PRP_Geyser
   m_TagString: Untagged
@@ -492,6 +494,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.6908313, y: 1.8589306}
   m_EdgeRadius: 0
+--- !u!114 &426048019996289975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9012888108891597671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8dac314590764fbaabee03ce8a31580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.GeyserSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  geyserBehaviour: {fileID: 4948147392549128823}
+  spatialBlend: 0
+  maxDistance: 30
 --- !u!1 &9189725496671404335
 GameObject:
   m_ObjectHideFlags: 0

@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 8492868461933203823}
   - component: {fileID: 7261889277458425937}
   - component: {fileID: 6135905185409447454}
+  - component: {fileID: 1995665623346157053}
   m_Layer: 0
   m_Name: SpikesBig
   m_TagString: Untagged
@@ -235,6 +236,7 @@ MonoBehaviour:
   _verticalForce: 5
   _applyDamage: 1
   _damageAmount: 5
+  _repeatInterval: 0.1
 --- !u!61 &6135905185409447454
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -281,6 +283,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7.921417, y: 0.6523628}
   m_EdgeRadius: 0
+--- !u!114 &1995665623346157053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394016082489279320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81b0ad3222a3d4f6c8d9787f849951f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::Platforming.Sound.SpikeSoundController
+  soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
+  knockbackHazard: {fileID: 7261889277458425937}
+  spatialBlend: 0
+  maxDistance: 44
 --- !u!1 &8495568828527407669
 GameObject:
   m_ObjectHideFlags: 0
