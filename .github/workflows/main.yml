@@ -1,4 +1,4 @@
-name: WebGL and Windows Build and Deploy
+name: CI/CD Build and Deploy
 
 on:
   push:
@@ -24,24 +24,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Bump Patch Version
         id: bump_version
         run: |
           VERSION=$(cat version.txt)
           IFS='.' read -r major minor patch <<< "$VERSION"
-          patch=$((patch + 1))
-          NEW_VERSION="$major.$minor.$patch"
-          echo "New Version: $NEW_VERSION"
+          NEW_VERSION="$major.$minor.$((patch + 1))"
           echo "$NEW_VERSION" > version.txt
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Commit and Push New Version
+      - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add version.txt
-          git commit -m "chore: bump build version to ${{ steps.bump_version.outputs.new_version }} [skip ci]"
+          git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }} [skip ci]"
           git push
 
   # --- JOB 2: BUILD WEBGL ---
@@ -50,33 +46,24 @@ jobs:
     name: Build WebGL
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Git LFS Pull
+        with: { lfs: true }
+      - name: Free Disk Space
         run: |
-          git lfs pull
-          git add .
-          git reset --hard
-
-      - name: Restore Library Cache
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+      - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-WebGL-
-
-      - name: Build WebGL
+      - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
-
-      - name: Upload WebGL Build Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-WebGL
@@ -85,117 +72,81 @@ jobs:
   # --- JOB 3: BUILD WINDOWS ---
   buildWindows:
     needs: versioning
-    name: Build Windows Standalone
+    name: Build Windows
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Git LFS Pull
+        with: { lfs: true }
+      - name: Free Disk Space
         run: |
-          git lfs pull
-          git add .
-          git reset --hard
-
-      - name: Restore Library Cache
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+      - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-          restore-keys: |
-            Library-Windows-
-
-      - name: Build Windows
+      - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneWindows64
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
-
-      - name: Upload Windows Build Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-Windows
           path: build/StandaloneWindows64/*
 
-  # --- JOB 4: DEPLOY WEBGL TO PAGES ---
+  # --- JOB 4: DEPLOY WEBGL ---
   deployPages:
-    needs: [versioning, buildWebGL]
-    name: Deploy to GitHub Pages
+    needs: [buildWebGL]
+    name: Deploy WebGL
     runs-on: ubuntu-latest
-    # REMOVED the 'if: main branch' condition so it forces a deploy every time for testing
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download WebGL Build Artifact
+      - name: Download
         uses: actions/download-artifact@v4
         with:
           name: build-WebGL
           path: build_files
-
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build_files
-# --- JOB 5: DEPLOY WINDOWS (KEEP ONLY LAST 3) ---
+
+  # --- JOB 5: DEPLOY WINDOWS (PRUNED) ---
   deployWindows:
     needs: [versioning, buildWindows]
-    name: Deploy Windows to Branch
+    name: Deploy Windows
     runs-on: ubuntu-latest
     steps:
-      # FIX 1: Checkout the base repo so the runner's root is a valid Git directory
-      - name: Checkout base repo
+      - name: Checkout Base
         uses: actions/checkout@v4
-
-      # Step 2: Checkout the existing windows-builds branch history
-      - name: Checkout Windows History
+      - name: Checkout History
+        continue-on-error: true
         uses: actions/checkout@v4
         with:
           ref: windows-builds
           path: windows_history
-
-      # FIX 2: Remove the nested .git folder so the deploy action doesn't get confused by a repo-inside-a-repo
-      - name: Clean nested git
-        run: rm -rf windows_history/.git
-
-      # Step 3: Download the newly built Windows app
-      - name: Download Windows Build Artifact
+      - name: Prepare Files
+        run: |
+          rm -rf windows_history/.git
+          mkdir -p windows_temp
+      - name: Download
         uses: actions/download-artifact@v4
         with:
           name: build-Windows
           path: windows_temp
-
-      # Step 4: Add the new build, then delete the oldest ones so only 3 remain
-      - name: Prune Old Builds
+      - name: Prune and Deploy
         run: |
-          # Create the new version folder and copy the new build into it
-          NEW_VERSION="v${{ needs.versioning.outputs.new_version }}"
-          mkdir -p windows_history/$NEW_VERSION
-          cp -r windows_temp/* windows_history/$NEW_VERSION/
-          
-          # Navigate to the history folder
+          mkdir -p windows_history/v${{ needs.versioning.outputs.new_version }}
+          cp -r windows_temp/* windows_history/v${{ needs.versioning.outputs.new_version }}/
           cd windows_history
-          
-          # Find all 'v*' folders, sort them by version, and get all except the newest 3
-          FOLDERS_TO_DELETE=$(ls -1d v* | sort -V | head -n -3)
-          
-          # If there are old folders to delete, remove them
-          if [ ! -z "$FOLDERS_TO_DELETE" ]; then
-            echo "Deleting old versions to maintain a maximum of 3:"
-            echo "$FOLDERS_TO_DELETE"
-            echo "$FOLDERS_TO_DELETE" | xargs rm -rf
-          else
-            echo "3 or fewer builds exist. Nothing to prune."
-          fi
-
-      # Step 5: Push the cleanly pruned folder back to the branch
-      - name: Deploy Windows to Dedicated Branch
+          ls -1d v* 2>/dev/null | sort -V | head -n -3 | xargs -r rm -rf
+      - name: Push
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: windows-builds
           folder: windows_history
-          clean: true # Wipes the branch and replaces it exactly with our pruned 3-build folder
+          clean: true
