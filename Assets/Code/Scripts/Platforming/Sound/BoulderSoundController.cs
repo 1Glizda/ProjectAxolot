@@ -1,42 +1,60 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class BoulderSoundController : MonoBehaviour
+namespace Platforming.Sound
 {
-    [Header("Audio Settings")]
-    [Tooltip("Drop your movement sound here!")]
-    public AudioClip movementSound;
-    
-    public float movementThreshold = 0.1f;
-
-    [Header("Mixer")]
-    [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
-    [SerializeField] private AudioMixerGroup sfxMixerGroup;
-
-    private AudioSource audioSource;
-    private Rigidbody rb;
-
-    void Start()
+    /// <summary>
+    /// Boulder movement sound controller. Attach alongside a BoulderBehaviour component.
+    /// Plays a looping movement sound while the boulder is moving above the velocity threshold.
+    /// </summary>
+    public class BoulderSoundController : MonoBehaviour
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
+        [Header("Audio Settings")]
+        [Tooltip("Drop your movement sound here!")]
+        public AudioClip movementSound;
+
+        public float movementThreshold = 0.1f;
+
+        [Header("Spatial")]
+        [Range(0f, 1f)]
+        [SerializeField] private float spatialBlend = 1f;
+        [SerializeField] private float maxDistance = 25f;
+
+        [Header("Mixer")]
+        [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
+        [SerializeField] private AudioMixerGroup sfxMixerGroup;
+
+        private AudioSource audioSource;
+        private Rigidbody2D rb;
+
+        void Start()
         {
-            // Safely add it if it's missing
-            audioSource = gameObject.AddComponent<AudioSource>(); 
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+
+            audioSource.clip = movementSound;
+            audioSource.loop = true;
+            audioSource.playOnAwake = false;
+            audioSource.spatialBlend = spatialBlend;
+            audioSource.maxDistance = maxDistance;
+            audioSource.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) audioSource.outputAudioMixerGroup = sfxMixerGroup;
+
+            rb = GetComponent<Rigidbody2D>();
+
+            if (rb == null)
+                Debug.LogWarning($"[{gameObject.name}] BoulderSoundController: No Rigidbody2D found. Sound will not play.", this);
+            if (movementSound == null)
+                Debug.LogWarning($"[{gameObject.name}] BoulderSoundController: No movementSound clip assigned.", this);
         }
-        
-        audioSource.clip = movementSound;
-        audioSource.loop = true;
-        audioSource.spatialBlend = 1.0f;
-        if (sfxMixerGroup != null) audioSource.outputAudioMixerGroup = sfxMixerGroup;
 
-        rb = GetComponent<Rigidbody>();
-    }
-
-    void Update()
-    {
-        if (rb != null)
+        void Update()
         {
+            if (rb == null) return;
+
             if (rb.linearVelocity.magnitude > movementThreshold)
             {
                 PlaySound();
@@ -46,21 +64,21 @@ public class BoulderSoundController : MonoBehaviour
                 StopSound();
             }
         }
-    }
 
-    public void PlaySound()
-    {
-        if (audioSource != null && !audioSource.isPlaying && audioSource.clip != null)
+        public void PlaySound()
         {
-            audioSource.Play();
+            if (audioSource != null && !audioSource.isPlaying && audioSource.clip != null)
+            {
+                audioSource.Play();
+            }
         }
-    }
 
-    public void StopSound()
-    {
-        if (audioSource != null && audioSource.isPlaying)
+        public void StopSound()
         {
-            audioSource.Stop();
+            if (audioSource != null && audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
         }
     }
 }

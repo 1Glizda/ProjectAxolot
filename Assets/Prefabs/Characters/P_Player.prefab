@@ -485,6 +485,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Player::Player.GameState.CheckpointsManager
   _playerController: {fileID: 7491801208797167539}
   _startingCheckpoint: {fileID: 0}
+  _preResetDelay: 0.5
+  _postResetDelay: 0.3
+  _postReviveDelay: 0.2
+  OnDeathStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeathFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReviveStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReviveFinished:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPlayerUnlocked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3371526616942566289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Player::Player.Sound.SoundController
   loopSource: {fileID: 0}
+  sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}
   oneShotSource: {fileID: 0}
   loopFadeSpeed: 8
   debugMode: 0
