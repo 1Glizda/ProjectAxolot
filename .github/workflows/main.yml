@@ -141,28 +141,35 @@ jobs:
         with:
           branch: gh-pages
           folder: build_files
-
-  # --- JOB 5: DEPLOY WINDOWS (KEEP ONLY LAST 3) ---
+# --- JOB 5: DEPLOY WINDOWS (KEEP ONLY LAST 3) ---
   deployWindows:
     needs: [versioning, buildWindows]
     name: Deploy Windows to Branch
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the existing windows-builds branch to get your 5 old folders
+      # FIX 1: Checkout the base repo so the runner's root is a valid Git directory
+      - name: Checkout base repo
+        uses: actions/checkout@v4
+
+      # Step 2: Checkout the existing windows-builds branch history
       - name: Checkout Windows History
         uses: actions/checkout@v4
         with:
           ref: windows-builds
           path: windows_history
 
-      # Step 2: Download the newly built Windows app
+      # FIX 2: Remove the nested .git folder so the deploy action doesn't get confused by a repo-inside-a-repo
+      - name: Clean nested git
+        run: rm -rf windows_history/.git
+
+      # Step 3: Download the newly built Windows app
       - name: Download Windows Build Artifact
         uses: actions/download-artifact@v4
         with:
           name: build-Windows
           path: windows_temp
 
-      # Step 3: Add the new build, then delete the oldest ones so only 3 remain
+      # Step 4: Add the new build, then delete the oldest ones so only 3 remain
       - name: Prune Old Builds
         run: |
           # Create the new version folder and copy the new build into it
@@ -185,7 +192,7 @@ jobs:
             echo "3 or fewer builds exist. Nothing to prune."
           fi
 
-      # Step 4: Push the cleanly pruned folder back to the branch
+      # Step 5: Push the cleanly pruned folder back to the branch
       - name: Deploy Windows to Dedicated Branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
