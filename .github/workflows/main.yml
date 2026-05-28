@@ -24,6 +24,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
       - name: Bump Patch Version
         id: bump_version
         run: |
@@ -32,6 +33,7 @@ jobs:
           NEW_VERSION="$major.$minor.$((patch + 1))"
           echo "$NEW_VERSION" > version.txt
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
@@ -49,20 +51,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with: { lfs: true }
+        
       - name: Free Disk Space
         run: |
           sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+          
       - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          
       - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
+          
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -78,27 +84,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with: { lfs: true }
+        
       - name: Free Disk Space
         run: |
           sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+          
       - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          
       - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneWindows64
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
+          
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-Windows
           path: build/StandaloneWindows64/*
 
-  # --- JOB 4: DEPLOY WEBGL ---
+  # --- JOB 4: DEPLOY WEBGL TO GITHUB PAGES ---
   deployPages:
     needs: [buildWebGL]
     name: Deploy WebGL
@@ -109,13 +119,14 @@ jobs:
         with:
           name: build-WebGL
           path: build_files
-      - name: Deploy
+          
+      - name: Deploy to gh-pages Branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build_files
 
-  # --- JOB 5: DEPLOY WINDOWS (PRUNED) ---
+  # --- JOB 5: DEPLOY WINDOWS (ZIPPED & PRUNED) ---
   deployWindows:
     needs: [versioning, buildWindows]
     name: Deploy Windows
@@ -123,30 +134,46 @@ jobs:
     steps:
       - name: Checkout Base
         uses: actions/checkout@v4
-      - name: Checkout History
+        
+      - name: Checkout Windows History
         continue-on-error: true
         uses: actions/checkout@v4
         with:
           ref: windows-builds
           path: windows_history
-      - name: Prepare Files
+          
+      - name: Prepare Folder
         run: |
           rm -rf windows_history/.git
           mkdir -p windows_temp
-      - name: Download
+          mkdir -p windows_history
+          
+      - name: Download Windows Artifact
         uses: actions/download-artifact@v4
         with:
           name: build-Windows
           path: windows_temp
-      - name: Prune and Deploy
+          
+      - name: Compress Build & Prune History
         run: |
-          mkdir -p windows_history/v${{ needs.versioning.outputs.new_version }}
-          cp -r windows_temp/* windows_history/v${{ needs.versioning.outputs.new_version }}/
+          VERSION="v${{ needs.versioning.outputs.new_version }}"
+          
+          # 1. Zip the new build into the history folder
+          cd windows_temp
+          zip -r ../windows_history/WindowsBuild_${VERSION}.zip ./*
+          cd ..
+          
+          # 2. Setup LFS tracking strictly for zip files
+          echo "*.zip filter=lfs diff=lfs merge=lfs -text" > windows_history/.gitattributes
+          
+          # 3. Prune old zips, keeping only the 3 newest
           cd windows_history
-          ls -1d v* 2>/dev/null | sort -V | head -n -3 | xargs -r rm -rf
-      - name: Push
+          ls -1 WindowsBuild_*.zip 2>/dev/null | sort -V | head -n -3 | xargs -r rm -f
+          
+      - name: Push Zipped Builds to windows-builds Branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: windows-builds
           folder: windows_history
           clean: true
+          lfs: true # Enables LFS upload for files >100MB
