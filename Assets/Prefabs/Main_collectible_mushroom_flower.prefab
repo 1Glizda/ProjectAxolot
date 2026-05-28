@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Interactions::Interactions.Collectible
   _collectClip: {fileID: 8300000, guid: 20c43d9bff13f4fbaa5f5cb74c54061d, type: 3}
-  _collectVolume: 0.479
+  _collectVolume: 1
   _sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}
 --- !u!58 &8232792773408312686
 CircleCollider2D:
