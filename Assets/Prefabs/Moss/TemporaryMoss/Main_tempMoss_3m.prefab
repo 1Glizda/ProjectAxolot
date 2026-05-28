@@ -378,4 +378,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Interactions::Interactions.Sound.MossSoundController
   soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
   spatialBlend: 0
-  maxDistance: 15
+  sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}
+  maxDistance: 35

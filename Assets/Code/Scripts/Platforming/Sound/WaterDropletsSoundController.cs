@@ -1,5 +1,6 @@
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Platforming.Sound
 {
@@ -17,6 +18,10 @@ namespace Platforming.Sound
         [Tooltip("0 = 2D, 1 = full 3D positional audio.")]
         [Range(0f, 1f)]
         [SerializeField] private float spatialBlend = 1f;
+
+        [Header("Mixer")]
+        [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
+        [SerializeField] private AudioMixerGroup sfxMixerGroup;
         [SerializeField] private float maxDistance = 20f;
 
         private AudioSource _source;
@@ -29,6 +34,7 @@ namespace Platforming.Sound
             _source.spatialBlend = spatialBlend;
             _source.maxDistance = maxDistance;
             _source.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) _source.outputAudioMixerGroup = sfxMixerGroup;
         }
 
         private void Start()

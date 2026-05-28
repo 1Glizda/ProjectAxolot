@@ -1,5 +1,6 @@
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Platforming.Sound
 {
@@ -18,6 +19,10 @@ namespace Platforming.Sound
         [Header("Spatial")]
         [Range(0f, 1f)]
         [SerializeField] private float spatialBlend = 1f;
+
+        [Header("Mixer")]
+        [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
+        [SerializeField] private AudioMixerGroup sfxMixerGroup;
         [SerializeField] private float maxDistance = 25f;
 
         private AudioSource _onSource;
@@ -37,6 +42,7 @@ namespace Platforming.Sound
             _onSource.spatialBlend = spatialBlend;
             _onSource.maxDistance = maxDistance;
             _onSource.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) _onSource.outputAudioMixerGroup = sfxMixerGroup;
 
             // Off source for OFF/Idle clip
             _offSource = gameObject.AddComponent<AudioSource>();
@@ -44,6 +50,7 @@ namespace Platforming.Sound
             _offSource.spatialBlend = spatialBlend;
             _offSource.maxDistance = maxDistance;
             _offSource.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) _offSource.outputAudioMixerGroup = sfxMixerGroup;
 
             // Loop source for active rumble
             _loopSource = gameObject.AddComponent<AudioSource>();
@@ -52,6 +59,7 @@ namespace Platforming.Sound
             _loopSource.spatialBlend = spatialBlend;
             _loopSource.maxDistance = maxDistance;
             _loopSource.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) _loopSource.outputAudioMixerGroup = sfxMixerGroup;
         }
 
         private void Start()
