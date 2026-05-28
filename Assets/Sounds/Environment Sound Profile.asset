@@ -21,21 +21,21 @@ MonoBehaviour:
   windMaxInterval: 8
   windPitchVariance: 0.1
   rockExplosionClip: {fileID: 8300000, guid: 2cdfbc39180884b77aba8898d9c3e0b0, type: 3}
-  rockExplosionVolume: 0.8
+  rockExplosionVolume: 0.2
   rockExplosionPitchVariance: 0.05
   geyserOnClip: {fileID: 8300000, guid: 98daa6dcfb15c4a86909f971ff2baad2, type: 3}
   geyserOffClip: {fileID: 8300000, guid: 20f8362faf67844e9bb1695ed4543084, type: 3}
   geyserActiveLoop: {fileID: 0}
-  geyserOneShotVolume: 0.7
-  geyserLoopVolume: 0.4
+  geyserOneShotVolume: 1
+  geyserLoopVolume: 0.063
   mushroomExplosionClip: {fileID: 8300000, guid: 97d4bdc8bc708437888fce880be3e851, type: 3}
   mushroomCloudLoop: {fileID: 8300000, guid: c305ac6c70fb34b4fb25d5d3b24b403a, type: 3}
-  mushroomExplosionVolume: 0.8
-  mushroomCloudVolume: 0.3
+  mushroomExplosionVolume: 0.4
+  mushroomCloudVolume: 0.15
   mossContactClip: {fileID: 8300000, guid: bc5553e86d67b4113a163214a9d9ce1f, type: 3}
   mossAmbientLoop: {fileID: 0}
   mossContactVolume: 0.6
   mossAmbientVolume: 0.3
   spikeDamageClip: {fileID: 8300000, guid: 1cc863e367fe54eeca48b0dad516c114, type: 3}
-  spikeDamageVolume: 0.8
+  spikeDamageVolume: 0.6
   spikePitchVariance: 0.05
