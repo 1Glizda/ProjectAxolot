@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2882437860833677870}
   - component: {fileID: 6050724042490194081}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Main_SmallTempMoss_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4370353267391504674}
   - component: {fileID: 8785479853267148290}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_LightType: 1
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9372549, g: 1, b: 0.4862745, a: 1}
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 4505460005290718217}
   - component: {fileID: 2192176052391601554}
   - component: {fileID: 6004956188146845197}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Main_tempMoss_3m
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8485721309440060529}
-  m_BodyType: 1
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

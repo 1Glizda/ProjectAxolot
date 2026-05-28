@@ -11,6 +11,9 @@ namespace Platforming
         [SerializeField] private List<Rigidbody2D> _wallPebbles;
         [SerializeField] private float _breakForceThreshold;
 
+        [Tooltip("Optional sprite that will be hidden when the wall breaks.")]
+        [SerializeField] private SpriteRenderer _spriteToHideOnBreak;
+
         /// <summary>Fired when the wall breaks. Subscribe from sound/VFX controllers.</summary>
         public event System.Action OnBreak;
 
@@ -25,6 +28,9 @@ namespace Platforming
         public void Break(Vector2 direction)
         {
             _wallCollider.enabled = false;
+
+            if (_spriteToHideOnBreak != null)
+                _spriteToHideOnBreak.enabled = false;
 
             foreach (var rb in _wallPebbles)
             {

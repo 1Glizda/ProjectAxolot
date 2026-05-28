@@ -96,6 +96,7 @@ namespace Player
         private Vector2[] _checkOrigins = new Vector2[3];
         private int _pushableLayerIndex;
         private float _resetHoldTimer;
+        private bool _isLocked = true;
 
         
         
@@ -131,11 +132,37 @@ namespace Player
             };
             
             _animatorHelper.Initialize(this);
+
+            // Start locked — call UnlockController() once the intro sequence ends
+            ((IPlayerInputHandler)inputHandler).SetInputActive(false);
+        }
+
+        /// <summary>
+        /// Unlocks the player controller, enabling all input and gameplay logic.
+        /// Safe to call once the intro sequence has finished.
+        /// </summary>
+        public void UnlockController()
+        {
+            if (!_isLocked) return;
+            _isLocked = false;
+            ((IPlayerInputHandler)inputHandler).SetInputActive(true);
+            _stateMachine.ChangeState<PlayerIdleState>();
+        }
+
+        /// <summary>
+        /// Locks the player controller, disabling all input and gameplay logic.
+        /// </summary>
+        public void LockController()
+        {
+            if (_isLocked) return;
+            _isLocked = true;
+            ((IPlayerInputHandler)inputHandler).SetInputActive(false);
         }
 
         private void Update()
         {
             if (Time.timeScale == 0f) return;
+            if (_isLocked) return;
 
             float dt = Time.deltaTime;
             CheckGrounded();
@@ -567,7 +594,7 @@ namespace Player
             _rb.interpolation = RigidbodyInterpolation2D.None;
     
             _rb.position = targetPosition;
-            transform.position = targetPosition;
+            transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
     
             Physics2D.SyncTransforms();
             _rb.interpolation = originalInterpolation;

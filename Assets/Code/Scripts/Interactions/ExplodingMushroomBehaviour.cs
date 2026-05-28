@@ -9,10 +9,8 @@ namespace Interactions
     public class ExplodingMushroomBehaviour : MonoBehaviour, IPulseInteraction
     {
         [Header("References")]
-        [SerializeField] private SpriteRenderer _spriteRenderer;
         [SerializeField] private Collider2D _collider;
-        [SerializeField] private Sprite _activeSprite;
-        [SerializeField] private Sprite _explodedSprite;
+        [SerializeField] private Animator _animator;
 
         [Header("Explosion Settings")]
         [SerializeField] private float _explosionRadius = 5f;
@@ -30,6 +28,7 @@ namespace Interactions
         [SerializeField] private Vector3 _preExplosionScale = new Vector3(0.8f, 0.8f, 1f);
 
         private bool _isExploded = false;
+        private Vector3 _initialScale;
 
         /// <summary>Fired when the mushroom explodes.</summary>
         public event System.Action OnExplode;
@@ -38,10 +37,7 @@ namespace Interactions
 
         private void Awake()
         {
-            if (_spriteRenderer == null)
-                _spriteRenderer = GetComponent<SpriteRenderer>();
-
-            SetSprite(false);
+            _initialScale = transform.localScale;
         }
 
         private void OnParticleCollision(GameObject other)
@@ -79,7 +75,7 @@ namespace Interactions
         private IEnumerator ExplodeRoutine(float delay)
         {
             _isExploded = true;
-            Vector3 originalScale = transform.localScale;
+            Vector3 originalScale = _initialScale;
 
             if (delay > 0f)
             {
@@ -93,19 +89,34 @@ namespace Interactions
                 transform.localScale = _preExplosionScale;
             }
 
-            SetSprite(true);
+            // Active sprite stays visible — fire the explosion animation on it.
+            // Damage is applied via the Animation Event (TriggerExplosionDamage) so it
+            // syncs with the visual impact frame. The Animator handles all visual state.
             if (_collider != null) _collider.enabled = false;
+            if (_animator != null) _animator.SetTrigger("Explode");
 
-            Explode();
             OnExplode?.Invoke();
 
+            // Wait for the full recovery period before reverting.
+            // _recoveryTime should be set to at least the length of the Explode animation.
             yield return new WaitForSeconds(_recoveryTime);
 
+            // Recover
             _isExploded = false;
-            SetSprite(false);
             if (_collider != null) _collider.enabled = true;
+            if (_animator != null) _animator.SetTrigger("Revert");
             transform.localScale = originalScale;
             OnRecover?.Invoke();
+        }
+
+        /// <summary>
+        /// Called by an Animation Event on the Explode clip at the impact frame.
+        /// Applies physics force and damage to nearby objects.
+        /// </summary>
+        public void TriggerExplosionDamage()
+        {
+            if (!_isExploded) return; // safety guard if called outside of explosion
+            Explode();
         }
 
         private void Explode()
@@ -148,11 +159,6 @@ namespace Interactions
             }
         }
 
-        private void SetSprite(bool exploded)
-        {
-            if (_spriteRenderer == null) return;
-            _spriteRenderer.sprite = exploded ? _explodedSprite : _activeSprite;
-        }
 
         private void OnDrawGizmosSelected()
         {

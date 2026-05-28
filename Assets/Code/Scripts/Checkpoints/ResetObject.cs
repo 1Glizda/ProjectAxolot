@@ -47,12 +47,14 @@ namespace Interactions
                 return;
             }
 
-            // Fallback: just move the transform
+            // Restore parent FIRST so the following local-space assignments are in the right coordinate space.
+            // worldPositionStays = false: don't try to preserve world position — we want to set local coords directly.
+            transform.SetParent(_initialParent, false);
+
             gameObject.SetActive(true);
             transform.localPosition = _initialLocalPosition;
             transform.localRotation = _initialLocalRotation;
             transform.localScale = _initialLocalScale;
-            transform.SetParent(_initialParent);
             
             // If there's a Rigidbody2D attached, kill its momentum so it doesn't instantly snap back out
             if (_rb != null)

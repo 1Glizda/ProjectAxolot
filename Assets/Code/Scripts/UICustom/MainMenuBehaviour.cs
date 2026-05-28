@@ -12,9 +12,14 @@ namespace UICustom
         [Header("Debug Settings")]
         [SerializeField] private bool _debugMode;
         [SerializeField] private float _debugTimeScale = 20f;
+
+        private bool _isStarting;
         
         public void OnStartGame()
         {
+            if (_isStarting) return;
+            _isStarting = true;
+
             if (_debugMode)
             {
                 Time.timeScale = _debugTimeScale;
