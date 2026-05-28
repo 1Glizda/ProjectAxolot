@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Interfaces;
 using UnityEngine;
@@ -26,6 +27,17 @@ namespace Player.Helpers
             if (layer == -1) return;
             
             SetLayerRecursively(gameObject, layer);
+        }
+
+        public void RestoreLayerDelayed(string layerName, float delaySeconds)
+        {
+            StartCoroutine(RestoreLayerRoutine(layerName, delaySeconds));
+        }
+
+        private IEnumerator RestoreLayerRoutine(string layerName, float delaySeconds)
+        {
+            yield return new WaitForSeconds(delaySeconds);
+            SetLayer(layerName);
         }
 
         private void SetLayerRecursively(GameObject obj, int newLayer)

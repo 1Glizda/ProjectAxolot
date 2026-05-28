@@ -11,6 +11,7 @@ namespace Player
         public InputAction PauseAction { get; }
         public InputAction GrabWallAction { get; }
         public InputAction ResetAction { get; }
+        public bool IsInputActive { get; }
         public void SetInputActive(bool active);
     }
 }

@@ -13,7 +13,9 @@ namespace Player.Input
         public InputAction PauseAction => _pauseAction;
         public InputAction GrabWallAction => _grabWallAction;
         public InputAction ResetAction => _resetAction;
+        public bool IsInputActive => _isInputActive;
         
+        private bool _isInputActive = true;
         private InputAction _moveAction;
         private InputAction _jumpAction;
         private InputAction _interactAction;
@@ -42,6 +44,7 @@ namespace Player.Input
 
         public void SetInputActive(bool active)
         {
+            _isInputActive = active;
             if (active)
             {
                 _inputActions.Player.Enable();

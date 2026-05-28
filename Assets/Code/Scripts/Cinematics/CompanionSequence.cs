@@ -8,6 +8,14 @@ using UnityEngine.Events;
 
 namespace Cinematics
 {
+    public enum EasingType
+    {
+        Linear,
+        EaseInOut,
+        EaseIn,
+        EaseOut
+    }
+
     [Serializable]
     public struct CompanionKeyframe
     {
@@ -17,6 +25,9 @@ namespace Cinematics
         [Tooltip("Position along the spline (0.0 to 1.0)")]
         [Range(0f, 1f)]
         public float SplinePosition;
+
+        [Tooltip("Easing applied when transitioning TO the next keyframe")]
+        public EasingType Easing;
         
         [Tooltip("Cinemachine Camera Priority starting at this keyframe")]
         public int CameraPriority;
@@ -50,9 +61,27 @@ namespace Cinematics
         private bool _isPlaying = false;
         private bool _timelinePlayed = false;
 
-        private void Awake()
+        private void Start()
         {
-            if (_playOnAwake) Play();
+            if (_playOnAwake)
+            {
+                Play();
+            }
+            else
+            {
+                // Ensure SplineAnimate doesn't start playing on its own
+                if (_splineAnimate != null)
+                {
+                    _splineAnimate.Pause();
+                }
+
+                // Snap to the first keyframe's state immediately
+                if (_keyframes != null && _keyframes.Count > 0)
+                {
+                    _keyframes.Sort((a, b) => a.Time.CompareTo(b.Time));
+                    Evaluate(0f);
+                }
+            }
         }
 
         public void Play()
@@ -149,6 +178,21 @@ namespace Cinematics
             if (next.Time > prev.Time)
             {
                 float tRatio = (t - prev.Time) / (next.Time - prev.Time);
+                
+                // Apply easing
+                switch (prev.Easing)
+                {
+                    case EasingType.EaseInOut:
+                        tRatio = Mathf.SmoothStep(0f, 1f, tRatio);
+                        break;
+                    case EasingType.EaseIn:
+                        tRatio = tRatio * tRatio;
+                        break;
+                    case EasingType.EaseOut:
+                        tRatio = tRatio * (2f - tRatio);
+                        break;
+                }
+
                 splinePos = Mathf.Lerp(prev.SplinePosition, next.SplinePosition, tRatio);
             }
 

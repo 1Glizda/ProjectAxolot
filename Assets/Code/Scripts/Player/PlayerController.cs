@@ -162,7 +162,6 @@ namespace Player
         private void Update()
         {
             if (Time.timeScale == 0f) return;
-            if (_isLocked) return;
 
             float dt = Time.deltaTime;
             CheckGrounded();
@@ -589,6 +588,10 @@ namespace Player
             // (which runs after rendering and fights with physics interpolation).
             yield return new WaitForFixedUpdate();
             ((IPlayerInputHandler)inputHandler).SetInputActive(false);
+
+            // Force the player to detach from vines/walls before teleporting,
+            // otherwise active HingeJoints will rip the physics engine apart.
+            _stateMachine.ChangeState<StateMachine.PlayerFallingState>();
 
             _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0f;
