@@ -10,6 +10,23 @@ namespace Player.Helpers
 
         [SerializeField] private List<SwingBone> _bones;
         public int BoneCount => _bones.Count;
+
+        private Dictionary<GameObject, int> _originalLayers;
+
+        private void Awake()
+        {
+            _originalLayers = new Dictionary<GameObject, int>();
+            SaveLayersRecursively(gameObject);
+        }
+
+        private void SaveLayersRecursively(GameObject obj)
+        {
+            _originalLayers[obj] = obj.layer;
+            foreach (Transform child in obj.transform)
+            {
+                SaveLayersRecursively(child.gameObject);
+            }
+        }
         
         public int GetBoneIndex(SwingBone swingBone)
         {
@@ -29,15 +46,27 @@ namespace Player.Helpers
             SetLayerRecursively(gameObject, layer);
         }
 
-        public void RestoreLayerDelayed(string layerName, float delaySeconds)
+        public void RestoreLayerDelayed(float delaySeconds)
         {
-            StartCoroutine(RestoreLayerRoutine(layerName, delaySeconds));
+            StartCoroutine(RestoreLayerRoutine(delaySeconds));
         }
 
-        private IEnumerator RestoreLayerRoutine(string layerName, float delaySeconds)
+        private IEnumerator RestoreLayerRoutine(float delaySeconds)
         {
             yield return new WaitForSeconds(delaySeconds);
-            SetLayer(layerName);
+            RestoreOriginalLayers();
+        }
+
+        private void RestoreOriginalLayers()
+        {
+            if (_originalLayers == null) return;
+            foreach (var kvp in _originalLayers)
+            {
+                if (kvp.Key != null)
+                {
+                    kvp.Key.layer = kvp.Value;
+                }
+            }
         }
 
         private void SetLayerRecursively(GameObject obj, int newLayer)

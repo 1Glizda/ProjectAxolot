@@ -20,6 +20,10 @@ namespace Platforming
         [SerializeField] private float _activationTranslationDuration = 0.5f;
         [SerializeField] private float _inactivationTranslationDuration = 1.0f;
 
+        [Header("VFX")]
+        [Tooltip("Particle systems to play when the geyser is active, and stop when inactive or blocked.")]
+        [SerializeField] private ParticleSystem[] _particleSystems;
+
         [Header("Linked Geyser (Optional)")]
         [Tooltip("If assigned, blocking this geyser will boost the linked one.")]
         [SerializeField] private GeyserBehaviour _linkedGeyser;
@@ -51,7 +55,21 @@ namespace Platforming
                 _streamObject.SetActive(true);
             }
 
+            SetParticlesActive(false);
             StartCoroutine(GeyserLoop());
+        }
+
+        private void SetParticlesActive(bool active)
+        {
+            if (_particleSystems == null) return;
+            foreach (var ps in _particleSystems)
+            {
+                if (ps == null) continue;
+                if (active && !ps.isPlaying)
+                    ps.Play();
+                else if (!active && ps.isPlaying)
+                    ps.Stop();
+            }
         }
 
         private IEnumerator GeyserLoop()
@@ -61,6 +79,7 @@ namespace Platforming
                 if (_blockingMovableCount > 0)
                 {
                     CurrentState = GeyserState.Blocked;
+                    SetParticlesActive(false);
                     _targetHeight = 0f;
                     
                     if (_linkedGeyser != null)
@@ -83,6 +102,7 @@ namespace Platforming
                 }
 
                 CurrentState = GeyserState.Inactive;
+                SetParticlesActive(false);
                 _targetHeight = 0f;
                 
                 float t = 0f;
@@ -96,6 +116,7 @@ namespace Platforming
                 if (_blockingMovableCount > 0) continue;
 
                 CurrentState = GeyserState.Active;
+                SetParticlesActive(true);
                 
                 t = 0f;
                 while (t < _activeDuration && _blockingMovableCount == 0)

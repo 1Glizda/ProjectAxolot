@@ -9,10 +9,13 @@ namespace Player.Helpers
         
         public float BoneLength { get; private set; }
         private int _pulseLayer;
-
+        private float _lastPulseTime;
 
         private void PulseInteract()
         {
+            if (Time.time - _lastPulseTime < 0.5f) return;
+            _lastPulseTime = Time.time;
+
             Vector2 dir =  Rb.position -  PlayerController.PlayerControllerContext.rb.position;
             Rb.AddForce(dir * 0.2f, ForceMode2D.Impulse);
         }
