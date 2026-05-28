@@ -165,7 +165,7 @@ namespace Player.StateMachine
         public override void ExitState()
         {
             stateMachine.lastVine = _vine;
-            if (_vine != null) _vine.RestoreLayerDelayed("Swing", 0.5f);
+            if (_vine != null) _vine.RestoreLayerDelayed(0.5f);
 
             ctx.swingHinge.enabled = false;
             ctx.swingHinge.connectedBody = null;
