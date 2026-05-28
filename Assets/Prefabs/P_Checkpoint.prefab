@@ -434,6 +434,10 @@ MonoBehaviour:
   - {fileID: 6377406753895996692}
   _fadeInDuration: 0.5
   _delayBetweenSprites: 0.2
+  _activationClip: {fileID: 8300000, guid: eed05cad776484914982e571322bc857, type: 3}
+  _activationVolume: 0.75
+  _sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}
+  _spatialBlend: 0
   OnCheckpointReveal:
     m_PersistentCalls:
       m_Calls: []
