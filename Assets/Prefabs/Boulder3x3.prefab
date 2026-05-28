@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 7976159759957115710}
   - component: {fileID: 1686996392330404559}
   - component: {fileID: 4104964339745848514}
+  - component: {fileID: 8174749093035369747}
   m_Layer: 11
   m_Name: Boulder3x3
   m_TagString: Untagged
@@ -394,3 +395,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Interactions::Interactions.ResetObject
   _prefabToRespawn: {fileID: 0}
+--- !u!114 &8174749093035369747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8637358814061396660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2a59b02547f446e90798ef4ed198fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::BoulderSoundController
+  movementSound: {fileID: 8300000, guid: 2846b4b87c41b4d97be824dd35769ca7, type: 3}
+  movementThreshold: 0.1
+  sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}

@@ -1,5 +1,6 @@
 using Interfaces;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Interactions.Sound
 {
@@ -18,6 +19,10 @@ namespace Interactions.Sound
         [Header("Spatial")]
         [Range(0f, 1f)]
         [SerializeField] private float spatialBlend = 1f;
+
+        [Header("Mixer")]
+        [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
+        [SerializeField] private AudioMixerGroup sfxMixerGroup;
         [SerializeField] private float maxDistance = 25f;
 
         private AudioSource _oneShotSource;
@@ -35,6 +40,7 @@ namespace Interactions.Sound
             _oneShotSource.spatialBlend = spatialBlend;
             _oneShotSource.maxDistance = maxDistance;
             _oneShotSource.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) _oneShotSource.outputAudioMixerGroup = sfxMixerGroup;
 
             _loopSource = gameObject.AddComponent<AudioSource>();
             _loopSource.playOnAwake = false;
@@ -42,6 +48,7 @@ namespace Interactions.Sound
             _loopSource.spatialBlend = spatialBlend;
             _loopSource.maxDistance = maxDistance;
             _loopSource.rolloffMode = AudioRolloffMode.Linear;
+            if (sfxMixerGroup != null) _loopSource.outputAudioMixerGroup = sfxMixerGroup;
         }
 
         private void Start()

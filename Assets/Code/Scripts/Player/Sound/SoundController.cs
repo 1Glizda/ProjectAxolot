@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Player.Sound
 {
@@ -11,6 +12,10 @@ namespace Player.Sound
         [Header("Audio Sources")]
         [Tooltip("Used for looping clips (footsteps, ambient).")]
         [SerializeField] private AudioSource loopSource;
+
+        [Header("Mixer")]
+        [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
+        [SerializeField] private AudioMixerGroup sfxMixerGroup;
 
         [Tooltip("Used for one-shot SFX (jump, land, pulse, chirps, singing).")]
         [SerializeField] private AudioSource oneShotSource;
@@ -62,6 +67,13 @@ namespace Player.Sound
             // Ensure AudioSources don't play on awake automatically
             if (loopSource != null) loopSource.playOnAwake = false;
             if (oneShotSource != null) oneShotSource.playOnAwake = false;
+
+            // Route through SFX mixer group
+            if (sfxMixerGroup != null)
+            {
+                if (loopSource != null) loopSource.outputAudioMixerGroup = sfxMixerGroup;
+                if (oneShotSource != null) oneShotSource.outputAudioMixerGroup = sfxMixerGroup;
+            }
         }
 
         private void Update()

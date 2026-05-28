@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 8078790710896341857}
   - component: {fileID: 1976829383498060650}
   - component: {fileID: 3998272023411489843}
+  - component: {fileID: 5899528346396053167}
   m_Layer: 11
   m_Name: PRP_RoundBoulder
   m_TagString: Untagged
@@ -315,3 +316,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Game.Checkpoints::Interactions.ResetObject
   _prefabToRespawn: {fileID: 7191345434751554851}
+--- !u!114 &5899528346396053167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7191345434751554851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2a59b02547f446e90798ef4ed198fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Platforming::BoulderSoundController
+  movementSound: {fileID: 8300000, guid: 2846b4b87c41b4d97be824dd35769ca7, type: 3}
+  movementThreshold: 0.1
+  sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}
