@@ -43,13 +43,18 @@ namespace Interactions
         {
             if (_prefabToRespawn != null)
             {
+                // Unregister BEFORE creating the new instance so there is never a frame
+                // where both old and new are in the registry simultaneously.
+                // The new instance's Awake() will register itself.
+                Player.GameState.CheckpointsManager.UnregisterResettable(this);
+
                 // Spawn a fresh copy of the prefab
                 GameObject newInstance = Instantiate(_prefabToRespawn, _initialParent);
                 newInstance.transform.localPosition = _initialLocalPosition;
                 newInstance.transform.localRotation = _initialLocalRotation;
                 newInstance.transform.localScale = _initialLocalScale;
 
-                // Destroy this old instance
+                // Destroy this old instance (OnDestroy will no-op since we already unregistered)
                 Destroy(gameObject);
                 return;
             }
@@ -59,16 +64,19 @@ namespace Interactions
             transform.SetParent(_initialParent, false);
 
             gameObject.SetActive(true);
-            transform.localPosition = _initialLocalPosition;
-            transform.localRotation = _initialLocalRotation;
-            transform.localScale = _initialLocalScale;
             
-            // If there's a Rigidbody2D attached, kill its momentum so it doesn't instantly snap back out
+            // If there's a Rigidbody2D attached, kill its momentum and disable CCD so it doesn't sweep across the map
             if (_rb != null)
             {
-                // Temporarily disable interpolation to prevent visual "sweeping" from the old position
+                // Temporarily disable interpolation and CCD to prevent visual/physical "sweeping" from the old position
                 var interp = _rb.interpolation;
+                var ccd = _rb.collisionDetectionMode;
                 _rb.interpolation = RigidbodyInterpolation2D.None;
+                _rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+
+                transform.localPosition = _initialLocalPosition;
+                transform.localRotation = _initialLocalRotation;
+                transform.localScale = _initialLocalScale;
 
                 _rb.linearVelocity = Vector2.zero;
                 _rb.angularVelocity = 0f;
@@ -78,10 +86,14 @@ namespace Interactions
                 _rb.Sleep(); 
                 _rb.WakeUp();
 
-                // Force Physics2D to immediately recognize the transform change
-                Physics2D.SyncTransforms();
-
                 _rb.interpolation = interp;
+                _rb.collisionDetectionMode = ccd;
+            }
+            else
+            {
+                transform.localPosition = _initialLocalPosition;
+                transform.localRotation = _initialLocalRotation;
+                transform.localScale = _initialLocalScale;
             }
         }
     }

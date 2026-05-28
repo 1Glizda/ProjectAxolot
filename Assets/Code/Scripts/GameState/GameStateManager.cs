@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace Player.GameState
 {
-    [DefaultExecutionOrder(-1)]
+    [DefaultExecutionOrder(-10)]
     public class GameStateManager : MonoBehaviour
     {
         public static GameStateManager Instance;
@@ -19,6 +20,10 @@ namespace Player.GameState
         [SerializeField] private float _damageCooldown = 1f;
         private int _currentHp;
         private float _damageCooldownTimer;
+
+        // Tracks all active IgnoreCollision pairs so we can clear them on death
+        private readonly List<(Collider2D playerCol, Collider2D hazardCol)> _activeIgnorePairs
+            = new List<(Collider2D, Collider2D)>();
 
         
         private void Awake()
@@ -49,6 +54,11 @@ namespace Player.GameState
             #if UNITY_EDITOR
             Debug.LogError("Player Killed", this);
             #endif
+            
+            // Clear all stale IgnoreCollision pairs accumulated during damage invincibility
+            StopAllCoroutines();
+            ClearAllIgnorePairs();
+            
             ResetPlayer();
             onDeath?.Invoke();
         }
@@ -92,21 +102,30 @@ namespace Player.GameState
                 if (pc && hazardCollider)
                 {
                     Physics2D.IgnoreCollision(pc, hazardCollider, true);
+                    _activeIgnorePairs.Add((pc, hazardCollider));
                 }
             }
 
             yield return new WaitForSeconds(duration);
 
-            if (hazardCollider && playerObj)
+            foreach (var pc in playerColliders)
             {
-                foreach (var pc in playerColliders)
+                if (pc && hazardCollider)
                 {
-                    if (pc && hazardCollider)
-                    {
-                        Physics2D.IgnoreCollision(pc, hazardCollider, false);
-                    }
+                    Physics2D.IgnoreCollision(pc, hazardCollider, false);
+                    _activeIgnorePairs.Remove((pc, hazardCollider));
                 }
             }
+        }
+
+        private void ClearAllIgnorePairs()
+        {
+            foreach (var (playerCol, hazardCol) in _activeIgnorePairs)
+            {
+                if (playerCol && hazardCol)
+                    Physics2D.IgnoreCollision(playerCol, hazardCol, false);
+            }
+            _activeIgnorePairs.Clear();
         }
 
         public void HealPlayer(int heal)

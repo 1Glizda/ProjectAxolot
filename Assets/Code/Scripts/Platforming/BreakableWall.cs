@@ -19,7 +19,17 @@ namespace Platforming
         /// <summary>Fired when the wall breaks. Subscribe from sound/VFX controllers.</summary>
         public event System.Action OnBreak;
 
-        private Dictionary<Transform, int> _initialLayers = new Dictionary<Transform, int>();
+        private class ChildState
+        {
+            public Vector3 LocalPosition;
+            public Quaternion LocalRotation;
+            public int Layer;
+            public Rigidbody2D Rb;
+            public RigidbodyType2D InitialBodyType;
+            public bool InitialSimulated;
+        }
+
+        private Dictionary<Transform, ChildState> _childStates = new Dictionary<Transform, ChildState>();
 
         private void Awake()
         {
@@ -27,7 +37,16 @@ namespace Platforming
 
             foreach (var obj in GetComponentsInChildren<Transform>(true))
             {
-                _initialLayers[obj] = obj.gameObject.layer;
+                var rb = obj.GetComponent<Rigidbody2D>();
+                _childStates[obj] = new ChildState
+                {
+                    LocalPosition = obj.localPosition,
+                    LocalRotation = obj.localRotation,
+                    Layer = obj.gameObject.layer,
+                    Rb = rb,
+                    InitialBodyType = rb != null ? rb.bodyType : RigidbodyType2D.Dynamic,
+                    InitialSimulated = rb != null ? rb.simulated : false
+                };
             }
         }
 
@@ -43,12 +62,24 @@ namespace Platforming
             if (_spriteToHideOnBreak != null)
                 _spriteToHideOnBreak.enabled = true;
 
-            // Restore original layers
-            foreach (var obj in GetComponentsInChildren<Transform>(true))
+            // Restore original transforms, layers, and rigidbodies
+            foreach (var kvp in _childStates)
             {
-                if (_initialLayers.TryGetValue(obj, out int initialLayer))
+                var obj = kvp.Key;
+                var state = kvp.Value;
+
+                if (obj == null) continue;
+
+                obj.gameObject.layer = state.Layer;
+                obj.localPosition = state.LocalPosition;
+                obj.localRotation = state.LocalRotation;
+
+                if (state.Rb != null)
                 {
-                    obj.gameObject.layer = initialLayer;
+                    state.Rb.bodyType = state.InitialBodyType;
+                    state.Rb.simulated = state.InitialSimulated;
+                    state.Rb.linearVelocity = Vector2.zero;
+                    state.Rb.angularVelocity = 0f;
                 }
             }
         }

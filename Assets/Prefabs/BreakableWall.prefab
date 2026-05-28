@@ -102,7 +102,6 @@ GameObject:
   - component: {fileID: 7397648783941994165}
   - component: {fileID: 8874296226019805568}
   - component: {fileID: 7804800198185896060}
-  - component: {fileID: 5343559995475026607}
   - component: {fileID: 2542032611833213776}
   m_Layer: 10
   m_Name: BreakableWall
@@ -141,25 +140,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.BreakableWall
   _wallCollider: {fileID: 2542032611833213776}
-  _wallPebbles:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _breakForceThreshold: 100
   _spriteToHideOnBreak: {fileID: 1494529778852055187}
 --- !u!50 &7804800198185896060
@@ -189,19 +169,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5343559995475026607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6789420716477974618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afe4eb5c478f9d04481f419852e5d96a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Game.Interactions::Interactions.ResetObject
-  _prefabToRespawn: {fileID: 6789420716477974618}
 --- !u!61 &2542032611833213776
 BoxCollider2D:
   m_ObjectHideFlags: 0

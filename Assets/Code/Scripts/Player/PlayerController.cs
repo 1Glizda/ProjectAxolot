@@ -584,20 +584,26 @@ namespace Player
         
         private IEnumerator TeleportRoutine(Vector2 targetPosition)
         {
-            yield return new WaitForEndOfFrame();
+            // WaitForFixedUpdate places position changes inside the physics cycle,
+            // avoiding the build-only bone corruption caused by WaitForEndOfFrame
+            // (which runs after rendering and fights with physics interpolation).
+            yield return new WaitForFixedUpdate();
             ((IPlayerInputHandler)inputHandler).SetInputActive(false);
 
             _rb.linearVelocity = Vector2.zero;
             _rb.angularVelocity = 0f;
     
             var originalInterpolation = _rb.interpolation;
+            var originalCcd = _rb.collisionDetectionMode;
             _rb.interpolation = RigidbodyInterpolation2D.None;
+            _rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     
             _rb.position = targetPosition;
             transform.position = new Vector3(targetPosition.x, targetPosition.y, transform.position.z);
     
             Physics2D.SyncTransforms();
             _rb.interpolation = originalInterpolation;
+            _rb.collisionDetectionMode = originalCcd;
 
             _isGrounded = false;
             _isInCoyoteTime = false;

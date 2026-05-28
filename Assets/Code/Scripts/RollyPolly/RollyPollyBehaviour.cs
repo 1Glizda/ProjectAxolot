@@ -84,12 +84,16 @@ namespace RollyPolly
         
         private bool _isDead;
         private Vector2 _smoothedGroundNormal = Vector2.up;
-        
-        
-        
+        private Vector3 _spawnPosition;
+        private Quaternion _spawnRotation;
+
+
         private void Awake()
         {
             Player.GameState.CheckpointsManager.RegisterResettable(this);
+
+            _spawnPosition = transform.position;
+            _spawnRotation = transform.rotation;
 
             GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null)
@@ -549,6 +553,10 @@ namespace RollyPolly
 
         public void TriggerReset()
         {
+            // Cancel any running coroutines (e.g. YeetAndKillRoutine) so they can't
+            // call HideOffscreen() after the reset has already happened.
+            StopAllCoroutines();
+
             _currentState = ERollyState.Patrol;
             _stateTimer = 0f;
             _pulseCooldownTimer = 0f;
@@ -582,13 +590,29 @@ namespace RollyPolly
                 if (attackCollider != null) attackCollider.enabled = false;
             }
 
+            // Restore transform
+            transform.SetPositionAndRotation(_spawnPosition, _spawnRotation);
+
             // Restore Rigidbody state
             if (_rb != null)
             {
+                _rb.interpolation = RigidbodyInterpolation2D.None;
+                _rb.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+
                 _rb.bodyType = RigidbodyType2D.Dynamic;
                 _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+                // Explicitly force the physics body position AFTER switching to Dynamic.
+                // The bodyType change from Static→Dynamic can inherit the old Static body's
+                // internal physics position (-9999) instead of reading transform.position.
+                // Setting _rb.position directly writes to the Box2D body — this always works.
+                _rb.position = (Vector2)_spawnPosition;
                 _rb.linearVelocity = Vector2.zero;
                 _rb.angularVelocity = 0f;
+
+                // Restore preferred settings
+                _rb.interpolation = RigidbodyInterpolation2D.Interpolate;
+                _rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             }
 
             // Ensure all colliders are re-enabled (they get disabled during Yeet)
@@ -750,6 +774,13 @@ namespace RollyPolly
 
         private void HideOffscreen()
         {
+            // Disable all colliders FIRST so the body at -9999 generates zero contacts
+            Collider2D[] colliders = GetComponentsInChildren<Collider2D>(true);
+            foreach (var col in colliders)
+            {
+                if (col != null) col.enabled = false;
+            }
+
             if (_rb != null)
             {
                 _rb.linearVelocity = Vector2.zero;
