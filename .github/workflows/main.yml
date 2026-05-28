@@ -42,8 +42,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add version.txt
           git commit -m "chore: bump version to ${{ steps.bump_version.outputs.new_version }} [skip ci]"
-          # Force with lease ensures we don't destroy other people's work, 
-          # but pushes our version change regardless of project file conflicts.
           git push origin HEAD:${{ github.ref_name }} --force-with-lease
 
   # --- JOB 2: BUILD WEBGL ---
@@ -55,20 +53,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with: { lfs: true }
-      - name: Free Disk Space
-        run: |
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+
+      # FIX 1: Restore Cache immediately after Checkout so the folder exists
       - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-WebGL-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-WebGL-
+
+      # FIX 2: Free space after cache step, before builder execution
+      - name: Free Disk Space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+
       - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: WebGL
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -84,20 +90,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with: { lfs: true }
-      - name: Free Disk Space
-        run: |
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+
+      # FIX 1: Restore Cache immediately after Checkout so the folder exists
       - name: Restore Cache
         uses: actions/cache@v4
         with:
           path: Library
           key: Library-Windows-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-Windows-
+
+      # FIX 2: Free space after cache step, before builder execution
+      - name: Free Disk Space
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+
       - name: Build
         uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneWindows64
           buildsPath: build
           version: ${{ needs.versioning.outputs.new_version }}
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
