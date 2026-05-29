@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4360f9ae3d5624ebe8e2b865d7568799, type: 3}
   m_Name: Sound Profile
   m_EditorClassIdentifier: Game.Player::Player.Sound.SoundProfileSo
-  footstepLoop: {fileID: 0}
+  footstepClip: {fileID: 8300000, guid: 313894b47b8424afd83bc0a2c20c8e32, type: 3}
+  footstepClips:
+  - {fileID: 8300000, guid: 313894b47b8424afd83bc0a2c20c8e32, type: 3}
+  - {fileID: 8300000, guid: 40452038daf8a43e288b8856d321a3b2, type: 3}
   footstepVolume: 0.3
   climbLoop: {fileID: 0}
   climbVolume: 0.355
@@ -28,7 +31,6 @@ MonoBehaviour:
   landVolume: 0.03
   pulseClip: {fileID: 8300000, guid: 68ec9f9310aa9f743ac13c412e32c559, type: 3}
   pulseClips:
-  - {fileID: 8300000, guid: c69e5363cebda429f9a1c369ba47a943, type: 3}
   - {fileID: 8300000, guid: 23247e49bd7cd4c89a9924e02f3a4266, type: 3}
   - {fileID: 8300000, guid: 664c0bf03967b49d988e4a4565329984, type: 3}
   pulseVolume: 0.18

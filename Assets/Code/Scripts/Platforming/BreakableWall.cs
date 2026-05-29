@@ -15,6 +15,9 @@ namespace Platforming
 
         [Tooltip("Optional sprite that will be hidden when the wall breaks.")]
         [SerializeField] private SpriteRenderer _spriteToHideOnBreak;
+        
+        [Tooltip("Optional GameObject that will be activated when the wall breaks (e.g. a particle effect or hidden path).")]
+        [SerializeField] private GameObject _objectToActivateOnBreak;
 
         /// <summary>Fired when the wall breaks. Subscribe from sound/VFX controllers.</summary>
         public event System.Action OnBreak;
@@ -62,6 +65,9 @@ namespace Platforming
             if (_spriteToHideOnBreak != null)
                 _spriteToHideOnBreak.enabled = true;
 
+            if (_objectToActivateOnBreak != null)
+                _objectToActivateOnBreak.SetActive(false);
+
             // Restore original transforms, layers, and rigidbodies
             foreach (var kvp in _childStates)
             {
@@ -98,6 +104,9 @@ namespace Platforming
 
             if (_spriteToHideOnBreak != null)
                 _spriteToHideOnBreak.enabled = false;
+
+            if (_objectToActivateOnBreak != null)
+                _objectToActivateOnBreak.SetActive(true);
 
             foreach (var obj in GetComponentsInChildren<Transform>())
             {

@@ -73,8 +73,8 @@ namespace Player.Sound
                 Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: PulseController not found. Pulse SFX will not play.", this);
 
             // Log warnings for unassigned clips to guide the developer
-            if (soundProfile.footstepLoop == null)
-                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Footstep loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if ((soundProfile.footstepClips == null || soundProfile.footstepClips.Length == 0) && soundProfile.footstepClip == null)
+                Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Footstep clips are not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.jumpClip == null)
                 Debug.LogWarning($"[{gameObject.name}] PlayerSoundController: Jump clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.landClip == null)
@@ -127,18 +127,16 @@ namespace Player.Sound
                 _isClimbingLoop = false;
             }
 
-            // ─── Footstep loop (only when not climbing) ────────────
+            // ─── Movement tracking (for idle state) ────────────
             if (!climbing)
             {
                 if (moving && !_isMoving)
                 {
-                    soundController.PlayLoop(soundProfile.footstepLoop, soundProfile.footstepVolume);
                     _isMoving = true;
                     ResetIdleState();
                 }
                 else if (!moving && _isMoving)
                 {
-                    soundController.StopLoop();
                     _isMoving = false;
                 }
             }
@@ -165,10 +163,8 @@ namespace Player.Sound
         private void HandleJump()
         {
             Debug.Log($"[{gameObject.name}] PlayerSoundController: HandleJump called!");
-            // Stop footsteps when jumping
             if (_isMoving)
             {
-                soundController.StopLoop();
                 _isMoving = false;
             }
 
@@ -186,10 +182,8 @@ namespace Player.Sound
         private void HandleStartClimb()
         {
             Debug.Log($"[{gameObject.name}] PlayerSoundController: HandleStartClimb called!");
-            // Stop footsteps when entering climb
             if (_isMoving)
             {
-                soundController.StopLoop();
                 _isMoving = false;
             }
         }
@@ -208,6 +202,29 @@ namespace Player.Sound
             else if (soundProfile.pulseClip != null)
             {
                 soundController.PlayOneShot(soundProfile.pulseClip, soundProfile.pulseVolume);
+            }
+        }
+
+        // ─── Animation Events ──────────────────────────────────────
+
+        /// <summary>
+        /// Called by an Animation Event to trigger a single footstep sound.
+        /// </summary>
+        public void PlayFootstep()
+        {
+            if (soundProfile == null || soundController == null) return;
+
+            if (soundProfile.footstepClips != null && soundProfile.footstepClips.Length > 0)
+            {
+                soundController.PlayRandomOneShot(soundProfile.footstepClips, soundProfile.footstepVolume, soundProfile.pitchVariance);
+            }
+            else if (soundProfile.footstepClip != null)
+            {
+                // We reuse pitchVariance here if you have PlayOneShotDebounced, but PlayOneShot works too.
+                // Depending on soundController's available methods, we'll use PlayOneShot but maybe add pitch variance later if it's supported.
+                // For now, let's just use what's available or PlayRandomOneShot with 1 clip.
+                var arr = new AudioClip[] { soundProfile.footstepClip };
+                soundController.PlayRandomOneShot(arr, soundProfile.footstepVolume, soundProfile.pitchVariance);
             }
         }
 

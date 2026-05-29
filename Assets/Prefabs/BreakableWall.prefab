@@ -144,6 +144,7 @@ MonoBehaviour:
   _wallCollider: {fileID: 2542032611833213776}
   _breakForceThreshold: 100
   _spriteToHideOnBreak: {fileID: 1494529778852055187}
+  _objectToActivateOnBreak: {fileID: 8583365003160934733}
 --- !u!50 &7804800198185896060
 Rigidbody2D:
   serializedVersion: 5
@@ -232,6 +233,7 @@ MonoBehaviour:
   soundProfile: {fileID: 11400000, guid: e76051cca53344bd9b50a0f677f42853, type: 2}
   breakableWall: {fileID: 8874296226019805568}
   spatialBlend: 0
+  sfxMixerGroup: {fileID: 0}
   maxDistance: 30
 --- !u!1 &7026994957449031497
 GameObject:
@@ -341,7 +343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8270580227017834785
 Transform:
   m_ObjectHideFlags: 0

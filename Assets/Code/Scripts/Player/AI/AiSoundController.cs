@@ -77,8 +77,8 @@ namespace Player.AI
             simpleAi.OnTongue += HandleTongue;
 
             // Log warnings for unassigned clips to guide the developer
-            if (soundProfile.runLoop == null && soundProfile.footstepLoop == null)
-                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Neither runLoop nor footstepLoop is assigned in the SoundProfile '{soundProfile.name}'.", this);
+            if (soundProfile.runLoop == null && soundProfile.footstepClip == null && (soundProfile.footstepClips == null || soundProfile.footstepClips.Length == 0))
+                Debug.LogWarning($"[{gameObject.name}] AiSoundController: Neither runLoop nor footstep clips are assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.climbLoop == null)
                 Debug.LogWarning($"[{gameObject.name}] AiSoundController: Climb loop clip is not assigned in the SoundProfile '{soundProfile.name}'.", this);
             if (soundProfile.idleChirps == null || soundProfile.idleChirps.Length == 0)
@@ -131,8 +131,8 @@ namespace Player.AI
             {
                 if (moving && !_isMoving)
                 {
-                    // Prefer runLoop if assigned, fallback to footstepLoop
-                    AudioClip moveClip = soundProfile.runLoop != null ? soundProfile.runLoop : soundProfile.footstepLoop;
+                    // Prefer runLoop if assigned, fallback to footstepClip
+                    AudioClip moveClip = soundProfile.runLoop != null ? soundProfile.runLoop : soundProfile.footstepClip;
                     float moveVol = soundProfile.runLoop != null ? soundProfile.runVolume : soundProfile.footstepVolume;
                     soundController.PlayLoop(moveClip, moveVol);
                     _isMoving = true;
