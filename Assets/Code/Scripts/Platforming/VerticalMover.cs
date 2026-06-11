@@ -127,6 +127,7 @@ namespace Platforming
             if (_inputActions != null)
             {
                 _inputActions.Player.HardMode.performed -= ToggleHardMode;
+                _inputActions.Disable();
                 _inputActions.Dispose();
             }
         }

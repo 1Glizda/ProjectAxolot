@@ -25,6 +25,11 @@ namespace Player.GameState
         private readonly List<(Collider2D playerCol, Collider2D hazardCol)> _activeIgnorePairs
             = new List<(Collider2D, Collider2D)>();
 
+        [Header("Stats")]
+        public int TotalDeaths { get; private set; }
+        public float TotalTimePlayed { get; private set; }
+        private bool _isTimerRunning = false;
+
         
         private void Awake()
         {
@@ -42,12 +47,33 @@ namespace Player.GameState
 
         private void Update()
         {
+            if (_isTimerRunning)
+            {
+                TotalTimePlayed += Time.deltaTime;
+            }
+
             if (_damageCooldownTimer > 0f)
             {
                 _damageCooldownTimer -= Time.deltaTime;
             }
         }
 
+        
+        public void StartTimer()
+        {
+            _isTimerRunning = true;
+        }
+
+        public void StopTimer()
+        {
+            _isTimerRunning = false;
+        }
+
+        public void ResetTimer()
+        {
+            TotalTimePlayed = 0f;
+            _isTimerRunning = false;
+        }
         
         public void KillPlayer()
         {
@@ -59,6 +85,7 @@ namespace Player.GameState
             StopAllCoroutines();
             ClearAllIgnorePairs();
             
+            TotalDeaths++;
             ResetPlayer();
             onDeath?.Invoke();
         }

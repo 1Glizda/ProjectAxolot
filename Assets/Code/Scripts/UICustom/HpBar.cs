@@ -94,9 +94,16 @@ namespace UICustom
 
         private IEnumerator IncreasePoints(int previous, int current)
         {
+            Vector3? playerScreenPos = null;
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null && Camera.main != null)
+            {
+                playerScreenPos = Camera.main.WorldToScreenPoint(player.transform.position);
+            }
+
             for (int i = previous; i < current; i++)
             {
-                _points[i].AnimatePoint(_giveTime, true);
+                _points[i].AnimatePoint(_giveTime, true, playerScreenPos);
                 yield return new WaitForSeconds(_giveTimeBetween);
             }
             _updateCoroutine = null;
