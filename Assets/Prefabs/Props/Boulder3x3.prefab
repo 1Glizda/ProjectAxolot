@@ -314,7 +314,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2.75, y: 2.75}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.05
 --- !u!114 &7976159759957115710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,4 +409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Game.Platforming::BoulderSoundController
   movementSound: {fileID: 8300000, guid: 2846b4b87c41b4d97be824dd35769ca7, type: 3}
   movementThreshold: 0.1
+  spatialBlend: 1
+  maxDistance: 25
   sfxMixerGroup: {fileID: 3603447279186903658, guid: 9c31c19bf90f047c9a1f6071298e5223, type: 2}

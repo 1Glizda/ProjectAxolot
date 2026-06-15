@@ -49,8 +49,8 @@ namespace Interactions
 
             try
             {
-                await FadeIn();
                 onStateChanged?.Invoke(true);
+                await FadeIn();
                 
                 await Awaitable.WaitForSecondsAsync(_timeLitUp);
 

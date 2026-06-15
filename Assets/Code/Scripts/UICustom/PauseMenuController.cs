@@ -8,21 +8,22 @@ namespace UICustom
     public class PauseMenuController : MonoBehaviour
     {
         [Header("UI Panels")]
-        [Tooltip("The UI panel that represents the Pause Menu overlay.")]
         [SerializeField] private GameObject _pauseMenuPanel;
 
-        [Tooltip("The back/resume button that will unpause the game when clicked.")]
         [SerializeField] private Button _backButton;
 
+        private PlayerController _playerController;
         private IPlayerInputHandler _inputHandler;
         private bool _isPaused = false;
 
         private void Start()
         {
-            // Find the player's input manager in the scene without referencing internal types
             GameObject playerObj = GameObject.FindWithTag("Player");
             if (playerObj != null)
             {
+                _playerController = playerObj.GetComponent<PlayerController>()
+                    ?? playerObj.GetComponentInParent<PlayerController>()
+                    ?? playerObj.GetComponentInChildren<PlayerController>();
                 _inputHandler = playerObj.GetComponent<IPlayerInputHandler>() 
                     ?? playerObj.GetComponentInParent<IPlayerInputHandler>() 
                     ?? playerObj.GetComponentInChildren<IPlayerInputHandler>();
@@ -40,9 +41,13 @@ namespace UICustom
                 }
             }
 
+            if (_playerController == null)
+            {
+                _playerController = FindFirstObjectByType<PlayerController>();
+            }
+
             if (_inputHandler != null && _inputHandler.PauseAction != null)
             {
-                // Subscribe to the escape/cancel press event
                 _inputHandler.PauseAction.performed += OnPauseToggle;
             }
             else
@@ -50,13 +55,11 @@ namespace UICustom
                 Debug.LogWarning("[PauseMenuController] Could not find IPlayerInputManager or PauseAction in the scene.");
             }
 
-            // Subscribe to the back/resume button click event
             if (_backButton != null)
             {
                 _backButton.onClick.AddListener(ResumeGame);
             }
 
-            // Ensure the pause menu panel is hidden initially
             if (_pauseMenuPanel != null)
             {
                 _pauseMenuPanel.SetActive(false);
@@ -67,7 +70,6 @@ namespace UICustom
         {
             if (_inputHandler != null && _inputHandler.PauseAction != null)
             {
-                // Unsubscribe from the event when this component is destroyed
                 _inputHandler.PauseAction.performed -= OnPauseToggle;
             }
 
@@ -79,6 +81,10 @@ namespace UICustom
 
         private void OnPauseToggle(InputAction.CallbackContext context)
         {
+            if (_playerController != null && _playerController.IsLocked)
+            {
+                return;
+            }
             TogglePause();
         }
 
@@ -90,17 +96,13 @@ namespace UICustom
             }
         }
 
-        /// <summary>
-        /// Toggles the pause state of the game, setting the time scale and showing/hiding the pause panel.
-        /// </summary>
+        
         public void TogglePause()
         {
             _isPaused = !_isPaused;
 
-            // Pause/resume time
             Time.timeScale = _isPaused ? 0f : 1f;
 
-            // Show/hide the pause panel
             if (_pauseMenuPanel != null)
             {
                 _pauseMenuPanel.SetActive(_isPaused);

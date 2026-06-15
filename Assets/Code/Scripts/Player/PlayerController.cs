@@ -26,6 +26,7 @@ namespace Player
         public float HorizontalVelocity => _rb.linearVelocityX;
 
         public bool IsGrounded => _isGrounded;
+        public bool IsLocked => _isLocked;
         public bool IsInCoyoteTime => _isInCoyoteTime;
         public bool IsOnSteepSlope => _isOnSteepSlope;
         public Vector2 GroundNormal => _groundNormal;

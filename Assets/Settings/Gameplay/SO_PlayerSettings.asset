@@ -62,7 +62,7 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 16780800
-  _groundCheckDistance: 0.2
+  _groundCheckDistance: 0.05
   _coyoteTime: 0.2
   _applyRotationThreshold: 5
   _maxRotation: 30
@@ -92,7 +92,7 @@ MonoBehaviour:
   _autoGrabVines: 1
   _vineReleaseHoldTime: 0.25
   _vineCatchTranslationDuration: 0.25
-  _pushPullForce: 1300
+  _pushPullForce: 1600
   _pushableCheckYOffset: 0.29
   _pushableCheckDistance: 0.5
   _useManualGrabForPushables: 1
