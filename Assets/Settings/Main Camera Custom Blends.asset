@@ -16,8 +16,8 @@ MonoBehaviour:
   - From: '**ANY CAMERA**'
     To: CM_Jump
     Blend:
-      Style: 2
-      Time: 4
+      Style: 6
+      Time: 5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -27,8 +27,8 @@ MonoBehaviour:
   - From: '**ANY CAMERA**'
     To: CM_Main
     Blend:
-      Style: 1
-      Time: 6
+      Style: 6
+      Time: 5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
