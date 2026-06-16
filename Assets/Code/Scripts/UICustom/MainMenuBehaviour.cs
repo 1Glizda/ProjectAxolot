@@ -15,11 +15,13 @@ namespace UICustom
         [SerializeField] private float _debugTimeScale = 20f;
 
         private bool _isStarting;
+        private bool _hasStarted;
         
         public void OnStartGame()
         {
             if (_isStarting) return;
             _isStarting = true;
+            _hasStarted = true;
 
             if (_debugMode)
             {
@@ -38,13 +40,19 @@ namespace UICustom
 
         public void ToggleSettingsMenu(bool toggle)
         {
-            _mainMenu.SetActive(!toggle);
+            if (!_hasStarted)
+            {
+                _mainMenu.SetActive(!toggle);
+            }
             _settingsMenu.SetActive(toggle);
         }
 
         public void ToggleCreditsReel(bool toggle)
         {
-            _mainMenu.SetActive(!toggle);
+            if (!_hasStarted)
+            {
+                _mainMenu.SetActive(!toggle);
+            }
             _creditsReel.SetActive(toggle);
         }
         
