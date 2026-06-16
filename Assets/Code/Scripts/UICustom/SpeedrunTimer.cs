@@ -32,6 +32,11 @@ namespace UICustom
             Instance = this;
         }
 
+        private void Start()
+        {
+            StartTimer();
+        }
+
         private void Update()
         {
             if (_isRunning)

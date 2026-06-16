@@ -52,6 +52,10 @@ namespace UICustom
             }
 
             // ── Live timer update ──────────────────────────────────────
+            if (_timer == null)
+            {
+                _timer = SpeedrunTimer.Instance;
+            }
             if (_timer == null || _timerText == null) return;
 
             _timerText.text = SpeedrunTimer.FormatTime(_timer.ElapsedTime);

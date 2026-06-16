@@ -12,6 +12,10 @@ namespace UICustom
         [SerializeField] private GameObject _settingsMenu;
         [SerializeField] private GameObject _mainMenu;
 
+        [Header("Leaderboard UI")]
+        [Tooltip("The leaderboard button in the main menu to hide when game starts.")]
+        [SerializeField] private GameObject _leaderboardButton;
+
         [Header("Username")]
         [Tooltip("Input field for the player's display name.")]
         [SerializeField] private TMP_InputField _usernameInput;
@@ -25,6 +29,21 @@ namespace UICustom
         [SerializeField] private float _debugTimeScale = 20f;
 
         private bool _isStarting;
+
+        private void Awake()
+        {
+            EnsureUGSBootstrap();
+        }
+
+        private void EnsureUGSBootstrap()
+        {
+            if (UGSBootstrap.Instance == null)
+            {
+                GameObject go = new GameObject("UGSBootstrap (Auto)");
+                go.AddComponent<UGSBootstrap>();
+                DontDestroyOnLoad(go);
+            }
+        }
 
         private void Start()
         {
@@ -50,6 +69,12 @@ namespace UICustom
         {
             if (_isStarting) return;
             _isStarting = true;
+
+            // Instantly hide the leaderboard button
+            if (_leaderboardButton != null)
+            {
+                _leaderboardButton.SetActive(false);
+            }
 
             if (_debugMode)
             {

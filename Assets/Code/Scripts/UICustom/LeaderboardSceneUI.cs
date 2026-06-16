@@ -57,6 +57,16 @@ namespace UICustom
 
         // ── Unity lifecycle ────────────────────────────────────────────
 
+        private void Awake()
+        {
+            if (UGSBootstrap.Instance == null)
+            {
+                GameObject go = new GameObject("UGSBootstrap (Auto)");
+                go.AddComponent<UGSBootstrap>();
+                DontDestroyOnLoad(go);
+            }
+        }
+
         private void Start()
         {
             // Get current player ID for highlighting

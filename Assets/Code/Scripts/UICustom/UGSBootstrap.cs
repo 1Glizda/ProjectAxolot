@@ -15,6 +15,7 @@ namespace UICustom
     {
         private const string PLAYER_NAME_PREF_KEY = "UGS_PlayerName";
 
+        public static UGSBootstrap Instance { get; private set; }
         public static bool IsReady { get; private set; }
 
         /// <summary>
@@ -22,25 +23,58 @@ namespace UICustom
         /// </summary>
         public static string PlayerDisplayName { get; private set; } = "Player";
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            Instance = null;
+            IsReady = false;
+            PlayerDisplayName = "Player";
+        }
+
+        // AutoInitialize removed to prevent initialization before Leaderboard package registers.
+        // It will now be spawned explicitly by other scripts.
+
         private async void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
             if (IsReady) return;
 
             try
             {
+                Debug.Log($"[UGS Diagnostics] UGSBootstrap Awake started. Current UnityServices.State: {UnityServices.State}");
+
                 // 1. Initialize Unity Services
-                await UnityServices.InitializeAsync();
-                Debug.Log("[UGSBootstrap] Unity Services initialized.");
+                if (UnityServices.State == ServicesInitializationState.Initialized)
+                {
+                    Debug.LogError("[CRITICAL ERROR] UnityServices is ALREADY initialized when the game started! This means Domain Reloading is definitely DISABLED in your Editor. UGS Leaderboards will crash. You MUST turn off 'Enter Play Mode Options' in Project Settings.");
+                }
+                else
+                {
+                    Debug.Log("[UGS Diagnostics] Calling UnityServices.InitializeAsync()...");
+                    await UnityServices.InitializeAsync();
+                }
+                Debug.Log($"[UGS Diagnostics] Unity Services initialized. State is now: {UnityServices.State}");
 
                 // 2. Sign in anonymously
                 if (!AuthenticationService.Instance.IsSignedIn)
                 {
+                    Debug.Log("[UGS Diagnostics] Not signed in. Calling SignInAnonymouslyAsync()...");
                     await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                    Debug.Log($"[UGSBootstrap] Signed in. Player ID: {AuthenticationService.Instance.PlayerId}");
                 }
+                Debug.Log($"[UGS Diagnostics] Signed in. Player ID: {AuthenticationService.Instance.PlayerId}");
 
                 // 3. Set default player name if not already set
                 await EnsurePlayerNameAsync();
+
+                // Workaround: Give Unity Services internal message bus time to register all package instances
+                await System.Threading.Tasks.Task.Delay(500);
 
                 IsReady = true;
             }

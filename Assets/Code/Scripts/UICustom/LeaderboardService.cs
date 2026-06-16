@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using UnityEngine;
+using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Exceptions;
 using Unity.Services.Leaderboards.Models;
@@ -16,6 +17,24 @@ namespace UICustom
         public const string LEADERBOARD_ID = "GleamAGDgameY1";
         public const int PAGE_SIZE = 20;
 
+        private static async Task EnsureInitializedAsync()
+        {
+            // If UGS isn't initialized yet, wait for UGSBootstrap to be ready
+            int timeout = 0;
+            while (!UGSBootstrap.IsReady && timeout < 100) // 10 seconds max timeout
+            {
+                await Task.Delay(100);
+                timeout++;
+            }
+            
+            Debug.Log($"[UGS Diagnostics] LeaderboardService EnsureInitialized finished waiting. UGSBootstrap.IsReady: {UGSBootstrap.IsReady}. UnityServices.State: {UnityServices.State}");
+
+            if (!UGSBootstrap.IsReady)
+            {
+                throw new Exception("Unity Gaming Services initialization timed out. Ensure your project is linked in Project Settings > Services.");
+            }
+        }
+
         /// <summary>
         /// Submit the player's completion time (in seconds) to the leaderboard.
         /// Since the leaderboard uses "best score" update type, only the lowest
@@ -23,6 +42,7 @@ namespace UICustom
         /// </summary>
         public static async Task SubmitScoreAsync(float timeInSeconds)
         {
+            await EnsureInitializedAsync();
             try
             {
                 double score = Math.Round(timeInSeconds, 3);
@@ -45,6 +65,7 @@ namespace UICustom
         /// <returns>A LeaderboardScoresPage with Results and Total.</returns>
         public static async Task<LeaderboardScoresPage> GetScoresPageAsync(int offset, int limit)
         {
+            await EnsureInitializedAsync();
             try
             {
                 var options = new GetScoresOptions
@@ -67,6 +88,7 @@ namespace UICustom
         /// </summary>
         public static async Task<LeaderboardEntry> GetPlayerScoreAsync()
         {
+            await EnsureInitializedAsync();
             try
             {
                 return await LeaderboardsService.Instance.GetPlayerScoreAsync(LEADERBOARD_ID);
