@@ -8,6 +8,7 @@ namespace UICustom
         [SerializeField] private PlayableDirector _startGameSequence;
         [SerializeField] private GameObject _settingsMenu;
         [SerializeField] private GameObject _mainMenu;
+        [SerializeField] private GameObject _creditsReel;
 
         [Header("Debug Settings")]
         [SerializeField] private bool _debugMode;
@@ -39,6 +40,12 @@ namespace UICustom
         {
             _mainMenu.SetActive(!toggle);
             _settingsMenu.SetActive(toggle);
+        }
+
+        public void ToggleCreditsReel(bool toggle)
+        {
+            _mainMenu.SetActive(!toggle);
+            _creditsReel.SetActive(toggle);
         }
         
         public void OnQuit()

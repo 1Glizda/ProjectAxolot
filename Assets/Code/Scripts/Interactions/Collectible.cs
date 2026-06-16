@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 namespace Interactions
 {
@@ -15,6 +16,17 @@ namespace Interactions
         [Header("Pitch Variation")]
         [SerializeField] private float _minPitch = 0.9f;
         [SerializeField] private float _maxPitch = 1.1f;
+
+        [Header("Components")]
+        [Tooltip("The SpriteRenderer to hide when collected.")]
+        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [Tooltip("The Collider to disable when collected.")]
+        [SerializeField] private Collider2D _triggerCollider;
+        [Tooltip("An optional extra GameObject to disable when collected.")]
+        [SerializeField] private GameObject _objectToDisable;
+
+        [Header("Events")]
+        public UnityEvent OnCollected;
 
         private bool _isCollected;
 
@@ -46,8 +58,15 @@ namespace Interactions
                 // Play collection sound before deactivating
                 PlayCollectSound();
 
-                // Deactivate the collectible upon collection
-                gameObject.SetActive(false);
+                // Hide the sprite and disable the collider instead of deactivating the whole object
+                if (_spriteRenderer != null) _spriteRenderer.enabled = false;
+                if (_triggerCollider != null) _triggerCollider.enabled = false;
+                
+                // Disable the extra GameObject if referenced
+                if (_objectToDisable != null) _objectToDisable.SetActive(false);
+
+                // Fire the Unity Event
+                OnCollected?.Invoke();
             }
         }
 
