@@ -10,8 +10,11 @@ namespace Player.Sound
     public class SoundProfileSo : ScriptableObject
     {
         [Header("Movement")]
-        [Tooltip("Looping footstep clip played while the character is moving on the ground.")]
-        public AudioClip footstepLoop;
+        [Tooltip("Single footstep clip (used if array is empty).")]
+        [UnityEngine.Serialization.FormerlySerializedAs("footstepLoop")]
+        public AudioClip footstepClip;
+        [Tooltip("Array of footstep clips for random variety.")]
+        public AudioClip[] footstepClips;
         [Range(0f, 1f)] public float footstepVolume = 0.6f;
 
         [Header("Climbing")]

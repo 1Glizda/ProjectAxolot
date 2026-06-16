@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &1923060530587127849
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,6 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &3089913113966112626
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +587,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &3646478784687583212
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &4664076724921559988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,6 +1027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &6117455862837939990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,6 +1174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &6554847245661271337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,6 +1408,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!1 &7478239308291340893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1549,6 +1556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 60
 --- !u!1 &8862219253478630372
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,6 +1705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54692c547c0307c4d8620cc548c12816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Platforming.SwingPoleHelper
+  _pulseForce: 15
 --- !u!58 &388635946819588665
 CircleCollider2D:
   m_ObjectHideFlags: 0

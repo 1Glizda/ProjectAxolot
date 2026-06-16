@@ -16,8 +16,19 @@ MonoBehaviour:
   - From: '**ANY CAMERA**'
     To: CM_Jump
     Blend:
-      Style: 2
-      Time: 4
+      Style: 6
+      Time: 5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: '**ANY CAMERA**'
+    To: CM_Main
+    Blend:
+      Style: 6
+      Time: 5
       CustomCurve:
         serializedVersion: 2
         m_Curve: []

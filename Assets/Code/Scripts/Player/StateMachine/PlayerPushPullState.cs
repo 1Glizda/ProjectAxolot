@@ -49,7 +49,19 @@ namespace Player.StateMachine
                         horizontalDistance = playerBounds.min.x - boulderBounds.max.x;
                     }
 
-                    if (horizontalDistance > settings.PushableCheckDistance + 0.15f)
+                    float verticalDistance = 0f;
+                    if (playerBounds.max.y < boulderBounds.min.y)
+                    {
+                        verticalDistance = boulderBounds.min.y - playerBounds.max.y;
+                    }
+                    else if (playerBounds.min.y > boulderBounds.max.y)
+                    {
+                        verticalDistance = playerBounds.min.y - boulderBounds.max.y;
+                    }
+                    
+                    float trueDistance = new Vector2(horizontalDistance, verticalDistance).magnitude;
+
+                    if (horizontalDistance > settings.PushableCheckDistance + 0.15f || trueDistance > 1.0f)
                     {
                         stateMachine.ChangeState<PlayerIdleState>();
                         return;

@@ -46,12 +46,12 @@ MonoBehaviour:
   _jumpInitialGravity: 25
   _fallingGravity: 25
   _standstillThreshold: 0.02
-  _initialJumpForce: 11
+  _initialJumpForce: 11.2
   _useDiagonalJump: 0
   _jumpRunningMaxAngle: 15
   _jumpHoldAccel: 20
   _maxJumpTime: 0.4
-  _minJumpTime: 0
+  _minJumpTime: 0.3
   _jumpCutMultiplier: 0.5
   _jumpBufferTime: 0.2
   _jumpApexThreshold: 2
@@ -62,7 +62,7 @@ MonoBehaviour:
   _groundLayers:
     serializedVersion: 2
     m_Bits: 16780800
-  _groundCheckDistance: 0.2
+  _groundCheckDistance: 0.05
   _coyoteTime: 0.2
   _applyRotationThreshold: 5
   _maxRotation: 30
@@ -92,11 +92,11 @@ MonoBehaviour:
   _autoGrabVines: 1
   _vineReleaseHoldTime: 0.25
   _vineCatchTranslationDuration: 0.25
-  _pushPullForce: 1000
+  _pushPullForce: 1600
   _pushableCheckYOffset: 0.29
   _pushableCheckDistance: 0.5
   _useManualGrabForPushables: 1
   _pushIntentDelay: 0.15
-  _pushForceRampTime: 0.35
+  _pushForceRampTime: 0
   _pushSnapSpeed: 20
   _knockbackAirAcceleration: 3

@@ -54,5 +54,14 @@ namespace Player.Input
                 _inputActions.Player.Disable();
             }
         }
+
+        private void OnDestroy()
+        {
+            if (_inputActions != null)
+            {
+                _inputActions.Disable();
+                _inputActions.Dispose();
+            }
+        }
     }
 }

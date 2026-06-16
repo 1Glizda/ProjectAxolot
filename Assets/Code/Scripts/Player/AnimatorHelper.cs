@@ -25,7 +25,7 @@ namespace Player
 
         private void Update()
         {
-            if (!_isInitialized) return;
+            if (!_isInitialized || _animator == null || _animator.runtimeAnimatorController == null || !_animator.isActiveAndEnabled) return;
             _animator.SetBool(IsClimbing,  _playerState.IsClimbing);
             _animator.SetFloat(VerticalVelocity, _playerState.VerticalVelocity);
             _animator.SetFloat(HorizontalVelocity, Mathf.Abs(_playerState.HorizontalVelocity));
@@ -61,16 +61,19 @@ namespace Player
         
         private void OnJump()
         {
+            if (_animator == null || _animator.runtimeAnimatorController == null || !_animator.isActiveAndEnabled) return;
             _animator.SetTrigger(Jump);
         }
 
         private void OnStartClimb()
         {
+            if (_animator == null || _animator.runtimeAnimatorController == null || !_animator.isActiveAndEnabled) return;
             _animator.SetTrigger(StartClimb);
         }
 
         private void OnGrabVine()
         {
+            if (_animator == null || _animator.runtimeAnimatorController == null || !_animator.isActiveAndEnabled) return;
             _animator.SetTrigger(GrabVine);
         }
 
