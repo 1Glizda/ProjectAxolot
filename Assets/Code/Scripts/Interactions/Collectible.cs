@@ -12,6 +12,9 @@ namespace Interactions
         [SerializeField] private float _collectVolume = 0.8f;
         [Tooltip("Assign the SFX mixer group so volume can be controlled from settings.")]
         [SerializeField] private AudioMixerGroup _sfxMixerGroup;
+        [Header("Pitch Variation")]
+        [SerializeField] private float _minPitch = 0.9f;
+        [SerializeField] private float _maxPitch = 1.1f;
 
         private bool _isCollected;
 
@@ -71,6 +74,35 @@ namespace Interactions
                         source.outputAudioMixerGroup = _sfxMixerGroup;
                 }
             }
+        }
+
+        /// <summary>
+        /// Plays the collection sound at this position with slight pitch variation.
+        /// Can be called publicly.
+        /// </summary>
+        public void PlayCollectSoundWithPitch()
+        {
+            if (_collectClip == null) return;
+
+            // Create a temporary GameObject to safely modify pitch and mixer
+            GameObject tempAudio = new GameObject("CollectibleAudio");
+            tempAudio.transform.position = transform.position;
+
+            AudioSource source = tempAudio.AddComponent<AudioSource>();
+            source.clip = _collectClip;
+            source.volume = _collectVolume;
+            source.pitch = Random.Range(_minPitch, _maxPitch);
+            source.spatialBlend = 1f; // Make it 3D like PlayClipAtPoint
+
+            if (_sfxMixerGroup != null)
+            {
+                source.outputAudioMixerGroup = _sfxMixerGroup;
+            }
+
+            source.Play();
+
+            // Destroy the temporary GameObject after the sound finishes playing
+            Destroy(tempAudio, _collectClip.length / source.pitch);
         }
     }
 }
