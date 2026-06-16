@@ -1,5 +1,8 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UICustom
 {
@@ -9,11 +12,39 @@ namespace UICustom
         [SerializeField] private GameObject _settingsMenu;
         [SerializeField] private GameObject _mainMenu;
 
+        [Header("Username")]
+        [Tooltip("Input field for the player's display name.")]
+        [SerializeField] private TMP_InputField _usernameInput;
+        [Tooltip("Button to confirm the username change.")]
+        [SerializeField] private Button _usernameConfirmButton;
+        [Tooltip("Text showing the current username.")]
+        [SerializeField] private TextMeshProUGUI _currentUsernameText;
+
         [Header("Debug Settings")]
         [SerializeField] private bool _debugMode;
         [SerializeField] private float _debugTimeScale = 20f;
 
         private bool _isStarting;
+
+        private void Start()
+        {
+            // Wire username confirm button
+            if (_usernameConfirmButton != null)
+            {
+                _usernameConfirmButton.onClick.AddListener(OnConfirmUsername);
+            }
+
+            // Show current name
+            UpdateUsernameDisplay();
+        }
+
+        private void OnDestroy()
+        {
+            if (_usernameConfirmButton != null)
+            {
+                _usernameConfirmButton.onClick.RemoveListener(OnConfirmUsername);
+            }
+        }
         
         public void OnStartGame()
         {
@@ -43,6 +74,41 @@ namespace UICustom
             _mainMenu.SetActive(!toggle);
             _settingsMenu.SetActive(toggle);
         }
+
+        /// <summary>
+        /// Load the Leaderboard scene. Wire this to a "Leaderboard" button in the menu.
+        /// </summary>
+        public void OnLeaderboard()
+        {
+            SceneManager.LoadScene("Leaderboard");
+        }
+
+        /// <summary>
+        /// Called when the player confirms their username.
+        /// </summary>
+        private async void OnConfirmUsername()
+        {
+            if (_usernameInput == null) return;
+
+            string newName = _usernameInput.text.Trim();
+            if (string.IsNullOrEmpty(newName)) return;
+
+            if (_usernameConfirmButton != null) _usernameConfirmButton.interactable = false;
+
+            await UGSBootstrap.SetPlayerNameAsync(newName);
+            UpdateUsernameDisplay();
+
+            if (_usernameConfirmButton != null) _usernameConfirmButton.interactable = true;
+            if (_usernameInput != null) _usernameInput.text = "";
+        }
+
+        private void UpdateUsernameDisplay()
+        {
+            if (_currentUsernameText != null)
+            {
+                _currentUsernameText.text = $"Playing as: {UGSBootstrap.PlayerDisplayName}";
+            }
+        }
         
         public void OnQuit()
         {
@@ -54,4 +120,3 @@ namespace UICustom
         }
     }
 }
-

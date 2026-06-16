@@ -3,7 +3,6 @@ using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using Interactions;
-using UICustom;
 using UnityEngine.Events;
 
 namespace Player.GameState
@@ -76,9 +75,6 @@ namespace Player.GameState
             Debug.Log($"[Checkpoint] NotifyEnable() called on {gameObject.name}. IsActivated: {IsActivated}");
             if (IsActivated) return;
             IsActivated = true;
-
-            // Register this checkpoint as a speedrun split
-            SpeedrunTimer.Instance?.RegisterCheckpoint(gameObject.name);
             
             if (_activationParticles != null)
             {
