@@ -27,6 +27,9 @@ namespace UICustom
             }
             
             _startGameSequence.Play();
+
+            // Start the speedrun timer the moment the player hits Start
+            SpeedrunTimer.Instance?.StartTimer();
         }
 
         private void OnSequenceStopped(PlayableDirector director)

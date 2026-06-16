@@ -665,7 +665,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -687,11 +693,11 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
-  cloudProjectId: ae44a250-12e7-4edb-b875-eea2c79aa6b1
+  cloudProjectId: a0f8c1a4-16b3-4507-839a-806740548b78
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: ContinuumTest
-  organizationId: mortiancur
+  projectName: Gleam (1)
+  organizationId: unity_v2fbhpfmijxggq
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
