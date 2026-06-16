@@ -95,6 +95,22 @@ namespace UICustom
         /// </summary>
         public void TogglePause()
         {
+            MainMenuBehaviour mainMenu = Object.FindFirstObjectByType<MainMenuBehaviour>();
+            if (mainMenu != null)
+            {
+                // If a sub-menu (like Settings) is open, close it instead of toggling pause
+                if (mainMenu.CloseActiveSubMenu())
+                {
+                    return; 
+                }
+
+                // If the game hasn't started yet, don't allow pausing at all
+                if (!mainMenu.HasStarted)
+                {
+                    return; 
+                }
+            }
+
             _isPaused = !_isPaused;
 
             // Pause/resume time

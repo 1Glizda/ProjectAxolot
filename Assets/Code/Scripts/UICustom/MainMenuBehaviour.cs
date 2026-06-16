@@ -16,6 +16,8 @@ namespace UICustom
 
         private bool _isStarting;
         private bool _hasStarted;
+
+        public bool HasStarted => _hasStarted;
         
         public void OnStartGame()
         {
@@ -54,6 +56,21 @@ namespace UICustom
                 _mainMenu.SetActive(!toggle);
             }
             _creditsReel.SetActive(toggle);
+        }
+
+        public bool CloseActiveSubMenu()
+        {
+            if (_settingsMenu != null && _settingsMenu.activeSelf)
+            {
+                ToggleSettingsMenu(false);
+                return true;
+            }
+            if (_creditsReel != null && _creditsReel.activeSelf)
+            {
+                ToggleCreditsReel(false);
+                return true;
+            }
+            return false;
         }
         
         public void OnQuit()

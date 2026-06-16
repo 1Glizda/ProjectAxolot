@@ -1,28 +1,28 @@
 fileFormatVersion: 2
-guid: 581cf5dcbdfa0f54eaa14b9e8e42f8f4
+guid: d8f4644d799c59b40a01394ac89dc61d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -634087343733892484
-    second: main_rolly_prompt_0
+      213: 761862698444582494
+    second: main_hp_prompt_0
   - first:
-      213: 9022714905747290260
-    second: main_rolly_prompt_1
+      213: -357898217570478249
+    second: main_hp_prompt_1
   - first:
-      213: -1598011087046938879
-    second: main_rolly_prompt_2
+      213: -7334732288211095612
+    second: main_hp_prompt_2
   - first:
-      213: -4418322798660948259
-    second: main_rolly_prompt_3
+      213: -5443934885936291220
+    second: main_hp_prompt_3
   - first:
-      213: -7018477918679470737
-    second: main_rolly_prompt_4
+      213: -2209007743942056009
+    second: main_hp_prompt_4
   - first:
-      213: 7671518564623084147
-    second: main_rolly_prompt_5
+      213: -6962440252254477044
+    second: main_hp_prompt_5
   - first:
-      213: -6707890088253798619
-    second: main_rolly_prompt_6
+      213: 9070842447863461432
+    second: main_hp_prompt_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -118,7 +118,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main_rolly_prompt_0
+      name: main_hp_prompt_0
       rect:
         serializedVersion: 2
         x: 316
@@ -133,14 +133,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c7a9b20abe44337f0800000000000000
-      internalID: -634087343733892484
+      spriteID: e5ee864761ea29a00800000000000000
+      internalID: 761862698444582494
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_rolly_prompt_1
+      name: main_hp_prompt_1
       rect:
         serializedVersion: 2
         x: 325
@@ -155,14 +155,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 49870b2076f173d70800000000000000
-      internalID: 9022714905747290260
+      spriteID: 75757f3a77d780bf0800000000000000
+      internalID: -357898217570478249
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_rolly_prompt_2
+      name: main_hp_prompt_2
       rect:
         serializedVersion: 2
         x: 329
@@ -177,14 +177,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 10f6e690269b2d9e0800000000000000
-      internalID: -1598011087046938879
+      spriteID: 4cfe69e48dbc53a90800000000000000
+      internalID: -7334732288211095612
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_rolly_prompt_3
+      name: main_hp_prompt_3
       rect:
         serializedVersion: 2
         x: 549
@@ -199,14 +199,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ddeedcae2d6fea2c0800000000000000
-      internalID: -4418322798660948259
+      spriteID: c62296f70124374b0800000000000000
+      internalID: -5443934885936291220
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_rolly_prompt_4
+      name: main_hp_prompt_4
       rect:
         serializedVersion: 2
         x: 302
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6def29b48b599e90800000000000000
-      internalID: -7018477918679470737
+      spriteID: 7b72f3429270851e0800000000000000
+      internalID: -2209007743942056009
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_rolly_prompt_5
+      name: main_hp_prompt_5
       rect:
         serializedVersion: 2
         x: 316
@@ -243,14 +243,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 37a6c243d75b67a60800000000000000
-      internalID: 7671518564623084147
+      spriteID: c05ad7aaa71706f90800000000000000
+      internalID: -6962440252254477044
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main_rolly_prompt_6
+      name: main_hp_prompt_6
       rect:
         serializedVersion: 2
         x: 31
@@ -265,8 +265,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 527c4413189c8e2a0800000000000000
-      internalID: -6707890088253798619
+      spriteID: 836bf6e952b12ed70800000000000000
+      internalID: 9070842447863461432
       vertices: []
       indices: 
       edges: []
@@ -285,13 +285,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      main_rolly_prompt_0: -634087343733892484
-      main_rolly_prompt_1: 9022714905747290260
-      main_rolly_prompt_2: -1598011087046938879
-      main_rolly_prompt_3: -4418322798660948259
-      main_rolly_prompt_4: -7018477918679470737
-      main_rolly_prompt_5: 7671518564623084147
-      main_rolly_prompt_6: -6707890088253798619
+      main_hp_prompt_0: 761862698444582494
+      main_hp_prompt_1: -357898217570478249
+      main_hp_prompt_2: -7334732288211095612
+      main_hp_prompt_3: -5443934885936291220
+      main_hp_prompt_4: -2209007743942056009
+      main_hp_prompt_5: -6962440252254477044
+      main_hp_prompt_6: 9070842447863461432
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
