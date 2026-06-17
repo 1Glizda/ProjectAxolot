@@ -98,14 +98,15 @@ namespace UICustom
             MainMenuBehaviour mainMenu = Object.FindFirstObjectByType<MainMenuBehaviour>();
             if (mainMenu != null)
             {
-                // If a sub-menu (like Settings) is open, close it instead of toggling pause
-                if (mainMenu.CloseActiveSubMenu())
+                // If the game hasn't started yet, don't allow pausing at all
+                if (!mainMenu.HasStarted)
                 {
                     return; 
                 }
 
-                // If the game hasn't started yet, don't allow pausing at all
-                if (!mainMenu.HasStarted)
+                // If a sub-menu (like Settings) is open, close it.
+                // But only block the toggle if we are NOT currently paused.
+                if (mainMenu.CloseActiveSubMenu() && !_isPaused)
                 {
                     return; 
                 }

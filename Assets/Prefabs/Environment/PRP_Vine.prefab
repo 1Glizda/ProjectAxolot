@@ -175,8 +175,8 @@ Transform:
   m_GameObject: {fileID: 1923060530587127849}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.7353911, w: 0.67764294}
-  m_LocalPosition: {x: 1.502, y: -0.007, z: 0}
-  m_LocalScale: {x: 0.51092, y: 0.51092, z: 0.51092}
+  m_LocalPosition: {x: 1.3320003, y: -0.06545546, z: 0}
+  m_LocalScale: {x: 3.357, y: 3.357, z: 3.357}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1957674417153176595}
@@ -228,14 +228,14 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 2f6b2379dfd25584795ebd73b0307420, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5a30c0824e7155842ac77cbdd20c71f5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.33, y: 0.405}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -667,7 +667,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.90274626, y: 0.0000031005864}
+  m_ConnectedAnchor: {x: 0.90274596, y: 0.000018753532}
   m_UseConnectedAnchor: 1
   m_UseMotor: 1
   m_Motor:
@@ -1251,7 +1251,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -125.905785, y: -33.73774}
+  m_ConnectedAnchor: {x: -142.88078, y: -42.88774}
   m_UseConnectedAnchor: 1
   m_UseMotor: 1
   m_Motor:
@@ -1340,7 +1340,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -0.004273776, y: -0.18181552}
+  m_ConnectedAnchor: {x: -0.0042581214, y: -0.18180768}
   m_UseConnectedAnchor: 1
   m_UseMotor: 1
   m_Motor:
@@ -1637,7 +1637,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0.99373233, y: 0.000011202243}
+  m_ConnectedAnchor: {x: 0.99373317, y: -0.0000044296826}
   m_UseConnectedAnchor: 1
   m_UseMotor: 1
   m_Motor:
