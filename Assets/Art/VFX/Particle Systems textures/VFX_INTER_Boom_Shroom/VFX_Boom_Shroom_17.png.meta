@@ -1,0 +1,689 @@
+fileFormatVersion: 2
+guid: 64bf51dc3e0cb17409be65558dc87f36
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2589497053397534437
+    second: VFX_Boom_Shroom_17_0
+  - first:
+      213: 1949732450444695511
+    second: VFX_Boom_Shroom_17_1
+  - first:
+      213: -8923497674111832986
+    second: VFX_Boom_Shroom_17_2
+  - first:
+      213: 7830254252684867272
+    second: VFX_Boom_Shroom_17_3
+  - first:
+      213: 2776191605733938525
+    second: VFX_Boom_Shroom_17_4
+  - first:
+      213: 7906460569538810351
+    second: VFX_Boom_Shroom_17_5
+  - first:
+      213: -278130250284725181
+    second: VFX_Boom_Shroom_17_6
+  - first:
+      213: 1595966762290001734
+    second: VFX_Boom_Shroom_17_7
+  - first:
+      213: 7795288251091318556
+    second: VFX_Boom_Shroom_17_8
+  - first:
+      213: -6549731843606364731
+    second: VFX_Boom_Shroom_17_9
+  - first:
+      213: -2332813603555557523
+    second: VFX_Boom_Shroom_17_10
+  - first:
+      213: 3818644471096181799
+    second: VFX_Boom_Shroom_17_11
+  - first:
+      213: 5335726517129487416
+    second: VFX_Boom_Shroom_17_12
+  - first:
+      213: 3796398730089715247
+    second: VFX_Boom_Shroom_17_13
+  - first:
+      213: 1231119756543222363
+    second: VFX_Boom_Shroom_17_14
+  - first:
+      213: 7748426019856909463
+    second: VFX_Boom_Shroom_17_15
+  - first:
+      213: 9149350409961751790
+    second: VFX_Boom_Shroom_17_16
+  - first:
+      213: -31117666563146593
+    second: VFX_Boom_Shroom_17_17
+  - first:
+      213: -4946384956498502561
+    second: VFX_Boom_Shroom_17_18
+  - first:
+      213: -468410092020858437
+    second: VFX_Boom_Shroom_17_19
+  - first:
+      213: -1088942131824909575
+    second: VFX_Boom_Shroom_17_20
+  - first:
+      213: 6624155371029183340
+    second: VFX_Boom_Shroom_17_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 268
+        width: 668
+        height: 498
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b19b1515622401cd0800000000000000
+      internalID: -2589497053397534437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_1
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 684
+        width: 87
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d7dec36557de0b10800000000000000
+      internalID: 1949732450444695511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 491
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66c2a84e42e592480800000000000000
+      internalID: -8923497674111832986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_3
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 152
+        width: 196
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c6f540a1c6aaac60800000000000000
+      internalID: 7830254252684867272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_4
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 244
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5551387e83078620800000000000000
+      internalID: 2776191605733938525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_5
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 228
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe15efd6ff369bd60800000000000000
+      internalID: 7906460569538810351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_6
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 140
+        width: 82
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34c0d7ec202e32cf0800000000000000
+      internalID: -278130250284725181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_7
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 197
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64730a38053062610800000000000000
+      internalID: 1595966762290001734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_8
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 196
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c17f218fc5d6e2c60800000000000000
+      internalID: 7795288251091318556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_9
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 121
+        width: 41
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cd37c7179daa15a0800000000000000
+      internalID: -6549731843606364731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_10
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 146
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6f3fd8236e20afd0800000000000000
+      internalID: -2332813603555557523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_11
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 80
+        width: 66
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72482371aec8ef430800000000000000
+      internalID: 3818644471096181799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_12
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 117
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 834a2285ffe4c0a40800000000000000
+      internalID: 5335726517129487416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_13
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 129
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f26ddb4e7848fa430800000000000000
+      internalID: 3796398730089715247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_14
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 118
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5269b455e0d51110800000000000000
+      internalID: 1231119756543222363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_15
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 121
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79407f18960f78b60800000000000000
+      internalID: 7748426019856909463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_16
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 62
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee44857f8b509fe70800000000000000
+      internalID: 9149350409961751790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_17
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 78
+        width: 8
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9cb34aa5a2719ff0800000000000000
+      internalID: -31117666563146593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_18
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 0
+        width: 185
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5c1291d619ea5bb0800000000000000
+      internalID: -4946384956498502561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_19
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 57
+        width: 16
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb183e7c08fdf79f0800000000000000
+      internalID: -468410092020858437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_20
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 53
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f2ae9b86ec43e0f0800000000000000
+      internalID: -1088942131824909575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Boom_Shroom_17_21
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 57
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6bb033b63abdeb50800000000000000
+      internalID: 6624155371029183340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      VFX_Boom_Shroom_17_0: -2589497053397534437
+      VFX_Boom_Shroom_17_1: 1949732450444695511
+      VFX_Boom_Shroom_17_10: -2332813603555557523
+      VFX_Boom_Shroom_17_11: 3818644471096181799
+      VFX_Boom_Shroom_17_12: 5335726517129487416
+      VFX_Boom_Shroom_17_13: 3796398730089715247
+      VFX_Boom_Shroom_17_14: 1231119756543222363
+      VFX_Boom_Shroom_17_15: 7748426019856909463
+      VFX_Boom_Shroom_17_16: 9149350409961751790
+      VFX_Boom_Shroom_17_17: -31117666563146593
+      VFX_Boom_Shroom_17_18: -4946384956498502561
+      VFX_Boom_Shroom_17_19: -468410092020858437
+      VFX_Boom_Shroom_17_2: -8923497674111832986
+      VFX_Boom_Shroom_17_20: -1088942131824909575
+      VFX_Boom_Shroom_17_21: 6624155371029183340
+      VFX_Boom_Shroom_17_3: 7830254252684867272
+      VFX_Boom_Shroom_17_4: 2776191605733938525
+      VFX_Boom_Shroom_17_5: 7906460569538810351
+      VFX_Boom_Shroom_17_6: -278130250284725181
+      VFX_Boom_Shroom_17_7: 1595966762290001734
+      VFX_Boom_Shroom_17_8: 7795288251091318556
+      VFX_Boom_Shroom_17_9: -6549731843606364731
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

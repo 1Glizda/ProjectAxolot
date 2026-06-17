@@ -1,0 +1,767 @@
+fileFormatVersion: 2
+guid: 9c6e674fd6c17e34eadb316bb741556d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2356977108326521684
+    second: VFX_Geyser_0
+  - first:
+      213: 1115204200589504478
+    second: VFX_Geyser_1
+  - first:
+      213: 2749342541630861302
+    second: VFX_Geyser_2
+  - first:
+      213: 5049490213486903544
+    second: VFX_Geyser_3
+  - first:
+      213: 947135698564028245
+    second: VFX_Geyser_4
+  - first:
+      213: 3861107206677796316
+    second: VFX_Geyser_5
+  - first:
+      213: 1566973113461550417
+    second: VFX_Geyser_6
+  - first:
+      213: -9163778985605364060
+    second: VFX_Geyser_7
+  - first:
+      213: -1483204222239606471
+    second: VFX_Geyser_8
+  - first:
+      213: 7839700582987325235
+    second: VFX_Geyser_9
+  - first:
+      213: -7819787243769196812
+    second: VFX_Geyser_10
+  - first:
+      213: -5486738688186589685
+    second: VFX_Geyser_11
+  - first:
+      213: 730616689532191327
+    second: VFX_Geyser_12
+  - first:
+      213: -6944158934563255245
+    second: VFX_Geyser_13
+  - first:
+      213: 3638503457227629176
+    second: VFX_Geyser_14
+  - first:
+      213: -4719926470130732207
+    second: VFX_Geyser_15
+  - first:
+      213: 8704138028944955004
+    second: VFX_Geyser_16
+  - first:
+      213: -8427981927373274670
+    second: VFX_Geyser_17
+  - first:
+      213: 5655029928697830190
+    second: VFX_Geyser_18
+  - first:
+      213: 4254873457254770921
+    second: VFX_Geyser_19
+  - first:
+      213: -5102225137385970027
+    second: VFX_Geyser_20
+  - first:
+      213: 1889989886494735665
+    second: VFX_Geyser_21
+  - first:
+      213: -4966297807017965351
+    second: VFX_Geyser_22
+  - first:
+      213: -3350308289661955220
+    second: VFX_Geyser_23
+  - first:
+      213: -756500199124164499
+    second: VFX_Geyser_24
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: VFX_Geyser_0
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 254
+        width: 103
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45b9785313aa5b020800000000000000
+      internalID: 2356977108326521684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_1
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 250
+        width: 112
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edf2924df400a7f00800000000000000
+      internalID: 1115204200589504478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_2
+      rect:
+        serializedVersion: 2
+        x: 166
+        y: 249
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ffe6c79970a72620800000000000000
+      internalID: 2749342541630861302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_3
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 237
+        width: 768
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f0c2b78894631640800000000000000
+      internalID: 5049490213486903544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_4
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 126
+        width: 253
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 557100356e6e42d00800000000000000
+      internalID: 947135698564028245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_5
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 119
+        width: 123
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd51bb52c88659530800000000000000
+      internalID: 3861107206677796316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_6
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 118
+        width: 111
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15da6789eb10fb510800000000000000
+      internalID: 1566973113461550417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_7
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 126
+        width: 102
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a68dca7097b3d080800000000000000
+      internalID: -9163778985605364060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_8
+      rect:
+        serializedVersion: 2
+        x: 660
+        y: 120
+        width: 111
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9397c044e999a6be0800000000000000
+      internalID: -1483204222239606471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_9
+      rect:
+        serializedVersion: 2
+        x: 787
+        y: 127
+        width: 102
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33fd16ac4263ccc60800000000000000
+      internalID: 7839700582987325235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_10
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 122
+        width: 111
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fe810ccee88a7390800000000000000
+      internalID: -7819787243769196812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_11
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 121
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0ede3bab303bd3b0800000000000000
+      internalID: -5486738688186589685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_12
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 7
+        width: 258
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f52c986120ca32a00800000000000000
+      internalID: 730616689532191327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_13
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 88
+        width: 18
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33c8081ad3461af90800000000000000
+      internalID: -6944158934563255245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_14
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 8
+        width: 129
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8726512ed9f8e7230800000000000000
+      internalID: 3638503457227629176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_15
+      rect:
+        serializedVersion: 2
+        x: 393
+        y: 6
+        width: 383
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 153f4e5f1e37f7eb0800000000000000
+      internalID: -4719926470130732207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_16
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 5
+        width: 134
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c769b3bbb6f4bc870800000000000000
+      internalID: 8704138028944955004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_17
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 9
+        width: 132
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d10185271bc90b80800000000000000
+      internalID: -8427981927373274670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_18
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 87
+        width: 17
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2b9c3e22c3ba7e40800000000000000
+      internalID: 5655029928697830190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_19
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 1
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e8a8e7bdd85c0b30800000000000000
+      internalID: 4254873457254770921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_20
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 1
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5966a0235414139b0800000000000000
+      internalID: -5102225137385970027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_21
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13d7995c9c79a3a10800000000000000
+      internalID: 1889989886494735665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_22
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 0
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d884e3057a241bb0800000000000000
+      internalID: -4966297807017965351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_23
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 0
+        width: 8
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6317aa7c505181d0800000000000000
+      internalID: -3350308289661955220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VFX_Geyser_24
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 0
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6021b6b31f5085f0800000000000000
+      internalID: -756500199124164499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      VFX_Geyser_0: 2356977108326521684
+      VFX_Geyser_1: 1115204200589504478
+      VFX_Geyser_10: -7819787243769196812
+      VFX_Geyser_11: -5486738688186589685
+      VFX_Geyser_12: 730616689532191327
+      VFX_Geyser_13: -6944158934563255245
+      VFX_Geyser_14: 3638503457227629176
+      VFX_Geyser_15: -4719926470130732207
+      VFX_Geyser_16: 8704138028944955004
+      VFX_Geyser_17: -8427981927373274670
+      VFX_Geyser_18: 5655029928697830190
+      VFX_Geyser_19: 4254873457254770921
+      VFX_Geyser_2: 2749342541630861302
+      VFX_Geyser_20: -5102225137385970027
+      VFX_Geyser_21: 1889989886494735665
+      VFX_Geyser_22: -4966297807017965351
+      VFX_Geyser_23: -3350308289661955220
+      VFX_Geyser_24: -756500199124164499
+      VFX_Geyser_3: 5049490213486903544
+      VFX_Geyser_4: 947135698564028245
+      VFX_Geyser_5: 3861107206677796316
+      VFX_Geyser_6: 1566973113461550417
+      VFX_Geyser_7: -9163778985605364060
+      VFX_Geyser_8: -1483204222239606471
+      VFX_Geyser_9: 7839700582987325235
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
