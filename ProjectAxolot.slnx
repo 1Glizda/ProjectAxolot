@@ -1,4 +1,5 @@
 ﻿<Solution>
+  <Project Path="Game.GameState.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Game.UICustom.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
@@ -8,5 +9,4 @@
   <Project Path="Game.RollyPolly.csproj" />
   <Project Path="Game.Checkpoints.csproj" />
   <Project Path="Game.Interfaces.csproj" />
-  <Project Path="Game.GameState.csproj" />
 </Solution>

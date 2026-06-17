@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: LootLockerConfig
   m_EditorClassIdentifier: lootlocker.lootlockersdk.runtime::LootLocker.LootLockerConfig
   apiKey: 
-  adminToken: 
-  domainKey: 
+  adminToken: bbc7f6af467af8973ef1fd27fb03cf2288f88ea0
+  domainKey: 5o6lp8pm
   game_version: 1.0.0.0
-  sdk_version: 
+  sdk_version: 8.0.0
   logLevel: 2
   prettifyJson: 1
   obfuscateLogs: 1
@@ -28,9 +28,9 @@ MonoBehaviour:
   enablePresenceAutoDisconnectOnFocusChange: 0
   enablePresenceInEditor: 1
   url: https://api.lootlocker.com/v1
-  adminUrl: https://api.lootlocker.com/admin
-  playerUrl: https://api.lootlocker.com/player
-  userUrl: https://api.lootlocker.com/game
-  webSocketBaseUrl: wss://api.lootlocker.com/game
-  baseUrl: https://api.lootlocker.com
+  adminUrl: https://5o6lp8pm.api.lootlocker.com/admin
+  playerUrl: https://5o6lp8pm.api.lootlocker.com/player
+  userUrl: https://5o6lp8pm.api.lootlocker.com/game
+  webSocketBaseUrl: wss://5o6lp8pm.api.lootlocker.com/game
+  baseUrl: https://5o6lp8pm.api.lootlocker.com
   clientSideRequestTimeOut: 180
