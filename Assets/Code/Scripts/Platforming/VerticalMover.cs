@@ -76,7 +76,7 @@ namespace Platforming
         private float _currentVelocity;
         private bool  _playing;
         public bool IsPlaying => _playing;
-        private bool _isHardMode = true;
+        private bool _isHardMode = false;
         private InputSystem_Actions _inputActions;
 
         private float _originalY;
