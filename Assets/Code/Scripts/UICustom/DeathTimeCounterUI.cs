@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using Player.GameState;
+using GameState;
 
 namespace UICustom
 {

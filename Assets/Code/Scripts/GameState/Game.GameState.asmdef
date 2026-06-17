@@ -2,7 +2,9 @@
     "name": "Game.GameState",
     "rootNamespace": "",
     "references": [
-        "Game.Interfaces"
+        "Game.Interfaces",
+        "lootlocker.lootlockersdk.runtime",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

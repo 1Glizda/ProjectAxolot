@@ -1,6 +1,6 @@
 using System.Collections;
 using Interfaces;
-using Player.GameState;
+using GameState;
 using Player.Input;
 using Player.StateMachine;
 using TMPro;

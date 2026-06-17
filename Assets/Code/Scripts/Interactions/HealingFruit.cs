@@ -1,5 +1,5 @@
 
-using Player.GameState;
+using GameState;
 using UnityEngine;
 
 namespace Interactions

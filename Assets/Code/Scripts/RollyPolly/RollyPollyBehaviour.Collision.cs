@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Interfaces;
-using Player.GameState;
+using GameState;
 
 namespace RollyPolly
 {

@@ -1,6 +1,6 @@
 using Interfaces;
 using Platforming;
-using Player.GameState;
+using GameState;
 using System.Collections;
 using UnityEngine;
 

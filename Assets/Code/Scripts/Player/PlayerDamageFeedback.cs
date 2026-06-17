@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Player.GameState;
+using GameState;
 using Unity.Cinemachine;
 using UnityEngine.Rendering.Universal;
 

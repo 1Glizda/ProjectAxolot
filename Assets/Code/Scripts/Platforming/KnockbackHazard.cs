@@ -1,5 +1,5 @@
 using Interfaces;
-using Player.GameState;
+using GameState;
 using System.Collections;
 using UnityEngine;
 

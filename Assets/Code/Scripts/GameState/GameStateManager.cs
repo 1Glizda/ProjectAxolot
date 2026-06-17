@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Player.GameState
+namespace GameState
 {
     [DefaultExecutionOrder(-10)]
     public class GameStateManager : MonoBehaviour
@@ -59,9 +59,11 @@ namespace Player.GameState
         }
 
         
+        
         public void StartTimer()
         {
             _isTimerRunning = true;
+            LeaderboardsHandler.Instance.LogAnonymous();
         }
 
         public void StopTimer()
