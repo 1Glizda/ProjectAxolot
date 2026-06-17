@@ -15,6 +15,7 @@ namespace Interactions
 
         [SerializeField] private float _lightPulseIn = 0.2f;
         [SerializeField] private float _lightPulseOut = 2f;
+        [SerializeField] private float _lightFadeOutDuration = 0.5f;
 
         private float _timeSincePing;
         private bool _canPulse;
@@ -82,5 +83,30 @@ namespace Interactions
             }
             
         } 
+
+        /// <summary>
+        /// Fades the light out to zero. Hook this up to Collectible's OnCollected event.
+        /// </summary>
+        public async void FadeOutLight()
+        {
+            try
+            {
+                float startIntensity = _light.intensity;
+                float elapsed = 0f;
+
+                while (elapsed < _lightFadeOutDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    _light.intensity = Mathf.Lerp(startIntensity, 0f, elapsed / _lightFadeOutDuration);
+                    await Awaitable.EndOfFrameAsync();
+                }
+
+                _light.intensity = 0f;
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogException(e);
+            }
+        }
     }
 }
